@@ -1,0 +1,77 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add privacy policy and disclaimer pages",
+  "requirements": [
+    {
+      "id": "REQ-29",
+      "summary": "Create Privacy page component displaying comprehensive privacy policy with data collection, usage, storage, user rights, and contact information sections",
+      "acceptanceCriteria": [
+        "Privacy page component exists at frontend/src/pages/Privacy.tsx",
+        "Page uses the existing Layout component wrapper",
+        "Content includes sections on data collection, usage, storage, user rights, and contact information",
+        "Styling uses the warm color palette defined in the global CSS (terracotta, sage, amber)",
+        "Typography and spacing match the existing page designs"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Privacy.tsx",
+          "operation": "create",
+          "description": "Create Privacy page component that wraps content in the Layout component. Display comprehensive privacy policy with clearly structured sections covering data collection practices, data usage policies, storage methods, user rights (access, correction, deletion), and contact information for privacy inquiries. Use semantic HTML headings (h1, h2) for section hierarchy. Apply the warm color palette from index.css using Tailwind utility classes (text-warm-* for terracotta/sage/amber tones). Match typography and spacing patterns from existing pages like Home.tsx and HostelDetail.tsx (use consistent padding, max-width containers, text sizes)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-30",
+      "summary": "Create Disclaimer page component displaying legal disclaimers covering liability limitations, information accuracy, third-party content, and terms of use",
+      "acceptanceCriteria": [
+        "Disclaimer page component exists at frontend/src/pages/Disclaimer.tsx",
+        "Page uses the existing Layout component wrapper",
+        "Content includes sections on liability limitations, information accuracy, third-party content, and terms of use",
+        "Styling matches the existing warm color palette and design patterns",
+        "Text is clearly readable with proper heading hierarchy"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Disclaimer.tsx",
+          "operation": "create",
+          "description": "Create Disclaimer page component that wraps content in the Layout component. Display legal disclaimers with clearly structured sections covering liability limitations (what the platform is not responsible for), accuracy of hostel information (user-generated content disclaimers), third-party content and links, and general terms of use. Use semantic HTML headings (h1, h2) for proper hierarchy. Apply the warm color palette from index.css using Tailwind utility classes matching the existing design system. Ensure text is clearly readable with appropriate line-height and spacing, following patterns from existing pages."
+        }
+      ]
+    },
+    {
+      "id": "REQ-31",
+      "summary": "Add routes for /privacy and /disclaimer in App.tsx that render the Privacy and Disclaimer page components",
+      "acceptanceCriteria": [
+        "Route /privacy is registered in App.tsx and renders the Privacy component",
+        "Route /disclaimer is registered in App.tsx and renders the Disclaimer component",
+        "Both routes follow the same routing pattern as existing routes (home, hostel detail, add hostel, edit hostel)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add route configurations for /privacy and /disclaimer paths in the TanStack Router setup. Import the Privacy and Disclaimer page components. Register both routes following the existing pattern used for home, hostel detail, add hostel, and edit hostel routes. Ensure both routes wrap their components in the Layout component consistent with other routes. Place the new route definitions alongside existing route configurations in the routes array."
+        }
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "summary": "Add Privacy and Disclaimer links to the footer section of the Layout component that navigate to the respective pages",
+      "acceptanceCriteria": [
+        "Privacy link is added to the footer in Layout.tsx",
+        "Disclaimer link is added to the footer in Layout.tsx",
+        "Links use proper routing (Link component or equivalent)",
+        "Footer styling remains consistent with existing design",
+        "Links are clearly visible and accessible"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Modify the footer section of the Layout component to include navigation links for Privacy and Disclaimer pages. Use the same Link component pattern used for the existing header navigation links (browse and add hostels). Add the links in a logical footer location with appropriate spacing and styling that matches the existing footer design. Ensure links use the warm color palette for hover states and maintain accessibility with proper contrast. Position the links prominently so they are clearly visible to users, possibly in a footer navigation group or alongside other footer content."
+        }
+      ]
+    }
+  ]
+}

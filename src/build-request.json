@@ -1,0 +1,102 @@
+{
+  "kind": "build_request",
+  "title": "Add privacy policy and disclaimer pages",
+  "projectName": "Hostel Addas",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-29",
+      "text": "Create a Privacy page component at frontend/src/pages/Privacy.tsx that displays a comprehensive privacy policy covering data collection, usage, storage, user rights, and contact information, styled consistently with the existing warm terracotta/sage/amber color palette",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "add privacy and disclaimer"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Privacy page component exists at frontend/src/pages/Privacy.tsx",
+        "Page uses the existing Layout component wrapper",
+        "Content includes sections on data collection, usage, storage, user rights, and contact information",
+        "Styling uses the warm color palette defined in the global CSS (terracotta, sage, amber)",
+        "Typography and spacing match the existing page designs"
+      ]
+    },
+    {
+      "id": "REQ-30",
+      "text": "Create a Disclaimer page component at frontend/src/pages/Disclaimer.tsx that displays legal disclaimers covering liability limitations, accuracy of information, third-party content, and terms of use, styled consistently with the existing design system",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "add privacy and disclaimer"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Disclaimer page component exists at frontend/src/pages/Disclaimer.tsx",
+        "Page uses the existing Layout component wrapper",
+        "Content includes sections on liability limitations, information accuracy, third-party content, and terms of use",
+        "Styling matches the existing warm color palette and design patterns",
+        "Text is clearly readable with proper heading hierarchy"
+      ]
+    },
+    {
+      "id": "REQ-31",
+      "text": "Add routes for /privacy and /disclaimer in frontend/src/App.tsx that render the Privacy and Disclaimer page components respectively",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "add privacy and disclaimer"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Route /privacy is registered in App.tsx and renders the Privacy component",
+        "Route /disclaimer is registered in App.tsx and renders the Disclaimer component",
+        "Both routes follow the same routing pattern as existing routes (home, hostel detail, add hostel, edit hostel)"
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "text": "Add Privacy and Disclaimer links to the footer section of the Layout component (frontend/src/components/Layout.tsx) that navigate to the respective pages",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "add privacy and disclaimer"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Privacy link is added to the footer in Layout.tsx",
+        "Disclaimer link is added to the footer in Layout.tsx",
+        "Links use proper routing (Link component or equivalent)",
+        "Footer styling remains consistent with existing design",
+        "Links are clearly visible and accessible"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify the backend schema or main.mo file",
+    "Use the existing Layout component wrapper for new pages",
+    "Maintain the warm terracotta/sage/amber color palette defined in index.css",
+    "Follow the existing routing pattern in App.tsx"
+  ],
+  "nonGoals": [
+    "Implementing cookie consent banners or GDPR-specific features",
+    "Adding dynamic privacy policy generation or management",
+    "Creating backend storage for privacy policy versions",
+    "Implementing user consent tracking or acceptance mechanisms"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
