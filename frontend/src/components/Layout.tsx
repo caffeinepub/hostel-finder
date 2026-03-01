@@ -1,5 +1,5 @@
 import { Outlet, Link } from '@tanstack/react-router';
-import { Home, MapPin, Plus, Download, Megaphone, Users } from 'lucide-react';
+import { Home, MapPin, Plus, Download, Megaphone, Users, TrendingUp } from 'lucide-react';
 import { Button } from './ui/button';
 import { useVisitorCount } from '../hooks/useQueries';
 
@@ -45,6 +45,13 @@ export default function Layout() {
               >
                 <Megaphone className="w-4 h-4" />
                 <span className="hidden sm:inline text-sm font-medium">Advertise</span>
+              </Link>
+              <Link
+                to="/earnings"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/30 transition-colors text-green-700 dark:text-green-400"
+              >
+                <TrendingUp className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm font-medium">Earn</span>
               </Link>
               <Link to="/download">
                 <Button
@@ -113,6 +120,14 @@ export default function Layout() {
                 >
                   <Megaphone className="w-3 h-3" />
                   Advertise
+                </Link>
+                <span className="text-muted-foreground">•</span>
+                <Link
+                  to="/earnings"
+                  className="text-sm text-green-700 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 transition-colors font-medium flex items-center gap-1"
+                >
+                  <TrendingUp className="w-3 h-3" />
+                  Earnings
                 </Link>
               </div>
               {/* Visitor count */}

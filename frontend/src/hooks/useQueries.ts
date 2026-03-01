@@ -55,3 +55,17 @@ export function useVisitorCount() {
     refetchInterval: 60000,
   });
 }
+
+export function useGetEarningsStats() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<{ visitorCount: bigint }>({
+    queryKey: ['earningsStats'],
+    queryFn: async () => {
+      if (!actor) return { visitorCount: BigInt(0) };
+      return actor.getEarningsStats();
+    },
+    enabled: !!actor && !isFetching,
+    refetchInterval: 60000,
+  });
+}

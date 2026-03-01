@@ -9,6 +9,7 @@ import Disclaimer from './pages/Disclaimer';
 import SeoGuide from './pages/SeoGuide';
 import Download from './pages/Download';
 import Advertise from './pages/Advertise';
+import Earnings from './pages/Earnings';
 
 const rootRoute = createRootRoute({
   component: Layout,
@@ -68,6 +69,12 @@ const advertiseRoute = createRoute({
   component: Advertise,
 });
 
+const earningsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/earnings',
+  component: Earnings,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   hostelDetailRoute,
@@ -78,6 +85,7 @@ const routeTree = rootRoute.addChildren([
   seoGuideRoute,
   downloadRoute,
   advertiseRoute,
+  earningsRoute,
 ]);
 
 const router = createRouter({ routeTree });

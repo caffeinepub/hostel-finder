@@ -3,6 +3,7 @@ import { useGetHostel } from '../hooks/useQueries';
 import ImageGallery from '../components/ImageGallery';
 import HostelMap from '../components/HostelMap';
 import AdBanner from '../components/AdBanner';
+import AmenitiesSection from '../components/AmenitiesSection';
 import { ArrowLeft, MapPin, Users, IndianRupee, Home as HomeIcon, Loader2, Phone, Edit, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -194,6 +195,11 @@ export default function HostelDetail() {
             <h2 className="text-2xl font-bold text-foreground mb-3">About This Hostel</h2>
             <p className="text-muted-foreground leading-relaxed">{hostel.description}</p>
           </div>
+
+          <Separator />
+
+          {/* Amenities */}
+          <AmenitiesSection amenities={hostel.amenities ?? []} />
 
           <Separator />
 

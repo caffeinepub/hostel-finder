@@ -12,6 +12,7 @@ interface AddHostelParams {
   roomCapacityDetails: RoomSharing;
   imageUrls: string[];
   ownerContact: string;
+  amenities?: string[];
   isSponsored?: boolean | null;
 }
 
@@ -35,6 +36,7 @@ export function useAddHostel() {
         params.roomCapacityDetails,
         params.imageUrls,
         params.ownerContact,
+        params.amenities ?? [],
         params.isSponsored ?? null
       );
     },

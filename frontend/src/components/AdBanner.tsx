@@ -1,11 +1,27 @@
-// AdBanner component - placeholder ad slots ready for future ad network integration
-// To integrate a real ad network (e.g., Google AdSense), replace the placeholder div
-// with the ad network's script/ins tags and provide the adSlotId to the network.
+// AdBanner component - placeholder ad slots ready for Google AdSense integration
+//
+// ─────────────────────────────────────────────────────────────────────────────
+// HOW TO ACTIVATE GOOGLE ADSENSE (3 steps):
+//
+//  Step 1 — Sign up at https://adsense.google.com and get your site approved.
+//           You will receive a publisher ID like: ca-pub-XXXXXXXXXXXXXXXX
+//
+//  Step 2 — In the render output below, DELETE the placeholder <div> (the amber
+//           gradient box labelled "Advertisement") and UNCOMMENT the AdSense
+//           <ins> block that follows it.
+//
+//  Step 3 — Replace the placeholder values:
+//           • data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"  → your real publisher ID
+//           • data-ad-slot="YYYYYYYYYY"                 → your real ad unit slot ID
+//             (create ad units in your AdSense dashboard under Ads > By ad unit)
+//
+//  After saving, the amber placeholder will disappear and real ads will load.
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface AdBannerProps {
   size: 'leaderboard' | 'rectangle' | 'banner';
   label?: string;
-  adSlotId?: string; // For future ad network integration (e.g., Google AdSense slot ID)
+  adSlotId?: string; // Pass your real AdSense slot ID here once activated
   className?: string;
 }
 
@@ -41,9 +57,19 @@ export default function AdBanner({
   return (
     <div
       className={`flex items-center justify-center mx-auto ${config.containerClass} ${className}`}
-      data-ad-slot={adSlotId}
       aria-label={label}
     >
+      {/*
+        ═══════════════════════════════════════════════════════════════════════
+        ADSENSE INJECTION POINT
+        ───────────────────────────────────────────────────────────────────────
+        CURRENT STATE: Showing amber placeholder (visible to visitors).
+        TO ACTIVATE ADS: Delete the placeholder <div> below and uncomment
+        the <ins> AdSense block that follows it (see instructions at top of file).
+        ═══════════════════════════════════════════════════════════════════════
+      */}
+
+      {/* ── PLACEHOLDER (delete this entire div when activating AdSense) ── */}
       <div className="w-full h-full bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-950/20 dark:to-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg flex flex-col items-center justify-center gap-1 overflow-hidden relative">
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-10">
@@ -58,6 +84,26 @@ export default function AdBanner({
           {config.label}
         </span>
       </div>
+      {/* ── END PLACEHOLDER ── */}
+
+      {/*
+        ── ADSENSE BLOCK (uncomment this when activating AdSense) ──────────
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+          data-ad-slot={adSlotId ?? "YYYYYYYYYY"}
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
+        <script>
+          {`(adsbygoogle = window.adsbygoogle || []).push({});`}
+        </script>
+        ── END ADSENSE BLOCK ────────────────────────────────────────────────
+
+        Also add the AdSense auto-ads script once in frontend/index.html <head>:
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+      */}
     </div>
   );
 }

@@ -17,6 +17,7 @@ export interface Hostel {
   'imageUrls' : Array<string>,
   'name' : string,
   'description' : string,
+  'amenities' : Array<string>,
   'longitude' : number,
   'address' : string,
   'ownerContact' : string,
@@ -39,6 +40,7 @@ export interface RoomSharing {
 export interface UpdateHostelInput {
   'id' : HostelId,
   'isSponsored' : [] | [boolean],
+  'amenities' : Array<string>,
   'roomCapacityDetails' : RoomSharing,
 }
 export interface _CaffeineStorageCreateCertificateResult {
@@ -79,10 +81,12 @@ export interface _SERVICE {
       RoomSharing,
       Array<string>,
       string,
+      Array<string>,
       [] | [boolean],
     ],
     Hostel
   >,
+  'getEarningsStats' : ActorMethod<[], { 'visitorCount' : bigint }>,
   'getHostel' : ActorMethod<[HostelId], Hostel>,
   'getHostelsByCategory' : ActorMethod<[string], Array<Hostel>>,
   'getVisitorCount' : ActorMethod<[], bigint>,

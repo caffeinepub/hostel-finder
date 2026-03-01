@@ -27,6 +27,7 @@ export interface Hostel {
     imageUrls: Array<string>;
     name: string;
     description: string;
+    amenities: Array<string>;
     longitude: number;
     address: string;
     ownerContact: string;
@@ -36,10 +37,14 @@ export interface Hostel {
 export interface UpdateHostelInput {
     id: HostelId;
     isSponsored?: boolean;
+    amenities: Array<string>;
     roomCapacityDetails: RoomSharing;
 }
 export interface backendInterface {
-    addHostel(name: string, category: string, description: string, address: string, latitude: number, longitude: number, roomCapacityDetails: RoomSharing, imageUrls: Array<string>, ownerContact: string, isSponsored: boolean | null): Promise<Hostel>;
+    addHostel(name: string, category: string, description: string, address: string, latitude: number, longitude: number, roomCapacityDetails: RoomSharing, imageUrls: Array<string>, ownerContact: string, amenities: Array<string>, isSponsored: boolean | null): Promise<Hostel>;
+    getEarningsStats(): Promise<{
+        visitorCount: bigint;
+    }>;
     getHostel(hostelId: HostelId): Promise<Hostel>;
     getHostelsByCategory(category: string): Promise<Array<Hostel>>;
     getVisitorCount(): Promise<bigint>;

@@ -1,107 +1,66 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T13:59:52.271Z",
+  "generatedAt": "2026-03-01T15:02:42.879Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 8,
-    "implemented": 8,
+    "total": 5,
+    "implemented": 4,
     "items": [
       {
-        "id": "REQ-66",
-        "summary": "Create a reusable AdBanner component at frontend/src/components/AdBanner.tsx that renders a styled advertisement placeholder banner. The component should accept props for size ('leaderboard' 728x90, 'rectangle' 300x250, 'banner' 468x60), a label ('Advertisement'), and an optional ad slot ID or image URL. Style it with a light warm-toned background (amber/cream tones from the existing palette), a subtle border, and centered 'Advertisement' label text. Include a note in the component that ad network script tags (e.g. Google AdSense) can be injected here once an account is approved.",
+        "id": "REQ-79",
+        "summary": "Add an `amenities` field (array of Text) to the Hostel type in backend/main.mo. Update the `addHostel` function to accept and store an amenities array. Update the `updateHostel` function to also accept and update the amenities field. Add representative amenities to all existing seed hostel records (e.g. WiFi, AC, Laundry, Parking, Meals, Gym, Hot Water, Power Backup, Security, CCTV, Study Room, Common Kitchen — use a realistic subset per hostel type and category).",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-80",
+        "summary": "Update the HostelCard component (frontend/src/components/HostelCard.tsx) to display a compact row of amenity icons/pills below the price and sharing details. Show up to 4–5 amenity tags (e.g. WiFi, AC, Meals) as small badge-style pills using the warm amber/sage color palette. If there are more amenities than shown, display a '+N more' indicator. Only display the amenities row when the hostel has at least one amenity.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/AdBanner.tsx"
+          "frontend/src/components/HostelCard.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/AdBanner.tsx"
+          "frontend/src/components/HostelCard.tsx"
         ]
       },
       {
-        "id": "REQ-67",
-        "summary": "Place AdBanner components in high-visibility positions on the Home page (frontend/src/pages/Home.tsx): (1) a leaderboard banner (728x90) below the search/filter controls and above the hostel grid on desktop, collapsing to a rectangle (300x250) on mobile; (2) a rectangle banner (300x250) at the bottom of the hostel grid, after every 6 hostel cards (inline between cards in the grid). Ensure ad placements do not disrupt the hostel listing layout and are clearly labelled 'Advertisement'.",
+        "id": "REQ-81",
+        "summary": "Update the HostelDetail page (frontend/src/pages/HostelDetail.tsx) to display a dedicated 'Amenities' section that lists all amenities for the hostel. Each amenity should be shown as an icon+label pill or badge. Use appropriate icons (e.g. WiFi icon for WiFi, snowflake for AC, fork-and-knife for Meals, car for Parking, dumbbell for Gym). Style the section consistently with the existing warm terracotta/sage/amber color palette, placed between the room sharing/pricing section and the map section.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/Home.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/Home.tsx"
-        ]
-      },
-      {
-        "id": "REQ-68",
-        "summary": "Place an AdBanner rectangle (300x250) on the HostelDetail page (frontend/src/pages/HostelDetail.tsx) in the sidebar area on desktop (beside the room sharing/pricing section) and below the contact section on mobile. The ad should be clearly labelled 'Advertisement' and styled consistently with the page.",
-        "status": "implemented",
-        "plannedFiles": [
+          "frontend/src/components/AmenitiesSection.tsx",
           "frontend/src/pages/HostelDetail.tsx"
         ],
         "matchedFiles": [
+          "frontend/src/components/AmenitiesSection.tsx",
           "frontend/src/pages/HostelDetail.tsx"
         ]
       },
       {
-        "id": "REQ-69",
-        "summary": "Add a 'Sponsored' badge and priority placement feature to hostel listings. In the backend (backend/main.mo), add an optional boolean field `isSponsored` to the Hostel type (defaulting to false). Update the addHostel and updateHostel functions to accept and store this field. In the frontend HostelCard component (frontend/src/components/HostelCard.tsx), display a 'Sponsored' badge (amber/gold colored pill label) in the top-left corner of the card image when `isSponsored` is true. In the Home page (frontend/src/pages/Home.tsx), sort sponsored hostels to appear before non-sponsored hostels in the listing, regardless of other sort order.",
+        "id": "REQ-82",
+        "summary": "Update the EditHostel page (frontend/src/pages/EditHostel.tsx) to include an amenities editing section. Display a checklist or multi-select input of common amenities (WiFi, AC, Laundry, Parking, Meals, Gym, Hot Water, Power Backup, Security, CCTV, Study Room, Common Kitchen). Pre-populate the checkboxes with the hostel's currently stored amenities. Allow the user to check/uncheck amenities. Include the updated amenities array in the form submission payload sent to the backend `updateHostel` function.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/HostelCard.tsx",
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/pages/EditHostel.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/HostelCard.tsx",
-          "frontend/src/pages/Home.tsx"
+          "frontend/src/pages/EditHostel.tsx"
         ]
       },
       {
-        "id": "REQ-70",
-        "summary": "Create an 'Advertise With Us' page at frontend/src/pages/Advertise.tsx that explains the monetization and advertising opportunities available on Hostel Addas. The page should include: (1) a hero section with headline 'Grow Your Business with Hostel Addas'; (2) a 'Sponsored Listing' section explaining that hostel owners can pay to have their listing shown at the top with a Sponsored badge; (3) an 'Ad Placements' section explaining banner ad slots available on the home and detail pages with approximate visitor reach; (4) a 'Visitor Stats' section with a placeholder showing site traffic metrics (e.g. 'Growing audience of students and working professionals in Hyderabad'); (5) a contact/inquiry section with a WhatsApp or email call-to-action (use a placeholder number/email with instruction to update). Style consistently with the warm terracotta/sage/amber palette.",
+        "id": "REQ-83",
+        "summary": "Update the mutation hook in frontend/src/hooks/useMutations.ts so that the `useUpdateHostel` mutation passes the amenities field (alongside the existing roomSharing data) to the backend `updateHostel` function call.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/Advertise.tsx"
+          "frontend/src/hooks/useMutations.ts"
         ],
         "matchedFiles": [
-          "frontend/src/pages/Advertise.tsx"
-        ]
-      },
-      {
-        "id": "REQ-71",
-        "summary": "Register the '/advertise' route in frontend/src/App.tsx that renders the Advertise page component, nested under the existing Layout root route alongside other page routes.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-72",
-        "summary": "Add an 'Advertise' link to the footer section of the Layout component (frontend/src/components/Layout.tsx) linking to the '/advertise' page. Also add a small 'Advertise' text link in the sticky header navigation (beside the existing nav links) so site visitors and hostel owners can easily discover the monetization page.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/Layout.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/Layout.tsx"
-        ]
-      },
-      {
-        "id": "REQ-73",
-        "summary": "Add a simple visitor counter feature to the backend (backend/main.mo): add a stable `var visitorCount : Nat = 0` variable and a public function `recordVisit() : async Nat` that increments the counter and returns the new total, plus a query function `getVisitorCount() : async Nat` that returns the current count. On the frontend, call `recordVisit()` once per session (guard with sessionStorage to avoid double-counting on re-renders) in the Home page (frontend/src/pages/Home.tsx) when the page mounts. Display the total visitor count in the footer of the Layout component (frontend/src/components/Layout.tsx) as a small stat: 'Visitors: X' styled subtly in the footer text.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/components/Layout.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/Home.tsx",
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/hooks/useMutations.ts"
         ]
       }
     ]
@@ -113,20 +72,14 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/generated/ad-placeholder-leaderboard.dim_728x90.png",
-    "frontend/public/assets/generated/ad-placeholder-rectangle.dim_300x250.png",
-    "frontend/src/App.tsx",
     "frontend/src/backend.d.ts",
     "frontend/src/backend.ts",
-    "frontend/src/components/AdBanner.tsx",
+    "frontend/src/components/AmenitiesSection.tsx",
     "frontend/src/components/HostelCard.tsx",
-    "frontend/src/components/Layout.tsx",
     "frontend/src/declarations/backend.did.d.ts",
     "frontend/src/declarations/backend.did.js",
     "frontend/src/hooks/useMutations.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/Advertise.tsx",
-    "frontend/src/pages/Home.tsx",
+    "frontend/src/pages/EditHostel.tsx",
     "frontend/src/pages/HostelDetail.tsx",
     "project_state.json",
     "scratch/component-selection.json",

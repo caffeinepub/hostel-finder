@@ -2,7 +2,7 @@ import { Hostel } from '../backend';
 import { useNavigate } from '@tanstack/react-router';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Users, Phone, Star } from 'lucide-react';
+import { MapPin, Users, Phone, Star, Wifi } from 'lucide-react';
 
 interface HostelCardProps {
   hostel: Hostel;
@@ -83,6 +83,10 @@ export default function HostelCard({ hostel }: HostelCardProps) {
     hostel.ownerContact.trim() !== '' &&
     hostel.ownerContact !== 'not available';
 
+  const amenities = hostel.amenities ?? [];
+  const visibleAmenities = amenities.slice(0, 5);
+  const extraCount = amenities.length - visibleAmenities.length;
+
   return (
     <Card
       onClick={handleClick}
@@ -128,9 +132,29 @@ export default function HostelCard({ hostel }: HostelCardProps) {
             <span className="text-sm font-medium">{hostel.ownerContact}</span>
           </div>
         )}
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
           {hostel.description}
         </p>
+
+        {/* Amenities pills */}
+        {visibleAmenities.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {visibleAmenities.map((amenity) => (
+              <span
+                key={amenity}
+                className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-warm-primary/10 text-warm-primary font-medium border border-warm-primary/20"
+              >
+                <Wifi className="w-2.5 h-2.5" />
+                {amenity}
+              </span>
+            ))}
+            {extraCount > 0 && (
+              <span className="inline-flex items-center text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium border border-warm-border">
+                +{extraCount} more
+              </span>
+            )}
+          </div>
+        )}
       </CardContent>
       <CardFooter className="p-5 pt-0 flex items-center justify-between">
         <div className="flex items-center gap-2 text-muted-foreground">

@@ -116,6 +116,7 @@ export interface Hostel {
     imageUrls: Array<string>;
     name: string;
     description: string;
+    amenities: Array<string>;
     longitude: number;
     address: string;
     ownerContact: string;
@@ -125,6 +126,7 @@ export interface Hostel {
 export interface UpdateHostelInput {
     id: HostelId;
     isSponsored?: boolean;
+    amenities: Array<string>;
     roomCapacityDetails: RoomSharing;
 }
 export interface _CaffeineStorageRefillResult {
@@ -138,7 +140,10 @@ export interface backendInterface {
     _caffeineStorageCreateCertificate(blobHash: string): Promise<_CaffeineStorageCreateCertificateResult>;
     _caffeineStorageRefillCashier(refillInformation: _CaffeineStorageRefillInformation | null): Promise<_CaffeineStorageRefillResult>;
     _caffeineStorageUpdateGatewayPrincipals(): Promise<void>;
-    addHostel(name: string, category: string, description: string, address: string, latitude: number, longitude: number, roomCapacityDetails: RoomSharing, imageUrls: Array<string>, ownerContact: string, isSponsored: boolean | null): Promise<Hostel>;
+    addHostel(name: string, category: string, description: string, address: string, latitude: number, longitude: number, roomCapacityDetails: RoomSharing, imageUrls: Array<string>, ownerContact: string, amenities: Array<string>, isSponsored: boolean | null): Promise<Hostel>;
+    getEarningsStats(): Promise<{
+        visitorCount: bigint;
+    }>;
     getHostel(hostelId: HostelId): Promise<Hostel>;
     getHostelsByCategory(category: string): Promise<Array<Hostel>>;
     getVisitorCount(): Promise<bigint>;
@@ -233,17 +238,33 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async addHostel(arg0: string, arg1: string, arg2: string, arg3: string, arg4: number, arg5: number, arg6: RoomSharing, arg7: Array<string>, arg8: string, arg9: boolean | null): Promise<Hostel> {
+    async addHostel(arg0: string, arg1: string, arg2: string, arg3: string, arg4: number, arg5: number, arg6: RoomSharing, arg7: Array<string>, arg8: string, arg9: Array<string>, arg10: boolean | null): Promise<Hostel> {
         if (this.processError) {
             try {
-                const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, to_candid_opt_n8(this._uploadFile, this._downloadFile, arg9));
+                const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, to_candid_opt_n8(this._uploadFile, this._downloadFile, arg10));
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, to_candid_opt_n8(this._uploadFile, this._downloadFile, arg9));
+            const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, to_candid_opt_n8(this._uploadFile, this._downloadFile, arg10));
+            return result;
+        }
+    }
+    async getEarningsStats(): Promise<{
+        visitorCount: bigint;
+    }> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getEarningsStats();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getEarningsStats();
             return result;
         }
     }
@@ -368,15 +389,18 @@ function to_candid_opt_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Arra
 function to_candid_record_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     id: HostelId;
     isSponsored?: boolean;
+    amenities: Array<string>;
     roomCapacityDetails: RoomSharing;
 }): {
     id: _HostelId;
     isSponsored: [] | [boolean];
+    amenities: Array<string>;
     roomCapacityDetails: _RoomSharing;
 } {
     return {
         id: value.id,
         isSponsored: value.isSponsored ? candid_some(value.isSponsored) : candid_none(),
+        amenities: value.amenities,
         roomCapacityDetails: value.roomCapacityDetails
     };
 }

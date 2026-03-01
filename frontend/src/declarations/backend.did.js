@@ -39,6 +39,7 @@ export const Hostel = IDL.Record({
   'imageUrls' : IDL.Vec(IDL.Text),
   'name' : IDL.Text,
   'description' : IDL.Text,
+  'amenities' : IDL.Vec(IDL.Text),
   'longitude' : IDL.Float64,
   'address' : IDL.Text,
   'ownerContact' : IDL.Text,
@@ -48,6 +49,7 @@ export const Hostel = IDL.Record({
 export const UpdateHostelInput = IDL.Record({
   'id' : HostelId,
   'isSponsored' : IDL.Opt(IDL.Bool),
+  'amenities' : IDL.Vec(IDL.Text),
   'roomCapacityDetails' : RoomSharing,
 });
 
@@ -89,10 +91,16 @@ export const idlService = IDL.Service({
         RoomSharing,
         IDL.Vec(IDL.Text),
         IDL.Text,
+        IDL.Vec(IDL.Text),
         IDL.Opt(IDL.Bool),
       ],
       [Hostel],
       [],
+    ),
+  'getEarningsStats' : IDL.Func(
+      [],
+      [IDL.Record({ 'visitorCount' : IDL.Nat })],
+      ['query'],
     ),
   'getHostel' : IDL.Func([HostelId], [Hostel], ['query']),
   'getHostelsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Hostel)], ['query']),
@@ -136,6 +144,7 @@ export const idlFactory = ({ IDL }) => {
     'imageUrls' : IDL.Vec(IDL.Text),
     'name' : IDL.Text,
     'description' : IDL.Text,
+    'amenities' : IDL.Vec(IDL.Text),
     'longitude' : IDL.Float64,
     'address' : IDL.Text,
     'ownerContact' : IDL.Text,
@@ -145,6 +154,7 @@ export const idlFactory = ({ IDL }) => {
   const UpdateHostelInput = IDL.Record({
     'id' : HostelId,
     'isSponsored' : IDL.Opt(IDL.Bool),
+    'amenities' : IDL.Vec(IDL.Text),
     'roomCapacityDetails' : RoomSharing,
   });
   
@@ -186,10 +196,16 @@ export const idlFactory = ({ IDL }) => {
           RoomSharing,
           IDL.Vec(IDL.Text),
           IDL.Text,
+          IDL.Vec(IDL.Text),
           IDL.Opt(IDL.Bool),
         ],
         [Hostel],
         [],
+      ),
+    'getEarningsStats' : IDL.Func(
+        [],
+        [IDL.Record({ 'visitorCount' : IDL.Nat })],
+        ['query'],
       ),
     'getHostel' : IDL.Func([HostelId], [Hostel], ['query']),
     'getHostelsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Hostel)], ['query']),

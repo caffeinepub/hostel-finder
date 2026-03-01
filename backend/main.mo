@@ -41,19 +41,19 @@ actor {
     roomCapacityDetails : RoomSharing;
     imageUrls : [Text];
     ownerContact : Text;
-    isSponsored : Bool; // New field to indicate sponsored hostels
+    amenities : [Text];
+    isSponsored : Bool;
   };
 
   type UpdateHostelInput = {
     id : HostelId;
     roomCapacityDetails : RoomSharing;
-    isSponsored : ?Bool; // Optional field for updating sponsorship status
+    amenities : [Text];
+    isSponsored : ?Bool;
   };
 
-  // Initialize with sample data, no changes needed
   func initializeSampleData() {
     let hostelsArray = [
-      // Existing hostels, now with isSponsored = false by default
       {
         id = 1;
         name = "Hemkund Boys Hostel";
@@ -79,11 +79,20 @@ actor {
           "/assets/generated/hostel_images/hemkund_boys_hostel_2.jpg",
         ];
         ownerContact = "90909090";
+        amenities = [
+          "WiFi",
+          "Laundry",
+          "Meals",
+          "Power Backup",
+          "Security",
+          "CCTV",
+          "Study Room",
+        ];
         isSponsored = false;
       },
       {
         id = 2;
-        name = "Secure Girl's Hostel Madhapur";
+        name = "Secure Girl`s Hostel Madhapur";
         category = "Girls";
         description = "Hostel with cctv cameras, professional cooks, and regular cleaning services.";
         address = "2nd Right Lane, Opposite Prime hospital, beside DAV school, Hitech City Rd, Mathrusree Nagar, Madhapur, Hyderabad, Telangana 500081";
@@ -106,6 +115,15 @@ actor {
           "/assets/generated/hostel_images/secure_girls_hostel_2.jpg",
         ];
         ownerContact = "532423423423";
+        amenities = [
+          "WiFi",
+          "AC",
+          "Laundry",
+          "Parking",
+          "Meals",
+          "Gym",
+          "Hot Water",
+        ];
         isSponsored = false;
       },
       {
@@ -133,6 +151,13 @@ actor {
           "/assets/generated/hostel_images/soho_gents_2.jpg",
         ];
         ownerContact = "845066445";
+        amenities = [
+          "WiFi",
+          "Laundry",
+          "AC",
+          "Gaming Zone",
+          "Fitness Studio",
+        ];
         isSponsored = false;
       },
       {
@@ -160,6 +185,13 @@ actor {
           "/assets/generated/hostel_images/sun_elite_2.jpg",
         ];
         ownerContact = "9090901209";
+        amenities = [
+          "WiFi",
+          "Meals",
+          "Power Backup",
+          "Laundry",
+          "Security",
+        ];
         isSponsored = false;
       },
       {
@@ -187,6 +219,13 @@ actor {
           "/assets/generated/hostel_images/yoho_keraam_2.jpg",
         ];
         ownerContact = "23424234";
+        amenities = [
+          "WiFi",
+          "Laundry",
+          "Inclusive Environment",
+          "Parking",
+          "Gym",
+        ];
         isSponsored = false;
       },
       {
@@ -214,6 +253,12 @@ actor {
           "/assets/generated/hostel_images/soho_gachibowli_2.jpg",
         ];
         ownerContact = "965467600";
+        amenities = [
+          "WiFi",
+          "AC",
+          "Laundry",
+          "Premium Fitness Center",
+        ];
         isSponsored = false;
       },
       {
@@ -241,6 +286,13 @@ actor {
           "/assets/generated/hostel_images/serenity_girls_2.jpg",
         ];
         ownerContact = "722388188";
+        amenities = [
+          "WiFi",
+          "Library",
+          "Movie Room",
+          "Meals",
+          "Laundry",
+        ];
         isSponsored = false;
       },
       {
@@ -268,6 +320,13 @@ actor {
           "/assets/generated/hostel_images/kailash_boys_2.jpg",
         ];
         ownerContact = "91103030";
+        amenities = [
+          "WiFi",
+          "Gym",
+          "Pool Hall",
+          "Laundry",
+          "Meals",
+        ];
         isSponsored = false;
       },
       {
@@ -295,6 +354,13 @@ actor {
           "/assets/generated/hostel_images/soho_ladies_2.jpg",
         ];
         ownerContact = "963876903";
+        amenities = [
+          "WiFi",
+          "Laundry",
+          "AC",
+          "Hot Water",
+          "Fitness Center",
+        ];
         isSponsored = false;
       },
       {
@@ -322,6 +388,12 @@ actor {
           "/assets/generated/hostel_images/green_nest_coliving_2.jpg",
         ];
         ownerContact = "988654003";
+        amenities = [
+          "WiFi",
+          "Organic Food",
+          "Fitness Area",
+          "Laundry",
+        ];
         isSponsored = false;
       },
       {
@@ -349,6 +421,12 @@ actor {
           "/assets/generated/hostel_images/blueberry_boys_2.jpg",
         ];
         ownerContact = "998812300";
+        amenities = [
+          "WiFi",
+          "Laundry",
+          "Meals",
+          "Parking",
+        ];
         isSponsored = false;
       },
       {
@@ -376,6 +454,12 @@ actor {
           "/assets/generated/hostel_images/pink_petal_girls_2.jpg",
         ];
         ownerContact = "955910308";
+        amenities = [
+          "WiFi",
+          "Cultural Activities",
+          "Laundry",
+          "Hot Water",
+        ];
         isSponsored = false;
       },
     ];
@@ -398,6 +482,7 @@ actor {
     roomCapacityDetails : RoomSharing,
     imageUrls : [Text],
     ownerContact : Text,
+    amenities : [Text],
     isSponsored : ?Bool,
   ) : async Hostel {
     let hostel : Hostel = {
@@ -411,6 +496,7 @@ actor {
       roomCapacityDetails;
       imageUrls;
       ownerContact;
+      amenities;
       isSponsored = switch (isSponsored) {
         case (null) { false };
         case (?sponsored) { sponsored };
@@ -430,6 +516,7 @@ actor {
         let updatedHostel : Hostel = {
           oldHostel with
           roomCapacityDetails = updateInput.roomCapacityDetails;
+          amenities = updateInput.amenities;
           isSponsored = switch (updateInput.isSponsored) {
             case (null) { oldHostel.isSponsored };
             case (?status) { status };
@@ -459,7 +546,6 @@ actor {
     );
   };
 
-  // New visitor counting functionality
   public shared ({ caller }) func recordVisit() : async Nat {
     visitorCount += 1;
     visitorCount;
@@ -467,5 +553,9 @@ actor {
 
   public query ({ caller }) func getVisitorCount() : async Nat {
     visitorCount;
+  };
+
+  public query ({ caller }) func getEarningsStats() : async { visitorCount : Nat } {
+    { visitorCount };
   };
 };

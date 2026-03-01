@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 37,
+  "projectStateVersion": 41,
   "summary": "Website for listing hostels with separate categories for girls, boys, and co-living spaces. Features include hostel images, maps, room sharing details, pricing information, and a clean homepage.",
   "architectural_notes": [
     "Website type project with hostel listing functionality",
@@ -20,7 +20,6 @@
     "Category filtering (All Hostels, Girls Only, Boys Only, Co-Living) not working on the home page"
   ],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Rectangular advertisement placeholder banner graphic with a soft amber/cream gradient background and centered 'Advertisement' text in muted gray, horizontal layout (ad-placeholder-leaderboard.dim_728x90.png)\n- Square advertisement placeholder graphic with a soft amber/cream gradient background and centered 'Advertisement' text in muted gray (ad-placeholder-rectangle.dim_300x250.png)",
   "existing_features": [
     {
       "id": "feature-design-and-implement-a-clean-modern-homepage-that-displays-hostel-categories-girls-boys-co-living-with-category-selection-or-filtering",
@@ -469,6 +468,70 @@
         "REQ-73"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-create-a-monetization-earnings-dashboard-page-at-frontend-src-pages-earnings-tsx-that-gives-the-site-owner-a-clear-overview-of-all-active-revenue-streams-1-a-display-ads-section-explaining-how-to-activate-google-adsense-step-by-step-instructions-to-sign-up-at-adsense-google-com-get-the-site-approved-paste-the-adsense-script-tag-into-the-adbanner-component-s-designated-injection-comment-and-replace-the-placeholder-data-ad-slot-values-with-real-slot-ids-2-a-sponsored-listings-section-showing-how-hostel-owners-pay-to-have-their-listing-featured-at-the-top-with-the-amber-sponsored-badge-with-a-contact-cta-whatsapp-email-placeholder-with-instructions-to-update-3-a-visitor-stats-section-displaying-the-live-visitor-count-fetched-from-the-backend-getvisitorcount-query-already-implemented-styled-as-a-prominent-stat-card-4-a-potential-earnings-estimator-section-with-a-simple-interactive-calculator-user-inputs-estimated-monthly-visitors-and-an-average-cpm-cost-per-thousand-impressions-and-the-page-calculates-an-estimated-monthly-ad-revenue-figure-style-the-page-consistently-with-the-warm-terracotta-sage-amber-palette",
+      "title": "Create a 'Monetization & Earnings' dashboard page at frontend/src/pages/Earnings.tsx that gives the site owner a clear overview of all active revenue streams: (1) a 'Display Ads' section explaining how to activate Google AdSense — step-by-step instructions to sign up at adsense.google.com, get the site approved, paste the AdSense script tag into the AdBanner component's designated injection comment, and replace the placeholder `data-ad-slot` values with real slot IDs; (2) a 'Sponsored Listings' section showing how hostel owners pay to have their listing featured at the top with the amber 'Sponsored' badge, with a contact CTA (WhatsApp/email placeholder with instructions to update); (3) a 'Visitor Stats' section displaying the live visitor count fetched from the backend `getVisitorCount` query (already implemented), styled as a prominent stat card; (4) a 'Potential Earnings Estimator' section with a simple interactive calculator — user inputs estimated monthly visitors and an average CPM (cost per thousand impressions), and the page calculates an estimated monthly ad revenue figure. Style the page consistently with the warm terracotta/sage/amber palette.",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-register-the-earnings-route-in-frontend-src-app-tsx-that-renders-the-earnings-page-component-nested-under-the-existing-layout-root-route-alongside-other-page-routes",
+      "title": "Register the '/earnings' route in frontend/src/App.tsx that renders the Earnings page component, nested under the existing Layout root route alongside other page routes.",
+      "reqIds": [
+        "REQ-75"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-earnings-link-to-the-footer-section-of-the-layout-component-frontend-src-components-layout-tsx-linking-to-the-earnings-page-so-the-site-owner-can-easily-access-the-monetization-dashboard-also-add-a-subtle-earn-or-monetize-text-link-in-the-sticky-header-navigation-beside-the-existing-advertise-link",
+      "title": "Add an 'Earnings' link to the footer section of the Layout component (frontend/src/components/Layout.tsx) linking to the '/earnings' page, so the site owner can easily access the monetization dashboard. Also add a subtle 'Earn' or 'Monetize' text link in the sticky header navigation beside the existing 'Advertise' link.",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-adbanner-component-frontend-src-components-adbanner-tsx-to-include-a-clearly-commented-placeholder-block-inside-the-component-s-render-output-where-google-adsense-ins-class-adsbygoogle-tags-and-the-corresponding-adsbygoogle-push-script-can-be-pasted-by-the-site-owner-once-their-adsense-account-is-approved-the-placeholder-block-should-be-hidden-visually-rendered-as-an-empty-fragment-by-default-but-contain-a-detailed-html-comment-explaining-1-delete-the-placeholder-div-and-uncomment-the-adsense-block-2-replace-data-ad-client-with-the-publisher-id-ca-pub-xxxxxxxx-3-replace-data-ad-slot-with-the-specific-ad-unit-slot-id-the-visible-placeholder-banner-ui-amber-gradient-advertisement-label-should-remain-unchanged-for-display-until-real-ads-are-activated",
+      "title": "Update the AdBanner component (frontend/src/components/AdBanner.tsx) to include a clearly commented placeholder block inside the component's render output where Google AdSense `<ins class='adsbygoogle'>` tags and the corresponding `adsbygoogle.push({})` script can be pasted by the site owner once their AdSense account is approved. The placeholder block should be hidden visually (rendered as an empty fragment by default) but contain a detailed HTML comment explaining: (1) delete the placeholder div and uncomment the AdSense block; (2) replace `data-ad-client` with the publisher ID (ca-pub-XXXXXXXX); (3) replace `data-ad-slot` with the specific ad unit slot ID. The visible placeholder banner UI (amber gradient, 'Advertisement' label) should remain unchanged for display until real ads are activated.",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-hostelcard-component-frontend-src-components-hostelcard-tsx-to-display-a-compact-row-of-amenity-icons-pills-below-the-price-and-sharing-details-show-up-to-4-5-amenity-tags-e-g-wifi-ac-meals-as-small-badge-style-pills-using-the-warm-amber-sage-color-palette-if-there-are-more-amenities-than-shown-display-a-n-more-indicator-only-display-the-amenities-row-when-the-hostel-has-at-least-one-amenity",
+      "title": "Update the HostelCard component (frontend/src/components/HostelCard.tsx) to display a compact row of amenity icons/pills below the price and sharing details. Show up to 4–5 amenity tags (e.g. WiFi, AC, Meals) as small badge-style pills using the warm amber/sage color palette. If there are more amenities than shown, display a '+N more' indicator. Only display the amenities row when the hostel has at least one amenity.",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-hosteldetail-page-frontend-src-pages-hosteldetail-tsx-to-display-a-dedicated-amenities-section-that-lists-all-amenities-for-the-hostel-each-amenity-should-be-shown-as-an-icon-label-pill-or-badge-use-appropriate-icons-e-g-wifi-icon-for-wifi-snowflake-for-ac-fork-and-knife-for-meals-car-for-parking-dumbbell-for-gym-style-the-section-consistently-with-the-existing-warm-terracotta-sage-amber-color-palette-placed-between-the-room-sharing-pricing-section-and-the-map-section",
+      "title": "Update the HostelDetail page (frontend/src/pages/HostelDetail.tsx) to display a dedicated 'Amenities' section that lists all amenities for the hostel. Each amenity should be shown as an icon+label pill or badge. Use appropriate icons (e.g. WiFi icon for WiFi, snowflake for AC, fork-and-knife for Meals, car for Parking, dumbbell for Gym). Style the section consistently with the existing warm terracotta/sage/amber color palette, placed between the room sharing/pricing section and the map section.",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-edithostel-page-frontend-src-pages-edithostel-tsx-to-include-an-amenities-editing-section-display-a-checklist-or-multi-select-input-of-common-amenities-wifi-ac-laundry-parking-meals-gym-hot-water-power-backup-security-cctv-study-room-common-kitchen-pre-populate-the-checkboxes-with-the-hostel-s-currently-stored-amenities-allow-the-user-to-check-uncheck-amenities-include-the-updated-amenities-array-in-the-form-submission-payload-sent-to-the-backend-updatehostel-function",
+      "title": "Update the EditHostel page (frontend/src/pages/EditHostel.tsx) to include an amenities editing section. Display a checklist or multi-select input of common amenities (WiFi, AC, Laundry, Parking, Meals, Gym, Hot Water, Power Backup, Security, CCTV, Study Room, Common Kitchen). Pre-populate the checkboxes with the hostel's currently stored amenities. Allow the user to check/uncheck amenities. Include the updated amenities array in the form submission payload sent to the backend `updateHostel` function.",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-mutation-hook-in-frontend-src-hooks-usemutations-ts-so-that-the-useupdatehostel-mutation-passes-the-amenities-field-alongside-the-existing-roomsharing-data-to-the-backend-updatehostel-function-call",
+      "title": "Update the mutation hook in frontend/src/hooks/useMutations.ts so that the `useUpdateHostel` mutation passes the amenities field (alongside the existing roomSharing data) to the backend `updateHostel` function call.",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -726,6 +789,34 @@
       "id": "AR-43",
       "summary": "Add advertisement placements and visitor-based earning features to the site (ad banners, sponsored listings, or similar monetization)",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Add a backend query function `getEarningsStats() : async { visitorCount: Nat }` to backend/main.mo that returns current visitor count (reusing the existing `visitorCount` stable variable). This gives the Earnings dashboard a dedicated stats endpoint that can be extended in future without breaking the existing `getVisitorCount` function.",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-49",
+      "summary": "Add amenities field to each hostel (e.g. WiFi, AC, laundry, parking, meals, gym, etc.) and display them on hostel listing cards and detail pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-50",
+      "summary": "Add ability to edit hostel amenities from the EditHostel page or hostel detail page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Add an `amenities` field (array of Text) to the Hostel type in backend/main.mo. Update the `addHostel` function to accept and store an amenities array. Update the `updateHostel` function to also accept and update the amenities field. Add representative amenities to all existing seed hostel records (e.g. WiFi, AC, Laundry, Parking, Meals, Gym, Hot Water, Power Backup, Security, CCTV, Study Room, Common Kitchen — use a realistic subset per hostel type and category).",
+      "reqIds": [
+        "REQ-79"
+      ],
       "status": "pending"
     }
   ],

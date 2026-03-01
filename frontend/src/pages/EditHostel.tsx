@@ -3,12 +3,31 @@ import { useParams, useNavigate, Link } from '@tanstack/react-router';
 import { useGetHostel } from '../hooks/useQueries';
 import { useUpdateHostel } from '../hooks/useMutations';
 import { RoomSharing } from '../backend';
-import { ArrowLeft, Loader2, Save, X } from 'lucide-react';
+import { ArrowLeft, Loader2, Save, X, CheckSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
+
+const COMMON_AMENITIES = [
+  'WiFi',
+  'AC',
+  'Laundry',
+  'Parking',
+  'Meals',
+  'Gym',
+  'Hot Water',
+  'Power Backup',
+  'Security',
+  'CCTV',
+  'Study Room',
+  'Common Kitchen',
+  'Library',
+  'Movie Room',
+  'Gaming Zone',
+];
 
 export default function EditHostel() {
   const { id } = useParams({ from: '/edit-hostel/$id' });
@@ -27,6 +46,7 @@ export default function EditHostel() {
   const [price4, setPrice4] = useState('');
   const [sharing5, setSharing5] = useState('');
   const [price5, setPrice5] = useState('');
+  const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
 
   useEffect(() => {
     if (hostel) {
@@ -40,8 +60,16 @@ export default function EditHostel() {
       setPrice4(hostel.roomCapacityDetails.price4.toString());
       setSharing5(hostel.roomCapacityDetails.sharing5.toString());
       setPrice5(hostel.roomCapacityDetails.price5.toString());
+      // Pre-populate amenities from hostel data
+      setSelectedAmenities(hostel.amenities ?? []);
     }
   }, [hostel]);
+
+  const toggleAmenity = (amenity: string) => {
+    setSelectedAmenities((prev) =>
+      prev.includes(amenity) ? prev.filter((a) => a !== amenity) : [...prev, amenity]
+    );
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,6 +110,7 @@ export default function EditHostel() {
       await updateHostelMutation.mutateAsync({
         id: hostelId,
         roomCapacityDetails,
+        amenities: selectedAmenities,
       });
 
       toast.success('Hostel updated successfully!');
@@ -130,9 +159,9 @@ export default function EditHostel() {
 
       <Card className="border-warm-border shadow-lg">
         <CardHeader className="bg-gradient-to-br from-warm-primary to-warm-accent text-white">
-          <CardTitle className="text-2xl">Edit Hostel Room Details</CardTitle>
+          <CardTitle className="text-2xl">Edit Hostel Details</CardTitle>
           <CardDescription className="text-white/80">
-            Update room sharing options and pricing for {hostel.name}
+            Update room sharing options, pricing, and amenities for {hostel.name}
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
@@ -140,7 +169,7 @@ export default function EditHostel() {
             {/* Room Sharing Options */}
             <div className="space-y-6">
               <h3 className="text-lg font-semibold text-foreground">Room Sharing & Pricing</h3>
-              
+
               {/* Sharing Option 1 - One Sharing Room */}
               <Card className="border-warm-border/50">
                 <CardHeader>
@@ -303,6 +332,49 @@ export default function EditHostel() {
                       required
                     />
                   </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Amenities Section */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <CheckSquare className="w-5 h-5 text-warm-primary" />
+                <h3 className="text-lg font-semibold text-foreground">Amenities</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Select all amenities available at this hostel.
+              </p>
+              <Card className="border-warm-border/50">
+                <CardContent className="pt-5">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {COMMON_AMENITIES.map((amenity) => {
+                      const checked = selectedAmenities.includes(amenity);
+                      return (
+                        <label
+                          key={amenity}
+                          className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg border cursor-pointer transition-colors select-none ${
+                            checked
+                              ? 'bg-warm-primary/10 border-warm-primary/40 text-warm-primary'
+                              : 'bg-background border-warm-border text-foreground hover:bg-muted/50'
+                          }`}
+                        >
+                          <Checkbox
+                            id={`amenity-${amenity}`}
+                            checked={checked}
+                            onCheckedChange={() => toggleAmenity(amenity)}
+                            className="flex-shrink-0"
+                          />
+                          <span className="text-sm font-medium leading-tight">{amenity}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                  {selectedAmenities.length > 0 && (
+                    <p className="text-xs text-muted-foreground mt-3">
+                      {selectedAmenities.length} amenit{selectedAmenities.length === 1 ? 'y' : 'ies'} selected
+                    </p>
+                  )}
                 </CardContent>
               </Card>
             </div>
