@@ -2,7 +2,8 @@ import { useParams, Link } from '@tanstack/react-router';
 import { useGetHostel } from '../hooks/useQueries';
 import ImageGallery from '../components/ImageGallery';
 import HostelMap from '../components/HostelMap';
-import { ArrowLeft, MapPin, Users, IndianRupee, Home as HomeIcon, Loader2, Phone, Edit } from 'lucide-react';
+import AdBanner from '../components/AdBanner';
+import { ArrowLeft, MapPin, Users, IndianRupee, Home as HomeIcon, Loader2, Phone, Edit, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -66,12 +67,10 @@ export default function HostelDetail() {
   };
 
   const getGalleryImages = (): string[] => {
-    // Use hostel's own imageUrls if available
     if (hostel.imageUrls && hostel.imageUrls.length > 0) {
       return hostel.imageUrls;
     }
 
-    // Category-appropriate fallback images
     switch (hostel.category) {
       case 'Girls':
         return [
@@ -149,9 +148,17 @@ export default function HostelDetail() {
           <div>
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex-1">
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-                  {hostel.name}
-                </h1>
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+                    {hostel.name}
+                  </h1>
+                  {hostel.isSponsored && (
+                    <span className="inline-flex items-center gap-1 bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-sm">
+                      <Star className="w-3 h-3 fill-white" />
+                      Sponsored
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center gap-2 text-muted-foreground mb-3">
                   <MapPin className="w-4 h-4 flex-shrink-0" />
                   <span>{hostel.address}</span>
@@ -196,6 +203,11 @@ export default function HostelDetail() {
             <div className="rounded-xl overflow-hidden border border-warm-border h-[400px]">
               <HostelMap hostels={[hostel]} />
             </div>
+          </div>
+
+          {/* Ad Banner below contact section — visible on mobile only */}
+          <div className="flex justify-center lg:hidden pt-2">
+            <AdBanner size="rectangle" adSlotId="detail-mobile-below-contact" />
           </div>
         </div>
 
@@ -261,6 +273,11 @@ export default function HostelDetail() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Ad Banner — sidebar on desktop */}
+          <div className="hidden lg:flex justify-center">
+            <AdBanner size="rectangle" adSlotId="detail-sidebar-rectangle" />
+          </div>
 
           {/* Room Details Card */}
           <Card className="border-warm-border shadow-lg">

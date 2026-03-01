@@ -40,3 +40,18 @@ export function useGetHostel(hostelId: HostelId) {
     enabled: !!actor && !isFetching,
   });
 }
+
+export function useVisitorCount() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<bigint>({
+    queryKey: ['visitorCount'],
+    queryFn: async () => {
+      if (!actor) return BigInt(0);
+      return actor.getVisitorCount();
+    },
+    enabled: !!actor && !isFetching,
+    // Refresh visitor count every 60 seconds
+    refetchInterval: 60000,
+  });
+}

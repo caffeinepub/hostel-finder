@@ -2,10 +2,144 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-category-filter-functionality-on-the-home-page-frontend-src-pages-home-tsx-so-that-selecting-all-hostels-girls-only-boys-only-or-co-living-correctly-filters-the-displayed-hostel-listings-investigate-whether-the-issue-is-in-the-categoryfilter-component-state-the-query-hook-usegethostelsbycategory-vs-usegetallhostels-or-the-filtering-logic-applied-to-the-hostel-list-and-ensure-selecting-each-category-tab-shows-only-hostels-matching-that-category-or-all-hostels-for-all",
-      "featureTitle": "Fix the category filter functionality on the Home page (frontend/src/pages/Home.tsx) so that selecting 'All Hostels', 'Girls Only', 'Boys Only', or 'Co-Living' correctly filters the displayed hostel listings. Investigate whether the issue is in the CategoryFilter component state, the query hook (useGetHostelsByCategory vs useGetAllHostels), or the filtering logic applied to the hostel list, and ensure selecting each category tab shows only hostels matching that category (or all hostels for 'All').",
+      "featureId": "feature-create-a-reusable-adbanner-component-at-frontend-src-components-adbanner-tsx-that-renders-a-styled-advertisement-placeholder-banner-the-component-should-accept-props-for-size-leaderboard-728x90-rectangle-300x250-banner-468x60-a-label-advertisement-and-an-optional-ad-slot-id-or-image-url-style-it-with-a-light-warm-toned-background-amber-cream-tones-from-the-existing-palette-a-subtle-border-and-centered-advertisement-label-text-include-a-note-in-the-component-that-ad-network-script-tags-e-g-google-adsense-can-be-injected-here-once-an-account-is-approved",
+      "featureTitle": "Create a reusable AdBanner component at frontend/src/components/AdBanner.tsx that renders a styled advertisement placeholder banner. The component should accept props for size ('leaderboard' 728x90, 'rectangle' 300x250, 'banner' 468x60), a label ('Advertisement'), and an optional ad slot ID or image URL. Style it with a light warm-toned background (amber/cream tones from the existing palette), a subtle border, and centered 'Advertisement' label text. Include a note in the component that ad network script tags (e.g. Google AdSense) can be injected here once an account is approved.",
       "files": [
-        "frontend/src/components/CategoryFilter.tsx",
+        "frontend/src/components/AdBanner.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-66"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-place-adbanner-components-in-high-visibility-positions-on-the-home-page-frontend-src-pages-home-tsx-1-a-leaderboard-banner-728x90-below-the-search-filter-controls-and-above-the-hostel-grid-on-desktop-collapsing-to-a-rectangle-300x250-on-mobile-2-a-rectangle-banner-300x250-at-the-bottom-of-the-hostel-grid-after-every-6-hostel-cards-inline-between-cards-in-the-grid-ensure-ad-placements-do-not-disrupt-the-hostel-listing-layout-and-are-clearly-labelled-advertisement",
+      "featureTitle": "Place AdBanner components in high-visibility positions on the Home page (frontend/src/pages/Home.tsx): (1) a leaderboard banner (728x90) below the search/filter controls and above the hostel grid on desktop, collapsing to a rectangle (300x250) on mobile; (2) a rectangle banner (300x250) at the bottom of the hostel grid, after every 6 hostel cards (inline between cards in the grid). Ensure ad placements do not disrupt the hostel listing layout and are clearly labelled 'Advertisement'.",
+      "files": [
+        "frontend/src/pages/Home.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-67"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-place-an-adbanner-rectangle-300x250-on-the-hosteldetail-page-frontend-src-pages-hosteldetail-tsx-in-the-sidebar-area-on-desktop-beside-the-room-sharing-pricing-section-and-below-the-contact-section-on-mobile-the-ad-should-be-clearly-labelled-advertisement-and-styled-consistently-with-the-page",
+      "featureTitle": "Place an AdBanner rectangle (300x250) on the HostelDetail page (frontend/src/pages/HostelDetail.tsx) in the sidebar area on desktop (beside the room sharing/pricing section) and below the contact section on mobile. The ad should be clearly labelled 'Advertisement' and styled consistently with the page.",
+      "files": [
+        "frontend/src/pages/HostelDetail.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-68"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-sponsored-badge-and-priority-placement-feature-to-hostel-listings-in-the-backend-backend-main-mo-add-an-optional-boolean-field-issponsored-to-the-hostel-type-defaulting-to-false-update-the-addhostel-and-updatehostel-functions-to-accept-and-store-this-field-in-the-frontend-hostelcard-component-frontend-src-components-hostelcard-tsx-display-a-sponsored-badge-amber-gold-colored-pill-label-in-the-top-left-corner-of-the-card-image-when-issponsored-is-true-in-the-home-page-frontend-src-pages-home-tsx-sort-sponsored-hostels-to-appear-before-non-sponsored-hostels-in-the-listing-regardless-of-other-sort-order",
+      "featureTitle": "Add a 'Sponsored' badge and priority placement feature to hostel listings. In the backend (backend/main.mo), add an optional boolean field `isSponsored` to the Hostel type (defaulting to false). Update the addHostel and updateHostel functions to accept and store this field. In the frontend HostelCard component (frontend/src/components/HostelCard.tsx), display a 'Sponsored' badge (amber/gold colored pill label) in the top-left corner of the card image when `isSponsored` is true. In the Home page (frontend/src/pages/Home.tsx), sort sponsored hostels to appear before non-sponsored hostels in the listing, regardless of other sort order.",
+      "files": [
+        "frontend/src/components/HostelCard.tsx",
+        "frontend/src/pages/Home.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-69"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-an-advertise-with-us-page-at-frontend-src-pages-advertise-tsx-that-explains-the-monetization-and-advertising-opportunities-available-on-hostel-addas-the-page-should-include-1-a-hero-section-with-headline-grow-your-business-with-hostel-addas-2-a-sponsored-listing-section-explaining-that-hostel-owners-can-pay-to-have-their-listing-shown-at-the-top-with-a-sponsored-badge-3-an-ad-placements-section-explaining-banner-ad-slots-available-on-the-home-and-detail-pages-with-approximate-visitor-reach-4-a-visitor-stats-section-with-a-placeholder-showing-site-traffic-metrics-e-g-growing-audience-of-students-and-working-professionals-in-hyderabad-5-a-contact-inquiry-section-with-a-whatsapp-or-email-call-to-action-use-a-placeholder-number-email-with-instruction-to-update-style-consistently-with-the-warm-terracotta-sage-amber-palette",
+      "featureTitle": "Create an 'Advertise With Us' page at frontend/src/pages/Advertise.tsx that explains the monetization and advertising opportunities available on Hostel Addas. The page should include: (1) a hero section with headline 'Grow Your Business with Hostel Addas'; (2) a 'Sponsored Listing' section explaining that hostel owners can pay to have their listing shown at the top with a Sponsored badge; (3) an 'Ad Placements' section explaining banner ad slots available on the home and detail pages with approximate visitor reach; (4) a 'Visitor Stats' section with a placeholder showing site traffic metrics (e.g. 'Growing audience of students and working professionals in Hyderabad'); (5) a contact/inquiry section with a WhatsApp or email call-to-action (use a placeholder number/email with instruction to update). Style consistently with the warm terracotta/sage/amber palette.",
+      "files": [
+        "frontend/src/pages/Advertise.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-70"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-register-the-advertise-route-in-frontend-src-app-tsx-that-renders-the-advertise-page-component-nested-under-the-existing-layout-root-route-alongside-other-page-routes",
+      "featureTitle": "Register the '/advertise' route in frontend/src/App.tsx that renders the Advertise page component, nested under the existing Layout root route alongside other page routes.",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-71"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-advertise-link-to-the-footer-section-of-the-layout-component-frontend-src-components-layout-tsx-linking-to-the-advertise-page-also-add-a-small-advertise-text-link-in-the-sticky-header-navigation-beside-the-existing-nav-links-so-site-visitors-and-hostel-owners-can-easily-discover-the-monetization-page",
+      "featureTitle": "Add an 'Advertise' link to the footer section of the Layout component (frontend/src/components/Layout.tsx) linking to the '/advertise' page. Also add a small 'Advertise' text link in the sticky header navigation (beside the existing nav links) so site visitors and hostel owners can easily discover the monetization page.",
+      "files": [
+        "frontend/src/components/Layout.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-72"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-simple-visitor-counter-feature-to-the-backend-backend-main-mo-add-a-stable-var-visitorcount-nat-0-variable-and-a-public-function-recordvisit-async-nat-that-increments-the-counter-and-returns-the-new-total-plus-a-query-function-getvisitorcount-async-nat-that-returns-the-current-count-on-the-frontend-call-recordvisit-once-per-session-guard-with-sessionstorage-to-avoid-double-counting-on-re-renders-in-the-home-page-frontend-src-pages-home-tsx-when-the-page-mounts-display-the-total-visitor-count-in-the-footer-of-the-layout-component-frontend-src-components-layout-tsx-as-a-small-stat-visitors-x-styled-subtly-in-the-footer-text",
+      "featureTitle": "Add a simple visitor counter feature to the backend (backend/main.mo): add a stable `var visitorCount : Nat = 0` variable and a public function `recordVisit() : async Nat` that increments the counter and returns the new total, plus a query function `getVisitorCount() : async Nat` that returns the current count. On the frontend, call `recordVisit()` once per session (guard with sessionStorage to avoid double-counting on re-renders) in the Home page (frontend/src/pages/Home.tsx) when the page mounts. Display the total visitor count in the footer of the Layout component (frontend/src/components/Layout.tsx) as a small stat: 'Visitors: X' styled subtly in the footer text.",
+      "files": [
+        "frontend/src/components/Layout.tsx",
         "frontend/src/hooks/useQueries.ts",
         "frontend/src/pages/Home.tsx"
       ],
@@ -18,7 +152,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-57"
+        "REQ-73"
       ],
       "confidence": "high"
     }

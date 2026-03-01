@@ -112,6 +112,7 @@ export interface _CaffeineStorageCreateCertificateResult {
 export interface Hostel {
     id: HostelId;
     latitude: number;
+    isSponsored: boolean;
     imageUrls: Array<string>;
     name: string;
     description: string;
@@ -123,6 +124,7 @@ export interface Hostel {
 }
 export interface UpdateHostelInput {
     id: HostelId;
+    isSponsored?: boolean;
     roomCapacityDetails: RoomSharing;
 }
 export interface _CaffeineStorageRefillResult {
@@ -136,13 +138,15 @@ export interface backendInterface {
     _caffeineStorageCreateCertificate(blobHash: string): Promise<_CaffeineStorageCreateCertificateResult>;
     _caffeineStorageRefillCashier(refillInformation: _CaffeineStorageRefillInformation | null): Promise<_CaffeineStorageRefillResult>;
     _caffeineStorageUpdateGatewayPrincipals(): Promise<void>;
-    addHostel(name: string, category: string, description: string, address: string, latitude: number, longitude: number, roomCapacityDetails: RoomSharing, imageUrls: Array<string>, ownerContact: string): Promise<Hostel>;
+    addHostel(name: string, category: string, description: string, address: string, latitude: number, longitude: number, roomCapacityDetails: RoomSharing, imageUrls: Array<string>, ownerContact: string, isSponsored: boolean | null): Promise<Hostel>;
     getHostel(hostelId: HostelId): Promise<Hostel>;
     getHostelsByCategory(category: string): Promise<Array<Hostel>>;
+    getVisitorCount(): Promise<bigint>;
     listHostels(): Promise<Array<Hostel>>;
+    recordVisit(): Promise<bigint>;
     updateHostel(updateInput: UpdateHostelInput): Promise<void>;
 }
-import type { _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
+import type { HostelId as _HostelId, RoomSharing as _RoomSharing, UpdateHostelInput as _UpdateHostelInput, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _caffeineStorageBlobIsLive(arg0: Uint8Array): Promise<boolean> {
@@ -229,17 +233,17 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async addHostel(arg0: string, arg1: string, arg2: string, arg3: string, arg4: number, arg5: number, arg6: RoomSharing, arg7: Array<string>, arg8: string): Promise<Hostel> {
+    async addHostel(arg0: string, arg1: string, arg2: string, arg3: string, arg4: number, arg5: number, arg6: RoomSharing, arg7: Array<string>, arg8: string, arg9: boolean | null): Promise<Hostel> {
         if (this.processError) {
             try {
-                const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+                const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, to_candid_opt_n8(this._uploadFile, this._downloadFile, arg9));
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+            const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, to_candid_opt_n8(this._uploadFile, this._downloadFile, arg9));
             return result;
         }
     }
@@ -271,6 +275,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async getVisitorCount(): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getVisitorCount();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getVisitorCount();
+            return result;
+        }
+    }
     async listHostels(): Promise<Array<Hostel>> {
         if (this.processError) {
             try {
@@ -285,17 +303,31 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async updateHostel(arg0: UpdateHostelInput): Promise<void> {
+    async recordVisit(): Promise<bigint> {
         if (this.processError) {
             try {
-                const result = await this.actor.updateHostel(arg0);
+                const result = await this.actor.recordVisit();
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.updateHostel(arg0);
+            const result = await this.actor.recordVisit();
+            return result;
+        }
+    }
+    async updateHostel(arg0: UpdateHostelInput): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateHostel(to_candid_UpdateHostelInput_n9(this._uploadFile, this._downloadFile, arg0));
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateHostel(to_candid_UpdateHostelInput_n9(this._uploadFile, this._downloadFile, arg0));
             return result;
         }
     }
@@ -321,11 +353,32 @@ function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint
         topped_up_amount: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.topped_up_amount))
     };
 }
+function to_candid_UpdateHostelInput_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UpdateHostelInput): _UpdateHostelInput {
+    return to_candid_record_n10(_uploadFile, _downloadFile, value);
+}
 function to_candid__CaffeineStorageRefillInformation_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _CaffeineStorageRefillInformation): __CaffeineStorageRefillInformation {
     return to_candid_record_n3(_uploadFile, _downloadFile, value);
 }
 function to_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _CaffeineStorageRefillInformation | null): [] | [__CaffeineStorageRefillInformation] {
     return value === null ? candid_none() : candid_some(to_candid__CaffeineStorageRefillInformation_n2(_uploadFile, _downloadFile, value));
+}
+function to_candid_opt_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: boolean | null): [] | [boolean] {
+    return value === null ? candid_none() : candid_some(value);
+}
+function to_candid_record_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    id: HostelId;
+    isSponsored?: boolean;
+    roomCapacityDetails: RoomSharing;
+}): {
+    id: _HostelId;
+    isSponsored: [] | [boolean];
+    roomCapacityDetails: _RoomSharing;
+} {
+    return {
+        id: value.id,
+        isSponsored: value.isSponsored ? candid_some(value.isSponsored) : candid_none(),
+        roomCapacityDetails: value.roomCapacityDetails
+    };
 }
 function to_candid_record_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     proposed_top_up_amount?: bigint;

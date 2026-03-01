@@ -35,6 +35,7 @@ export const HostelId = IDL.Nat;
 export const Hostel = IDL.Record({
   'id' : HostelId,
   'latitude' : IDL.Float64,
+  'isSponsored' : IDL.Bool,
   'imageUrls' : IDL.Vec(IDL.Text),
   'name' : IDL.Text,
   'description' : IDL.Text,
@@ -46,6 +47,7 @@ export const Hostel = IDL.Record({
 });
 export const UpdateHostelInput = IDL.Record({
   'id' : HostelId,
+  'isSponsored' : IDL.Opt(IDL.Bool),
   'roomCapacityDetails' : RoomSharing,
 });
 
@@ -87,13 +89,16 @@ export const idlService = IDL.Service({
         RoomSharing,
         IDL.Vec(IDL.Text),
         IDL.Text,
+        IDL.Opt(IDL.Bool),
       ],
       [Hostel],
       [],
     ),
   'getHostel' : IDL.Func([HostelId], [Hostel], ['query']),
   'getHostelsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Hostel)], ['query']),
+  'getVisitorCount' : IDL.Func([], [IDL.Nat], ['query']),
   'listHostels' : IDL.Func([], [IDL.Vec(Hostel)], ['query']),
+  'recordVisit' : IDL.Func([], [IDL.Nat], []),
   'updateHostel' : IDL.Func([UpdateHostelInput], [], []),
 });
 
@@ -127,6 +132,7 @@ export const idlFactory = ({ IDL }) => {
   const Hostel = IDL.Record({
     'id' : HostelId,
     'latitude' : IDL.Float64,
+    'isSponsored' : IDL.Bool,
     'imageUrls' : IDL.Vec(IDL.Text),
     'name' : IDL.Text,
     'description' : IDL.Text,
@@ -138,6 +144,7 @@ export const idlFactory = ({ IDL }) => {
   });
   const UpdateHostelInput = IDL.Record({
     'id' : HostelId,
+    'isSponsored' : IDL.Opt(IDL.Bool),
     'roomCapacityDetails' : RoomSharing,
   });
   
@@ -179,13 +186,16 @@ export const idlFactory = ({ IDL }) => {
           RoomSharing,
           IDL.Vec(IDL.Text),
           IDL.Text,
+          IDL.Opt(IDL.Bool),
         ],
         [Hostel],
         [],
       ),
     'getHostel' : IDL.Func([HostelId], [Hostel], ['query']),
     'getHostelsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Hostel)], ['query']),
+    'getVisitorCount' : IDL.Func([], [IDL.Nat], ['query']),
     'listHostels' : IDL.Func([], [IDL.Vec(Hostel)], ['query']),
+    'recordVisit' : IDL.Func([], [IDL.Nat], []),
     'updateHostel' : IDL.Func([UpdateHostelInput], [], []),
   });
 };

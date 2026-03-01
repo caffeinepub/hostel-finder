@@ -2,16 +2,10 @@ import Map "mo:core/Map";
 import Nat "mo:core/Nat";
 
 module {
-  type OldCategory = {
-    #girls;
-    #boys;
-    #coLiving;
-  };
-
   type OldHostel = {
     id : Nat;
     name : Text;
-    category : OldCategory;
+    category : Text;
     description : Text;
     address : Text;
     latitude : Float;
@@ -30,10 +24,6 @@ module {
     };
     imageUrls : [Text];
     ownerContact : Text;
-  };
-
-  type OldActor = {
-    hostels : Map.Map<Nat, OldHostel>;
   };
 
   type NewHostel = {
@@ -58,29 +48,30 @@ module {
     };
     imageUrls : [Text];
     ownerContact : Text;
+    isSponsored : Bool;
+  };
+
+  type OldActor = {
+    nextHostelId : Nat;
+    hostels : Map.Map<Nat, OldHostel>;
   };
 
   type NewActor = {
+    nextHostelId : Nat;
     hostels : Map.Map<Nat, NewHostel>;
-  };
-
-  func convertCategory(cat : OldCategory) : Text {
-    switch (cat) {
-      case (#girls) { "Girls" };
-      case (#boys) { "Boys" };
-      case (#coLiving) { "Co-Living" };
-    };
+    visitorCount : Nat;
   };
 
   public func run(old : OldActor) : NewActor {
     let newHostels = old.hostels.map<Nat, OldHostel, NewHostel>(
       func(_id, oldHostel) {
-        {
-          oldHostel with
-          category = convertCategory(oldHostel.category)
-        };
+        { oldHostel with isSponsored = false };
       }
     );
-    { hostels = newHostels };
+    {
+      old with
+      hostels = newHostels;
+      visitorCount = 0;
+    };
   };
 };

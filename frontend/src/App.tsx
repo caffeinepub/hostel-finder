@@ -7,6 +7,8 @@ import EditHostel from './pages/EditHostel';
 import Privacy from './pages/Privacy';
 import Disclaimer from './pages/Disclaimer';
 import SeoGuide from './pages/SeoGuide';
+import Download from './pages/Download';
+import Advertise from './pages/Advertise';
 
 const rootRoute = createRootRoute({
   component: Layout,
@@ -54,6 +56,18 @@ const seoGuideRoute = createRoute({
   component: SeoGuide,
 });
 
+const downloadRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/download',
+  component: Download,
+});
+
+const advertiseRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/advertise',
+  component: Advertise,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   hostelDetailRoute,
@@ -62,6 +76,8 @@ const routeTree = rootRoute.addChildren([
   privacyRoute,
   disclaimerRoute,
   seoGuideRoute,
+  downloadRoute,
+  advertiseRoute,
 ]);
 
 const router = createRouter({ routeTree });

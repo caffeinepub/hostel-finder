@@ -1,0 +1,20 @@
+{
+  "name": "Hostel Addas",
+  "short_name": "Hostel Addas",
+  "description": "Find affordable hostels and PG accommodations in Hyderabad for girls, boys, and co-living.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#C1440E",
+  "theme_color": "#C1440E",
+  "lang": "en-IN",
+  "categories": ["travel", "lifestyle"],
+  "icons": [
+    {
+      "src": "/assets/generated/hero-banner.dim_1200x400.png",
+      "sizes": "1200x400",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 29,
+  "projectStateVersion": 37,
   "summary": "Website for listing hostels with separate categories for girls, boys, and co-living spaces. Features include hostel images, maps, room sharing details, pricing information, and a clean homepage.",
   "architectural_notes": [
     "Website type project with hostel listing functionality",
@@ -19,7 +19,8 @@
     "Site still not visible in Google search results - requires additional SEO improvements beyond meta tags (structured data, backlinks, content optimization)",
     "Category filtering (All Hostels, Girls Only, Boys Only, Co-Living) not working on the home page"
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Rectangular advertisement placeholder banner graphic with a soft amber/cream gradient background and centered 'Advertisement' text in muted gray, horizontal layout (ad-placeholder-leaderboard.dim_728x90.png)\n- Square advertisement placeholder graphic with a soft amber/cream gradient background and centered 'Advertisement' text in muted gray (ad-placeholder-rectangle.dim_300x250.png)",
   "existing_features": [
     {
       "id": "feature-design-and-implement-a-clean-modern-homepage-that-displays-hostel-categories-girls-boys-co-living-with-category-selection-or-filtering",
@@ -356,6 +357,118 @@
         "REQ-57"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-audit-and-fix-the-category-filtering-logic-in-frontend-src-pages-home-tsx-so-that-selecting-girls-only-boys-only-co-living-or-all-hostels-from-the-categoryfilter-component-correctly-filters-and-displays-only-the-matching-hostel-listings-the-fix-must-ensure-1-the-selected-category-value-passed-from-categoryfilter-exactly-matches-the-category-strings-stored-in-the-backend-girls-boys-co-living-2-the-filtering-comparison-is-case-insensitive-or-uses-exact-match-normalisation-so-no-hostels-are-silently-dropped-3-selecting-all-hostels-shows-every-hostel-regardless-of-category-4-the-filtered-results-are-applied-after-not-before-the-search-price-range-and-sharing-type-filters-so-all-filter-types-remain-composable",
+      "title": "Audit and fix the category filtering logic in frontend/src/pages/Home.tsx so that selecting 'Girls Only', 'Boys Only', 'Co-Living', or 'All Hostels' from the CategoryFilter component correctly filters and displays only the matching hostel listings. The fix must ensure: (1) the selected category value passed from CategoryFilter exactly matches the category strings stored in the backend ('Girls', 'Boys', 'Co-Living'); (2) the filtering comparison is case-insensitive or uses exact-match normalisation so no hostels are silently dropped; (3) selecting 'All Hostels' shows every hostel regardless of category; (4) the filtered results are applied after (not before) the search, price-range, and sharing-type filters so all filter types remain composable.",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-category-filtering-bug-in-frontend-src-pages-home-tsx-and-frontend-src-components-categoryfilter-tsx-so-that-clicking-girls-only-correctly-filters-and-displays-only-girls-hostels-trace-the-full-data-flow-1-confirm-the-categoryfilter-component-emits-exactly-girls-not-girls-only-girls-or-any-other-variant-when-the-girls-only-tab-is-clicked-2-ensure-the-filtering-logic-in-home-tsx-compares-each-hostel-s-category-field-against-the-selected-value-using-case-insensitive-exact-match-or-strict-normalised-comparison-3-verify-the-backend-seed-data-in-backend-main-mo-stores-the-category-as-girls-matching-capitalisation-and-the-gethostelsbycategory-function-uses-exact-equality-4-ensure-selecting-all-hostels-resets-the-filter-and-shows-all-hostels-5-confirm-the-same-fix-applies-consistently-to-boys-only-emitting-boys-and-co-living-emitting-co-living-so-all-category-tabs-work-correctly",
+      "title": "Fix the category filtering bug in frontend/src/pages/Home.tsx and frontend/src/components/CategoryFilter.tsx so that clicking 'Girls Only' correctly filters and displays only girls hostels. Trace the full data flow: (1) confirm the CategoryFilter component emits exactly 'Girls' (not 'Girls Only', 'girls', or any other variant) when the Girls Only tab is clicked; (2) ensure the filtering logic in Home.tsx compares each hostel's category field against the selected value using case-insensitive exact match or strict normalised comparison; (3) verify the backend seed data in backend/main.mo stores the category as 'Girls' (matching capitalisation) and the getHostelsByCategory function uses exact equality; (4) ensure selecting 'All Hostels' resets the filter and shows all hostels; (5) confirm the same fix applies consistently to 'Boys Only' (emitting 'Boys') and 'Co-Living' (emitting 'Co-Living') so all category tabs work correctly.",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-dedicated-download-page-component-at-frontend-src-pages-download-tsx-that-presents-a-mobile-app-download-section-for-hostel-addas-the-page-should-explain-that-the-site-is-available-as-a-progressive-web-app-pwa-installable-directly-from-the-browser-on-both-android-and-ios-include-clear-step-by-step-installation-instructions-for-android-chrome-tap-the-three-dot-menu-add-to-home-screen-and-ios-safari-tap-the-share-icon-add-to-home-screen-display-app-feature-highlights-hostel-search-category-filters-maps-contact-owners-style-the-page-consistently-with-the-existing-warm-terracotta-sage-amber-color-palette-include-a-prominent-app-icon-logo-visual-and-qr-code-placeholder-section-for-sharing-the-site-url",
+      "title": "Create a dedicated '/download' page component at frontend/src/pages/Download.tsx that presents a mobile app download section for Hostel Addas. The page should explain that the site is available as a Progressive Web App (PWA) installable directly from the browser on both Android and iOS. Include clear step-by-step installation instructions for Android (Chrome: tap the three-dot menu → 'Add to Home Screen') and iOS (Safari: tap the Share icon → 'Add to Home Screen'). Display app feature highlights (hostel search, category filters, maps, contact owners). Style the page consistently with the existing warm terracotta/sage/amber color palette. Include a prominent app icon/logo visual and QR code placeholder section for sharing the site URL.",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-register-the-download-route-in-frontend-src-app-tsx-that-renders-the-download-page-component-nested-under-the-existing-layout-root-route-alongside-the-other-page-routes",
+      "title": "Register the '/download' route in frontend/src/App.tsx that renders the Download page component, nested under the existing Layout root route alongside the other page routes.",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-download-app-link-to-the-footer-section-of-the-layout-component-frontend-src-components-layout-tsx-and-a-prominent-get-the-app-button-in-the-sticky-header-navigation-both-linking-to-the-download-page-the-button-in-the-header-should-be-styled-similarly-to-the-existing-add-hostel-button-but-use-a-distinct-accent-color-within-the-warm-palette-to-differentiate-it",
+      "title": "Add a 'Download App' link to the footer section of the Layout component (frontend/src/components/Layout.tsx) and a prominent 'Get the App' button in the sticky header navigation, both linking to the '/download' page. The button in the header should be styled similarly to the existing 'Add Hostel' button but use a distinct accent color within the warm palette to differentiate it.",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-pwa-enabling-meta-tags-and-a-web-app-manifest-to-support-add-to-home-screen-installation-create-frontend-public-manifest-json-with-name-hostel-addas-short-name-hostel-addas-start-url-display-standalone-background-color-matching-the-warm-terracotta-palette-c1440e-or-closest-token-theme-color-matching-the-same-and-icons-referencing-existing-assets-link-the-manifest-in-frontend-index-html-via-link-rel-manifest-href-manifest-json-ensure-the-existing-apple-mobile-web-app-meta-tags-and-theme-color-meta-tag-in-index-html-are-present-and-correctly-set",
+      "title": "Add PWA-enabling meta tags and a Web App Manifest to support 'Add to Home Screen' installation. Create frontend/public/manifest.json with name 'Hostel Addas', short_name 'Hostel Addas', start_url '/', display 'standalone', background_color matching the warm terracotta palette (#C1440E or closest token), theme_color matching the same, and icons referencing existing assets. Link the manifest in frontend/index.html via <link rel='manifest' href='/manifest.json'>. Ensure the existing apple-mobile-web-app meta tags and theme-color meta tag in index.html are present and correctly set.",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-reusable-adbanner-component-at-frontend-src-components-adbanner-tsx-that-renders-a-styled-advertisement-placeholder-banner-the-component-should-accept-props-for-size-leaderboard-728x90-rectangle-300x250-banner-468x60-a-label-advertisement-and-an-optional-ad-slot-id-or-image-url-style-it-with-a-light-warm-toned-background-amber-cream-tones-from-the-existing-palette-a-subtle-border-and-centered-advertisement-label-text-include-a-note-in-the-component-that-ad-network-script-tags-e-g-google-adsense-can-be-injected-here-once-an-account-is-approved",
+      "title": "Create a reusable AdBanner component at frontend/src/components/AdBanner.tsx that renders a styled advertisement placeholder banner. The component should accept props for size ('leaderboard' 728x90, 'rectangle' 300x250, 'banner' 468x60), a label ('Advertisement'), and an optional ad slot ID or image URL. Style it with a light warm-toned background (amber/cream tones from the existing palette), a subtle border, and centered 'Advertisement' label text. Include a note in the component that ad network script tags (e.g. Google AdSense) can be injected here once an account is approved.",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-place-adbanner-components-in-high-visibility-positions-on-the-home-page-frontend-src-pages-home-tsx-1-a-leaderboard-banner-728x90-below-the-search-filter-controls-and-above-the-hostel-grid-on-desktop-collapsing-to-a-rectangle-300x250-on-mobile-2-a-rectangle-banner-300x250-at-the-bottom-of-the-hostel-grid-after-every-6-hostel-cards-inline-between-cards-in-the-grid-ensure-ad-placements-do-not-disrupt-the-hostel-listing-layout-and-are-clearly-labelled-advertisement",
+      "title": "Place AdBanner components in high-visibility positions on the Home page (frontend/src/pages/Home.tsx): (1) a leaderboard banner (728x90) below the search/filter controls and above the hostel grid on desktop, collapsing to a rectangle (300x250) on mobile; (2) a rectangle banner (300x250) at the bottom of the hostel grid, after every 6 hostel cards (inline between cards in the grid). Ensure ad placements do not disrupt the hostel listing layout and are clearly labelled 'Advertisement'.",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-place-an-adbanner-rectangle-300x250-on-the-hosteldetail-page-frontend-src-pages-hosteldetail-tsx-in-the-sidebar-area-on-desktop-beside-the-room-sharing-pricing-section-and-below-the-contact-section-on-mobile-the-ad-should-be-clearly-labelled-advertisement-and-styled-consistently-with-the-page",
+      "title": "Place an AdBanner rectangle (300x250) on the HostelDetail page (frontend/src/pages/HostelDetail.tsx) in the sidebar area on desktop (beside the room sharing/pricing section) and below the contact section on mobile. The ad should be clearly labelled 'Advertisement' and styled consistently with the page.",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-sponsored-badge-and-priority-placement-feature-to-hostel-listings-in-the-backend-backend-main-mo-add-an-optional-boolean-field-issponsored-to-the-hostel-type-defaulting-to-false-update-the-addhostel-and-updatehostel-functions-to-accept-and-store-this-field-in-the-frontend-hostelcard-component-frontend-src-components-hostelcard-tsx-display-a-sponsored-badge-amber-gold-colored-pill-label-in-the-top-left-corner-of-the-card-image-when-issponsored-is-true-in-the-home-page-frontend-src-pages-home-tsx-sort-sponsored-hostels-to-appear-before-non-sponsored-hostels-in-the-listing-regardless-of-other-sort-order",
+      "title": "Add a 'Sponsored' badge and priority placement feature to hostel listings. In the backend (backend/main.mo), add an optional boolean field `isSponsored` to the Hostel type (defaulting to false). Update the addHostel and updateHostel functions to accept and store this field. In the frontend HostelCard component (frontend/src/components/HostelCard.tsx), display a 'Sponsored' badge (amber/gold colored pill label) in the top-left corner of the card image when `isSponsored` is true. In the Home page (frontend/src/pages/Home.tsx), sort sponsored hostels to appear before non-sponsored hostels in the listing, regardless of other sort order.",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-advertise-with-us-page-at-frontend-src-pages-advertise-tsx-that-explains-the-monetization-and-advertising-opportunities-available-on-hostel-addas-the-page-should-include-1-a-hero-section-with-headline-grow-your-business-with-hostel-addas-2-a-sponsored-listing-section-explaining-that-hostel-owners-can-pay-to-have-their-listing-shown-at-the-top-with-a-sponsored-badge-3-an-ad-placements-section-explaining-banner-ad-slots-available-on-the-home-and-detail-pages-with-approximate-visitor-reach-4-a-visitor-stats-section-with-a-placeholder-showing-site-traffic-metrics-e-g-growing-audience-of-students-and-working-professionals-in-hyderabad-5-a-contact-inquiry-section-with-a-whatsapp-or-email-call-to-action-use-a-placeholder-number-email-with-instruction-to-update-style-consistently-with-the-warm-terracotta-sage-amber-palette",
+      "title": "Create an 'Advertise With Us' page at frontend/src/pages/Advertise.tsx that explains the monetization and advertising opportunities available on Hostel Addas. The page should include: (1) a hero section with headline 'Grow Your Business with Hostel Addas'; (2) a 'Sponsored Listing' section explaining that hostel owners can pay to have their listing shown at the top with a Sponsored badge; (3) an 'Ad Placements' section explaining banner ad slots available on the home and detail pages with approximate visitor reach; (4) a 'Visitor Stats' section with a placeholder showing site traffic metrics (e.g. 'Growing audience of students and working professionals in Hyderabad'); (5) a contact/inquiry section with a WhatsApp or email call-to-action (use a placeholder number/email with instruction to update). Style consistently with the warm terracotta/sage/amber palette.",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-register-the-advertise-route-in-frontend-src-app-tsx-that-renders-the-advertise-page-component-nested-under-the-existing-layout-root-route-alongside-other-page-routes",
+      "title": "Register the '/advertise' route in frontend/src/App.tsx that renders the Advertise page component, nested under the existing Layout root route alongside other page routes.",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-advertise-link-to-the-footer-section-of-the-layout-component-frontend-src-components-layout-tsx-linking-to-the-advertise-page-also-add-a-small-advertise-text-link-in-the-sticky-header-navigation-beside-the-existing-nav-links-so-site-visitors-and-hostel-owners-can-easily-discover-the-monetization-page",
+      "title": "Add an 'Advertise' link to the footer section of the Layout component (frontend/src/components/Layout.tsx) linking to the '/advertise' page. Also add a small 'Advertise' text link in the sticky header navigation (beside the existing nav links) so site visitors and hostel owners can easily discover the monetization page.",
+      "reqIds": [
+        "REQ-72"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-simple-visitor-counter-feature-to-the-backend-backend-main-mo-add-a-stable-var-visitorcount-nat-0-variable-and-a-public-function-recordvisit-async-nat-that-increments-the-counter-and-returns-the-new-total-plus-a-query-function-getvisitorcount-async-nat-that-returns-the-current-count-on-the-frontend-call-recordvisit-once-per-session-guard-with-sessionstorage-to-avoid-double-counting-on-re-renders-in-the-home-page-frontend-src-pages-home-tsx-when-the-page-mounts-display-the-total-visitor-count-in-the-footer-of-the-layout-component-frontend-src-components-layout-tsx-as-a-small-stat-visitors-x-styled-subtly-in-the-footer-text",
+      "title": "Add a simple visitor counter feature to the backend (backend/main.mo): add a stable `var visitorCount : Nat = 0` variable and a public function `recordVisit() : async Nat` that increments the counter and returns the new total, plus a query function `getVisitorCount() : async Nat` that returns the current count. On the frontend, call `recordVisit()` once per session (guard with sessionStorage to avoid double-counting on re-renders) in the Home page (frontend/src/pages/Home.tsx) when the page mounts. Display the total visitor count in the footer of the Layout component (frontend/src/components/Layout.tsx) as a small stat: 'Visitors: X' styled subtly in the footer text.",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -593,6 +706,26 @@
       "reqIds": [
         "REQ-58"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Verify that the category values stored in the backend seed data in backend/main.mo exactly match the strings expected by the frontend filter ('Girls', 'Boys', 'Co-Living') — including capitalisation and spacing. If any seed hostel has a mismatched category value (e.g. 'girls', 'GIRLS', 'Co-living'), correct it so all category strings are consistent. Also confirm the getHostelsByCategory backend function compares category strings using exact equality against these normalised values.",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Add a mobile app download section/page to the website so users can download or install the mobile app",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Add advertisement placements and visitor-based earning features to the site (ad banners, sponsored listings, or similar monetization)",
+      "reqIds": [],
       "status": "pending"
     }
   ],

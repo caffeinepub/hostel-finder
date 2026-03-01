@@ -15,6 +15,8 @@ actor {
   type HostelId = Nat;
   var nextHostelId : HostelId = 13;
 
+  var visitorCount = 0;
+
   type RoomSharing = {
     sharing1 : Nat;
     price1 : Nat;
@@ -39,17 +41,19 @@ actor {
     roomCapacityDetails : RoomSharing;
     imageUrls : [Text];
     ownerContact : Text;
+    isSponsored : Bool; // New field to indicate sponsored hostels
   };
 
   type UpdateHostelInput = {
     id : HostelId;
     roomCapacityDetails : RoomSharing;
+    isSponsored : ?Bool; // Optional field for updating sponsorship status
   };
 
-  let hostels = Map.empty<HostelId, Hostel>();
-
+  // Initialize with sample data, no changes needed
   func initializeSampleData() {
     let hostelsArray = [
+      // Existing hostels, now with isSponsored = false by default
       {
         id = 1;
         name = "Hemkund Boys Hostel";
@@ -75,6 +79,7 @@ actor {
           "/assets/generated/hostel_images/hemkund_boys_hostel_2.jpg",
         ];
         ownerContact = "90909090";
+        isSponsored = false;
       },
       {
         id = 2;
@@ -101,6 +106,7 @@ actor {
           "/assets/generated/hostel_images/secure_girls_hostel_2.jpg",
         ];
         ownerContact = "532423423423";
+        isSponsored = false;
       },
       {
         id = 3;
@@ -127,6 +133,7 @@ actor {
           "/assets/generated/hostel_images/soho_gents_2.jpg",
         ];
         ownerContact = "845066445";
+        isSponsored = false;
       },
       {
         id = 4;
@@ -153,6 +160,7 @@ actor {
           "/assets/generated/hostel_images/sun_elite_2.jpg",
         ];
         ownerContact = "9090901209";
+        isSponsored = false;
       },
       {
         id = 5;
@@ -179,6 +187,7 @@ actor {
           "/assets/generated/hostel_images/yoho_keraam_2.jpg",
         ];
         ownerContact = "23424234";
+        isSponsored = false;
       },
       {
         id = 6;
@@ -205,6 +214,7 @@ actor {
           "/assets/generated/hostel_images/soho_gachibowli_2.jpg",
         ];
         ownerContact = "965467600";
+        isSponsored = false;
       },
       {
         id = 7;
@@ -231,6 +241,7 @@ actor {
           "/assets/generated/hostel_images/serenity_girls_2.jpg",
         ];
         ownerContact = "722388188";
+        isSponsored = false;
       },
       {
         id = 8;
@@ -257,6 +268,7 @@ actor {
           "/assets/generated/hostel_images/kailash_boys_2.jpg",
         ];
         ownerContact = "91103030";
+        isSponsored = false;
       },
       {
         id = 9;
@@ -283,6 +295,7 @@ actor {
           "/assets/generated/hostel_images/soho_ladies_2.jpg",
         ];
         ownerContact = "963876903";
+        isSponsored = false;
       },
       {
         id = 10;
@@ -309,6 +322,7 @@ actor {
           "/assets/generated/hostel_images/green_nest_coliving_2.jpg",
         ];
         ownerContact = "988654003";
+        isSponsored = false;
       },
       {
         id = 11;
@@ -335,6 +349,7 @@ actor {
           "/assets/generated/hostel_images/blueberry_boys_2.jpg",
         ];
         ownerContact = "998812300";
+        isSponsored = false;
       },
       {
         id = 12;
@@ -361,6 +376,7 @@ actor {
           "/assets/generated/hostel_images/pink_petal_girls_2.jpg",
         ];
         ownerContact = "955910308";
+        isSponsored = false;
       },
     ];
 
@@ -369,6 +385,7 @@ actor {
     };
   };
 
+  let hostels = Map.empty<HostelId, Hostel>();
   initializeSampleData();
 
   public shared ({ caller }) func addHostel(
@@ -381,6 +398,7 @@ actor {
     roomCapacityDetails : RoomSharing,
     imageUrls : [Text],
     ownerContact : Text,
+    isSponsored : ?Bool,
   ) : async Hostel {
     let hostel : Hostel = {
       id = nextHostelId;
@@ -393,6 +411,10 @@ actor {
       roomCapacityDetails;
       imageUrls;
       ownerContact;
+      isSponsored = switch (isSponsored) {
+        case (null) { false };
+        case (?sponsored) { sponsored };
+      };
     };
 
     hostels.add(nextHostelId, hostel);
@@ -405,7 +427,14 @@ actor {
     switch (hostels.get(updateInput.id)) {
       case (null) { Runtime.trap("Hostel with id " # updateInput.id.toText() # " does not exist.") };
       case (?oldHostel) {
-        let updatedHostel : Hostel = { oldHostel with roomCapacityDetails = updateInput.roomCapacityDetails };
+        let updatedHostel : Hostel = {
+          oldHostel with
+          roomCapacityDetails = updateInput.roomCapacityDetails;
+          isSponsored = switch (updateInput.isSponsored) {
+            case (null) { oldHostel.isSponsored };
+            case (?status) { status };
+          };
+        };
         hostels.add(oldHostel.id, updatedHostel);
       };
     };
@@ -423,6 +452,20 @@ actor {
   };
 
   public query ({ caller }) func getHostelsByCategory(category : Text) : async [Hostel] {
-    hostels.values().toArray().filter(func(hostel) { Text.equal(hostel.category, category) });
+    hostels.values().toArray().filter(
+      func(hostel) {
+        Text.equal(hostel.category, category);
+      }
+    );
+  };
+
+  // New visitor counting functionality
+  public shared ({ caller }) func recordVisit() : async Nat {
+    visitorCount += 1;
+    visitorCount;
+  };
+
+  public query ({ caller }) func getVisitorCount() : async Nat {
+    visitorCount;
   };
 };

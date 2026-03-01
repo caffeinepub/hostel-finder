@@ -1,63 +1,174 @@
 {
   "kind": "build_request",
-  "title": "Fix category filtering (All, Girls Only, Boys Only, Co-Living) on Home page",
+  "title": "Add advertisement placements and visitor-based earning features",
   "projectName": "Hostel Addas",
-  "priority": "high",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-57",
-      "text": "Fix the category filter functionality on the Home page (frontend/src/pages/Home.tsx) so that selecting 'All Hostels', 'Girls Only', 'Boys Only', or 'Co-Living' correctly filters the displayed hostel listings. Investigate whether the issue is in the CategoryFilter component state, the query hook (useGetHostelsByCategory vs useGetAllHostels), or the filtering logic applied to the hostel list, and ensure selecting each category tab shows only hostels matching that category (or all hostels for 'All').",
+      "id": "REQ-66",
+      "text": "Create a reusable AdBanner component at frontend/src/components/AdBanner.tsx that renders a styled advertisement placeholder banner. The component should accept props for size ('leaderboard' 728x90, 'rectangle' 300x250, 'banner' 468x60), a label ('Advertisement'), and an optional ad slot ID or image URL. Style it with a light warm-toned background (amber/cream tones from the existing palette), a subtle border, and centered 'Advertisement' label text. Include a note in the component that ad network script tags (e.g. Google AdSense) can be injected here once an account is approved.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-latest"
         ],
         "quotes": [
-          "all hostels,girls only,boys only,co-living not working ,fix it"
+          "do changes my site as a ads and site vistor based earning site"
         ]
       },
       "acceptanceCriteria": [
-        "Selecting 'All Hostels' displays every hostel in the listings grid",
-        "Selecting 'Girls Only' displays only hostels with category 'Girls'",
-        "Selecting 'Boys Only' displays only hostels with category 'Boys'",
-        "Selecting 'Co-Living' displays only hostels with category 'Co-Living'",
-        "The active/selected category tab is visually highlighted",
-        "Switching between category tabs updates the listings grid immediately without a page reload",
-        "If no hostels match the selected category, the empty-state UI is shown"
+        "AdBanner component renders without errors in three sizes: leaderboard, rectangle, and banner",
+        "Each variant displays the correct dimensions and an 'Advertisement' label",
+        "Styling is consistent with the existing warm terracotta/amber color palette",
+        "Component accepts an optional ad slot ID prop for future ad network integration"
       ]
     },
     {
-      "id": "REQ-58",
-      "text": "Verify and fix the backend category filtering logic in backend/main.mo so that the getHostelsByCategory function (or equivalent) correctly matches and returns hostels whose category field equals the requested category string (e.g. 'Girls', 'Boys', 'Co-Living'). Ensure the category values stored in the seed data and returned by the backend exactly match the values expected by the frontend filter.",
-      "target": "backend",
+      "id": "REQ-67",
+      "text": "Place AdBanner components in high-visibility positions on the Home page (frontend/src/pages/Home.tsx): (1) a leaderboard banner (728x90) below the search/filter controls and above the hostel grid on desktop, collapsing to a rectangle (300x250) on mobile; (2) a rectangle banner (300x250) at the bottom of the hostel grid, after every 6 hostel cards (inline between cards in the grid). Ensure ad placements do not disrupt the hostel listing layout and are clearly labelled 'Advertisement'.",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-latest"
         ],
         "quotes": [
-          "all hostels,girls only,boys only,co-living not working ,fix it"
+          "do changes my site as a ads and site vistor based earning site"
         ]
       },
       "acceptanceCriteria": [
-        "The backend getHostelsByCategory function returns only hostels whose category matches the requested value",
-        "Category strings in seed data match exactly what the frontend CategoryFilter passes to the query (case and spelling)",
-        "Calling getHostelsByCategory with 'Girls' returns all girls hostels and none from other categories",
-        "Calling getHostelsByCategory with 'Boys' returns all boys hostels and none from other categories",
-        "Calling getHostelsByCategory with 'Co-Living' returns all co-living hostels and none from other categories"
+        "A leaderboard/rectangle AdBanner appears below the filter controls and above the hostel grid on the Home page",
+        "A rectangle AdBanner appears after every 6 hostel cards in the grid",
+        "Ad placements are visible on both desktop and mobile",
+        "The hostel card grid layout is not broken by ad insertions"
+      ]
+    },
+    {
+      "id": "REQ-68",
+      "text": "Place an AdBanner rectangle (300x250) on the HostelDetail page (frontend/src/pages/HostelDetail.tsx) in the sidebar area on desktop (beside the room sharing/pricing section) and below the contact section on mobile. The ad should be clearly labelled 'Advertisement' and styled consistently with the page.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "do changes my site as a ads and site vistor based earning site"
+        ]
+      },
+      "acceptanceCriteria": [
+        "An AdBanner rectangle appears on the HostelDetail page beside the pricing section on desktop",
+        "On mobile the ad appears below the contact section",
+        "Ad is labelled 'Advertisement' and does not overlap hostel content"
+      ]
+    },
+    {
+      "id": "REQ-69",
+      "text": "Add a 'Sponsored' badge and priority placement feature to hostel listings. In the backend (backend/main.mo), add an optional boolean field `isSponsored` to the Hostel type (defaulting to false). Update the addHostel and updateHostel functions to accept and store this field. In the frontend HostelCard component (frontend/src/components/HostelCard.tsx), display a 'Sponsored' badge (amber/gold colored pill label) in the top-left corner of the card image when `isSponsored` is true. In the Home page (frontend/src/pages/Home.tsx), sort sponsored hostels to appear before non-sponsored hostels in the listing, regardless of other sort order.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "do changes my site as a ads and site vistor based earning site"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The Hostel type in backend/main.mo has an optional `isSponsored` field",
+        "addHostel and updateHostel functions accept the `isSponsored` field",
+        "HostelCard displays a gold/amber 'Sponsored' badge when isSponsored is true",
+        "Sponsored hostels appear at the top of the listing on the Home page above non-sponsored hostels"
+      ]
+    },
+    {
+      "id": "REQ-70",
+      "text": "Create an 'Advertise With Us' page at frontend/src/pages/Advertise.tsx that explains the monetization and advertising opportunities available on Hostel Addas. The page should include: (1) a hero section with headline 'Grow Your Business with Hostel Addas'; (2) a 'Sponsored Listing' section explaining that hostel owners can pay to have their listing shown at the top with a Sponsored badge; (3) an 'Ad Placements' section explaining banner ad slots available on the home and detail pages with approximate visitor reach; (4) a 'Visitor Stats' section with a placeholder showing site traffic metrics (e.g. 'Growing audience of students and working professionals in Hyderabad'); (5) a contact/inquiry section with a WhatsApp or email call-to-action (use a placeholder number/email with instruction to update). Style consistently with the warm terracotta/sage/amber palette.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "do changes my site as a ads and site vistor based earning site"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Advertise page renders at /advertise route",
+        "Page includes sponsored listing, ad placement, visitor stats, and contact sections",
+        "Page is styled consistently with the existing warm color palette",
+        "Contact CTA is visible with a placeholder WhatsApp/email link"
+      ]
+    },
+    {
+      "id": "REQ-71",
+      "text": "Register the '/advertise' route in frontend/src/App.tsx that renders the Advertise page component, nested under the existing Layout root route alongside other page routes.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "do changes my site as a ads and site vistor based earning site"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Navigating to /advertise renders the Advertise page",
+        "The page is wrapped in the Layout component with header and footer"
+      ]
+    },
+    {
+      "id": "REQ-72",
+      "text": "Add an 'Advertise' link to the footer section of the Layout component (frontend/src/components/Layout.tsx) linking to the '/advertise' page. Also add a small 'Advertise' text link in the sticky header navigation (beside the existing nav links) so site visitors and hostel owners can easily discover the monetization page.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "do changes my site as a ads and site vistor based earning site"
+        ]
+      },
+      "acceptanceCriteria": [
+        "'Advertise' link appears in the footer and navigates to /advertise",
+        "'Advertise' link appears in the header navigation",
+        "Both links use the existing navigation styling"
+      ]
+    },
+    {
+      "id": "REQ-73",
+      "text": "Add a simple visitor counter feature to the backend (backend/main.mo): add a stable `var visitorCount : Nat = 0` variable and a public function `recordVisit() : async Nat` that increments the counter and returns the new total, plus a query function `getVisitorCount() : async Nat` that returns the current count. On the frontend, call `recordVisit()` once per session (guard with sessionStorage to avoid double-counting on re-renders) in the Home page (frontend/src/pages/Home.tsx) when the page mounts. Display the total visitor count in the footer of the Layout component (frontend/src/components/Layout.tsx) as a small stat: 'Visitors: X' styled subtly in the footer text.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "do changes my site as a ads and site vistor based earning site"
+        ]
+      },
+      "acceptanceCriteria": [
+        "backend/main.mo exposes recordVisit() and getVisitorCount() functions",
+        "Home page calls recordVisit() once per browser session using sessionStorage guard",
+        "Footer displays the live visitor count fetched from getVisitorCount()",
+        "Visitor count increments correctly on each new session visit"
       ]
     }
   ],
   "constraints": [
-    "Do not change the Hostel data model schema",
-    "Do not modify files listed in frontend.immutablePaths"
+    "Do not integrate any real third-party ad network SDK (e.g. Google AdSense script tags) — all ad slots must be placeholders ready for future integration",
+    "Do not modify any files listed in frontend.immutablePaths",
+    "All backend changes must remain within the single-actor architecture in backend/main.mo"
   ],
   "nonGoals": [
-    "Adding new hostel categories beyond Girls, Boys, Co-Living",
-    "Changing the visual design of the CategoryFilter component",
-    "Modifying search, price range, or sort filter functionality"
+    "Real-time ad bidding or programmatic advertising integration",
+    "Payment processing for sponsored listings (manual offline arrangement only)",
+    "User authentication or login wall for ad management",
+    "Analytics dashboard beyond the simple visitor counter"
   ],
   "imageRequirements": {
-    "required": [],
+    "required": [
+      "Rectangular advertisement placeholder banner graphic with a soft amber/cream gradient background and centered 'Advertisement' text in muted gray, horizontal layout (ad-placeholder-leaderboard.dim_728x90.png)",
+      "Square advertisement placeholder graphic with a soft amber/cream gradient background and centered 'Advertisement' text in muted gray (ad-placeholder-rectangle.dim_300x250.png)"
+    ],
     "edits": []
   }
 }

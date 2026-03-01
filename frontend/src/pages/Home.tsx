@@ -1,5 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useGetAllHostels, useGetHostelsByCategory } from '../hooks/useQueries';
+import { useActor } from '../hooks/useActor';
 import CategoryFilter, { CategoryValue } from '../components/CategoryFilter';
 import SearchBar from '../components/SearchBar';
 import AdvancedFilters from '../components/AdvancedFilters';
@@ -7,7 +8,12 @@ import SortControls, { SortOption } from '../components/SortControls';
 import HostelGrid from '../components/HostelGrid';
 import HostelMap from '../components/HostelMap';
 import SeoInfoBanner from '../components/SeoInfoBanner';
+import AdBanner from '../components/AdBanner';
+import HostelCard from '../components/HostelCard';
+import { Hostel } from '../backend';
 import { Loader2 } from 'lucide-react';
+
+const AD_INTERVAL = 6; // Insert an ad after every N hostel cards
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryValue>('All');
@@ -16,10 +22,27 @@ export default function Home() {
   const [selectedSharingTypes, setSelectedSharingTypes] = useState<string[]>([]);
   const [sortOption, setSortOption] = useState<SortOption>('price-asc');
 
+  const { actor } = useActor();
+
   const { data: allHostels, isLoading: isLoadingAll } = useGetAllHostels();
   const { data: girlsHostels, isLoading: isLoadingGirls } = useGetHostelsByCategory('Girls');
   const { data: boysHostels, isLoading: isLoadingBoys } = useGetHostelsByCategory('Boys');
   const { data: coLivingHostels, isLoading: isLoadingCoLiving } = useGetHostelsByCategory('Co-Living');
+
+  // Record visit once per browser session
+  useEffect(() => {
+    if (!actor) return;
+    const visited = sessionStorage.getItem('hostel_addas_visited');
+    if (!visited) {
+      actor.recordVisit()
+        .then(() => {
+          sessionStorage.setItem('hostel_addas_visited', '1');
+        })
+        .catch(() => {
+          // Silently ignore errors — visitor tracking is non-critical
+        });
+    }
+  }, [actor]);
 
   const getCategoryFilteredHostels = () => {
     switch (selectedCategory) {
@@ -83,19 +106,24 @@ export default function Home() {
       });
     }
 
-    // Apply sorting
-    const sortedHostels = [...hostels].sort((a, b) => {
-      const getMinPrice = (h: typeof a) => {
-        const prices = [
-          Number(h.roomCapacityDetails.price1),
-          Number(h.roomCapacityDetails.price2),
-          Number(h.roomCapacityDetails.price3),
-          Number(h.roomCapacityDetails.price4),
-          Number(h.roomCapacityDetails.price5),
-        ].filter((p) => p > 0);
-        return prices.length > 0 ? Math.min(...prices) : 0;
-      };
+    // Two-tier sort: sponsored first, then by user-selected sort option
+    const getMinPrice = (h: Hostel) => {
+      const prices = [
+        Number(h.roomCapacityDetails.price1),
+        Number(h.roomCapacityDetails.price2),
+        Number(h.roomCapacityDetails.price3),
+        Number(h.roomCapacityDetails.price4),
+        Number(h.roomCapacityDetails.price5),
+      ].filter((p) => p > 0);
+      return prices.length > 0 ? Math.min(...prices) : 0;
+    };
 
+    const sortedHostels = [...hostels].sort((a, b) => {
+      // Primary: sponsored hostels first
+      if (a.isSponsored && !b.isSponsored) return -1;
+      if (!a.isSponsored && b.isSponsored) return 1;
+
+      // Secondary: user-selected sort
       switch (sortOption) {
         case 'price-asc':
           return getMinPrice(a) - getMinPrice(b);
@@ -144,6 +172,18 @@ export default function Home() {
       : selectedCategory === 'Boys'
       ? 'Boys Hostels'
       : 'Co-Living Hostels';
+
+  // Build hostel grid items with inline ads after every AD_INTERVAL cards
+  const gridItems = useMemo(() => {
+    const items: Array<{ type: 'hostel'; hostel: Hostel } | { type: 'ad'; key: string }> = [];
+    filteredAndSortedHostels.forEach((hostel, index) => {
+      items.push({ type: 'hostel', hostel });
+      if ((index + 1) % AD_INTERVAL === 0 && index < filteredAndSortedHostels.length - 1) {
+        items.push({ type: 'ad', key: `ad-${index}` });
+      }
+    });
+    return items;
+  }, [filteredAndSortedHostels]);
 
   return (
     <div className="w-full">
@@ -198,6 +238,18 @@ export default function Home() {
         />
       </section>
 
+      {/* Ad Banner — between filters and hostel grid (desktop: leaderboard, mobile: rectangle) */}
+      <section className="container mx-auto px-4 mt-8 flex justify-center">
+        {/* Desktop/tablet leaderboard */}
+        <div className="hidden sm:flex justify-center w-full">
+          <AdBanner size="leaderboard" adSlotId="home-leaderboard-top" />
+        </div>
+        {/* Mobile rectangle */}
+        <div className="flex sm:hidden justify-center w-full">
+          <AdBanner size="rectangle" adSlotId="home-rectangle-mobile-top" />
+        </div>
+      </section>
+
       {/* Map Section */}
       <section className="container mx-auto px-4 mt-12">
         <div className="bg-white dark:bg-card rounded-2xl shadow-lg overflow-hidden border border-warm-border">
@@ -219,7 +271,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hostel Grid */}
+      {/* Hostel Grid with inline ads */}
       <section className="container mx-auto px-4 mt-12 mb-16">
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -231,7 +283,32 @@ export default function Home() {
           </div>
           <SortControls currentSort={sortOption} onSortChange={setSortOption} />
         </div>
-        <HostelGrid hostels={filteredAndSortedHostels} isLoading={isLoading} />
+
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <Loader2 className="w-10 h-10 animate-spin text-warm-primary" />
+          </div>
+        ) : filteredAndSortedHostels.length === 0 ? (
+          <div className="text-center py-16 text-muted-foreground">
+            <p className="text-lg">No hostels found matching your criteria.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gridItems.map((item) => {
+              if (item.type === 'hostel') {
+                return (
+                  <HostelCard key={item.hostel.id.toString()} hostel={item.hostel} />
+                );
+              }
+              // Ad item — spans full width on all breakpoints
+              return (
+                <div key={item.key} className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-2">
+                  <AdBanner size="rectangle" adSlotId={`home-inline-${item.key}`} />
+                </div>
+              );
+            })}
+          </div>
+        )}
       </section>
     </div>
   );

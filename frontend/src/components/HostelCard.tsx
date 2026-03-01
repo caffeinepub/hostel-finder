@@ -2,7 +2,7 @@ import { Hostel } from '../backend';
 import { useNavigate } from '@tanstack/react-router';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Users, Phone } from 'lucide-react';
+import { MapPin, Users, Phone, Star } from 'lucide-react';
 
 interface HostelCardProps {
   hostel: Hostel;
@@ -98,6 +98,16 @@ export default function HostelCard({ hostel }: HostelCardProps) {
             target.src = getDefaultImage(hostel.category, hostel.id);
           }}
         />
+        {/* Sponsored badge — top-left */}
+        {hostel.isSponsored && (
+          <div className="absolute top-2 left-2 z-10">
+            <span className="inline-flex items-center gap-1 bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">
+              <Star className="w-3 h-3 fill-white" />
+              Sponsored
+            </span>
+          </div>
+        )}
+        {/* Category badge — top-right */}
         <div className="absolute top-3 right-3">
           <Badge className={getCategoryColor(hostel.category)}>
             {getCategoryLabel(hostel.category)}

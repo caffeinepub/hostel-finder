@@ -13,6 +13,7 @@ import type { Principal } from '@icp-sdk/core/principal';
 export interface Hostel {
   'id' : HostelId,
   'latitude' : number,
+  'isSponsored' : boolean,
   'imageUrls' : Array<string>,
   'name' : string,
   'description' : string,
@@ -37,6 +38,7 @@ export interface RoomSharing {
 }
 export interface UpdateHostelInput {
   'id' : HostelId,
+  'isSponsored' : [] | [boolean],
   'roomCapacityDetails' : RoomSharing,
 }
 export interface _CaffeineStorageCreateCertificateResult {
@@ -77,12 +79,15 @@ export interface _SERVICE {
       RoomSharing,
       Array<string>,
       string,
+      [] | [boolean],
     ],
     Hostel
   >,
   'getHostel' : ActorMethod<[HostelId], Hostel>,
   'getHostelsByCategory' : ActorMethod<[string], Array<Hostel>>,
+  'getVisitorCount' : ActorMethod<[], bigint>,
   'listHostels' : ActorMethod<[], Array<Hostel>>,
+  'recordVisit' : ActorMethod<[], bigint>,
   'updateHostel' : ActorMethod<[UpdateHostelInput], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;

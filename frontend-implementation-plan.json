@@ -1,35 +1,149 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix category filtering (All, Girls Only, Boys Only, Co-Living) on Home page",
+  "title": "Add advertisement placements and visitor-based earning features",
   "requirements": [
     {
-      "id": "REQ-57",
-      "summary": "Fix the category filter functionality on the Home page so that selecting 'All Hostels', 'Girls Only', 'Boys Only', or 'Co-Living' correctly filters the displayed hostel listings",
+      "id": "REQ-66",
+      "summary": "Create a reusable AdBanner component with three size variants (leaderboard, rectangle, banner) that displays styled advertisement placeholders ready for future ad network integration",
       "acceptanceCriteria": [
-        "Selecting 'All Hostels' displays every hostel in the listings grid",
-        "Selecting 'Girls Only' displays only hostels with category 'Girls'",
-        "Selecting 'Boys Only' displays only hostels with category 'Boys'",
-        "Selecting 'Co-Living' displays only hostels with category 'Co-Living'",
-        "The active/selected category tab is visually highlighted",
-        "Switching between category tabs updates the listings grid immediately without a page reload",
-        "If no hostels match the selected category, the empty-state UI is shown"
+        "AdBanner component renders without errors in three sizes: leaderboard, rectangle, and banner",
+        "Each variant displays the correct dimensions and an 'Advertisement' label",
+        "Styling is consistent with the existing warm terracotta/amber color palette",
+        "Component accepts an optional ad slot ID prop for future ad network integration"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AdBanner.tsx",
+          "operation": "create",
+          "description": "Create a reusable AdBanner component that accepts size prop ('leaderboard' 728x90, 'rectangle' 300x250, 'banner' 468x60), optional label prop (defaults to 'Advertisement'), and optional adSlotId prop for future ad network integration. Style with warm amber/cream background gradient matching the existing palette (amber-50/amber-100), subtle border (border-amber-200), and centered gray label text (text-gray-500). Include responsive behavior: leaderboard should collapse gracefully on mobile. Add a developer comment noting that ad network script tags (e.g., Google AdSense) can be injected in place of the placeholder once an account is approved. Use the generated placeholder images at frontend/public/assets/generated/ad-placeholder-leaderboard.dim_728x90.png and frontend/public/assets/generated/ad-placeholder-rectangle.dim_300x250.png as background images for visual consistency."
+        }
+      ]
+    },
+    {
+      "id": "REQ-67",
+      "summary": "Integrate AdBanner components into the Home page in high-visibility positions: one responsive banner below filter controls and rectangle banners inline after every 6 hostel cards",
+      "acceptanceCriteria": [
+        "A leaderboard/rectangle AdBanner appears below the filter controls and above the hostel grid on the Home page",
+        "A rectangle AdBanner appears after every 6 hostel cards in the grid",
+        "Ad placements are visible on both desktop and mobile",
+        "The hostel card grid layout is not broken by ad insertions"
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/Home.tsx",
           "operation": "modify",
-          "description": "Fix the category filtering logic to correctly switch between useGetAllHostels (for 'All Hostels') and useGetHostelsByCategory (for specific categories). Ensure the selectedCategory state is properly passed to the query hooks and that the filtering logic correctly applies the category filter to the hostel list. Verify that the CategoryFilter component's onCategoryChange callback correctly updates the selectedCategory state and triggers a re-fetch of hostels matching the selected category. Ensure the empty-state UI is displayed when no hostels match the selected category."
+          "description": "Import and place AdBanner components in two strategic positions: (1) Add a responsive banner between the filter controls section (SearchBar, CategoryFilter, AdvancedFilters, SortControls) and the HostelGrid component. Use size='leaderboard' on desktop/tablet (hidden on mobile) and a separate size='rectangle' banner for mobile (hidden on desktop/tablet) using Tailwind responsive classes. (2) Modify the hostel rendering logic to insert a rectangle AdBanner (size='rectangle') after every 6 hostel cards. To achieve this without breaking the grid, interleave ad components into the filtered/sorted hostel array before passing to HostelGrid, or render ads inline with conditional logic inside the grid mapping. Ensure the grid maintains its responsive layout (grid-cols-1 md:grid-cols-2 lg:grid-cols-3) and ad cards span appropriately to maintain visual flow."
+        }
+      ]
+    },
+    {
+      "id": "REQ-68",
+      "summary": "Add a rectangle AdBanner to the HostelDetail page positioned in the sidebar on desktop and below contact section on mobile",
+      "acceptanceCriteria": [
+        "An AdBanner rectangle appears on the HostelDetail page beside the pricing section on desktop",
+        "On mobile the ad appears below the contact section",
+        "Ad is labelled 'Advertisement' and does not overlap hostel content"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/HostelDetail.tsx",
+          "operation": "modify",
+          "description": "Import the AdBanner component and place a rectangle banner (size='rectangle') in the right sidebar on desktop (beside the room sharing/pricing Card components) and repositioned below the contact information section on mobile. Use Tailwind responsive utilities (hidden/block) to control placement: on larger screens (lg:), display the ad in a sidebar column layout alongside the pricing details; on mobile, display it after the contact section. Ensure the ad does not overlap content and maintains the warm color palette styling consistent with the page."
+        }
+      ]
+    },
+    {
+      "id": "REQ-69",
+      "summary": "Add 'Sponsored' badge display and priority sorting for sponsored hostels in frontend listings",
+      "acceptanceCriteria": [
+        "HostelCard displays a gold/amber 'Sponsored' badge when isSponsored is true",
+        "Sponsored hostels appear at the top of the listing on the Home page above non-sponsored hostels"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/HostelCard.tsx",
+          "operation": "modify",
+          "description": "Add conditional rendering to display a 'Sponsored' badge when hostel.isSponsored is true. Position the badge in the top-left corner of the hostel image (absolute positioning over the image thumbnail). Style the badge as a pill/rounded label with amber-500 or gold background, white text, small padding, and subtle shadow to ensure visibility over images. Use Tailwind classes like 'bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded-full' and position with 'absolute top-2 left-2 z-10'."
         },
         {
-          "path": "frontend/src/components/CategoryFilter.tsx",
+          "path": "frontend/src/pages/Home.tsx",
           "operation": "modify",
-          "description": "Verify and fix the CategoryFilter component state management to ensure the selected category is correctly tracked and visually highlighted. Ensure the onCategoryChange callback is invoked with the correct category value ('All', 'Girls', 'Boys', or 'Co-Living') when a user clicks a category button. Confirm that the active category button receives the correct gradient styling to indicate selection."
+          "description": "Modify the hostel sorting logic to prioritize sponsored hostels. After fetching and filtering hostels, sort the array so that hostels with isSponsored=true appear first, followed by non-sponsored hostels. Maintain the user-selected sort order (price, name, location) within each group (sponsored first, then non-sponsored sorted by the selected criteria). Implement this as a two-tier sort: primary sort by isSponsored descending, secondary sort by the user's chosen sort field."
+        }
+      ]
+    },
+    {
+      "id": "REQ-70",
+      "summary": "Create an 'Advertise With Us' informational page explaining monetization opportunities (sponsored listings, ad placements, visitor stats) with a contact call-to-action",
+      "acceptanceCriteria": [
+        "Advertise page renders at /advertise route",
+        "Page includes sponsored listing, ad placement, visitor stats, and contact sections",
+        "Page is styled consistently with the existing warm color palette",
+        "Contact CTA is visible with a placeholder WhatsApp/email link"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Advertise.tsx",
+          "operation": "create",
+          "description": "Create the Advertise page component with five main sections styled using shadcn/ui Card components and the warm terracotta/sage/amber color palette: (1) Hero section with headline 'Grow Your Business with Hostel Addas' and a subheadline explaining the site's value to hostel owners and advertisers. (2) 'Sponsored Listing' section describing how hostel owners can pay to feature their listing at the top with a 'Sponsored' badge, increasing visibility to prospective tenants. (3) 'Ad Placements' section explaining available banner ad slots (leaderboard on home page, rectangles on home and detail pages) with approximate visitor reach and engagement statistics (use placeholder numbers like '1000+ monthly visitors' with a note to update). (4) 'Visitor Stats' section displaying a placeholder metric (e.g., 'Growing audience of students and working professionals in Hyderabad') with a note that real-time stats are available on request. (5) Contact/Inquiry section with a call-to-action button linking to WhatsApp (using a placeholder number with instructional comment to update) or email (placeholder email with instruction to update). Use existing Tailwind typography classes and Card components for clean, professional presentation. Include icons from lucide-react (TrendingUp, Star, Users, Mail) for visual enhancement."
+        }
+      ]
+    },
+    {
+      "id": "REQ-71",
+      "summary": "Register the '/advertise' route in the router configuration",
+      "acceptanceCriteria": [
+        "Navigating to /advertise renders the Advertise page",
+        "The page is wrapped in the Layout component with header and footer"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import the Advertise page component and add a new Route entry for path '/advertise' nested under the existing Layout root route, alongside the other page routes (home, hostel-detail, add-hostel, etc.). Ensure the route is properly registered with TanStack Router and follows the same pattern as existing routes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-72",
+      "summary": "Add 'Advertise' navigation links to both the header and footer sections of the Layout component",
+      "acceptanceCriteria": [
+        "'Advertise' link appears in the footer and navigates to /advertise",
+        "'Advertise' link appears in the header navigation",
+        "Both links use the existing navigation styling"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Add an 'Advertise' navigation link in two places: (1) In the sticky header navigation, add a Link component to '/advertise' positioned after the existing nav links ('Browse', 'Add Hostel', 'Download App'). Style consistently with existing nav links using the same text color, hover effects, and responsive behavior. (2) In the footer section, add an 'Advertise' link within the existing footer link group (near the Privacy Policy, Disclaimer, SEO Guide links). Use the same text styling and hover effects as existing footer links. Ensure both links use TanStack Router's Link component for client-side navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-73",
+      "summary": "Implement frontend visitor tracking and display total visitor count in the footer",
+      "acceptanceCriteria": [
+        "Home page calls recordVisit() once per browser session using sessionStorage guard",
+        "Footer displays the live visitor count fetched from getVisitorCount()",
+        "Visitor count increments correctly on each new session visit"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Add a useEffect hook that runs on component mount to call the backend recordVisit() function once per browser session. Use sessionStorage to set a flag (e.g., 'visited') to prevent duplicate calls on re-renders or navigating back to the home page within the same session. Check sessionStorage for the flag; if absent, call recordVisit() via the actor hook and set the flag after the call succeeds. Handle errors gracefully (catch and log, but don't block the page)."
         },
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Review the useGetHostelsByCategory and useGetAllHostels hooks to ensure they are correctly enabled based on the selectedCategory state and that they fetch the appropriate data from the backend. Verify that useGetHostelsByCategory passes the correct category string to the backend actor's getHostelsByCategory method and that useGetAllHostels calls listHostels. Ensure query keys are unique per category to prevent cache conflicts."
+          "description": "Add a new React Query hook 'useVisitorCount' that fetches the current visitor count from the backend getVisitorCount() query function. Configure the query to poll or refetch on an interval (e.g., refetchInterval: 60000 for once per minute) to keep the count relatively fresh. Return the visitor count and loading/error states for use in the Layout footer."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Import and call the useVisitorCount hook to fetch the live visitor count. Display the count in the footer section as a small, subtle stat line: 'Visitors: X' (or 'Site Visitors: X'). Style it with muted text color (text-gray-500) and small font size to blend with the footer styling. Position it alongside or below the existing footer links, ensuring it doesn't dominate the footer but is visible for transparency. Handle loading and error states gracefully (show a loading indicator or fallback text like 'Visitors: --' if the count is unavailable)."
         }
       ]
     }
