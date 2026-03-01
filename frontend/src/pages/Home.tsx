@@ -1,34 +1,33 @@
 import { useState, useMemo } from 'react';
 import { useGetAllHostels, useGetHostelsByCategory } from '../hooks/useQueries';
-import CategoryFilter from '../components/CategoryFilter';
+import CategoryFilter, { CategoryValue } from '../components/CategoryFilter';
 import SearchBar from '../components/SearchBar';
 import AdvancedFilters from '../components/AdvancedFilters';
 import SortControls, { SortOption } from '../components/SortControls';
 import HostelGrid from '../components/HostelGrid';
 import HostelMap from '../components/HostelMap';
 import SeoInfoBanner from '../components/SeoInfoBanner';
-import { Category, Hostel } from '../backend';
 import { Loader2 } from 'lucide-react';
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState<Category | 'all'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<CategoryValue>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 20000 });
   const [selectedSharingTypes, setSelectedSharingTypes] = useState<string[]>([]);
   const [sortOption, setSortOption] = useState<SortOption>('price-asc');
-  
+
   const { data: allHostels, isLoading: isLoadingAll } = useGetAllHostels();
-  const { data: girlsHostels, isLoading: isLoadingGirls } = useGetHostelsByCategory(Category.girls);
-  const { data: boysHostels, isLoading: isLoadingBoys } = useGetHostelsByCategory(Category.boys);
-  const { data: coLivingHostels, isLoading: isLoadingCoLiving } = useGetHostelsByCategory(Category.coLiving);
+  const { data: girlsHostels, isLoading: isLoadingGirls } = useGetHostelsByCategory('Girls');
+  const { data: boysHostels, isLoading: isLoadingBoys } = useGetHostelsByCategory('Boys');
+  const { data: coLivingHostels, isLoading: isLoadingCoLiving } = useGetHostelsByCategory('Co-Living');
 
   const getCategoryFilteredHostels = () => {
     switch (selectedCategory) {
-      case Category.girls:
+      case 'Girls':
         return girlsHostels || [];
-      case Category.boys:
+      case 'Boys':
         return boysHostels || [];
-      case Category.coLiving:
+      case 'Co-Living':
         return coLivingHostels || [];
       default:
         return allHostels || [];
@@ -44,75 +43,64 @@ export default function Home() {
       hostels = hostels.filter(
         (hostel) =>
           hostel.name.toLowerCase().includes(query) ||
-          hostel.address.toLowerCase().includes(query)
+          hostel.address.toLowerCase().includes(query) ||
+          hostel.description.toLowerCase().includes(query)
       );
     }
 
-    // Apply price range filter
+    // Apply price range filter (use all 5 sharing prices)
     hostels = hostels.filter((hostel) => {
-      const minPrice = Math.min(
+      const prices = [
         Number(hostel.roomCapacityDetails.price1),
         Number(hostel.roomCapacityDetails.price2),
         Number(hostel.roomCapacityDetails.price3),
-        Number(hostel.roomCapacityDetails.price4)
-      );
+        Number(hostel.roomCapacityDetails.price4),
+        Number(hostel.roomCapacityDetails.price5),
+      ].filter((p) => p > 0);
+      const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
       return minPrice >= priceRange.min && minPrice <= priceRange.max;
     });
 
     // Apply sharing type filter
     if (selectedSharingTypes.length > 0) {
       hostels = hostels.filter((hostel) => {
-        const hasSelectedSharing = selectedSharingTypes.some((type) => {
+        return selectedSharingTypes.some((type) => {
           switch (type) {
             case 'single':
-              return Number(hostel.roomCapacityDetails.sharing1) > 0;
+              return Number(hostel.roomCapacityDetails.price1) > 0;
             case 'double':
-              return Number(hostel.roomCapacityDetails.sharing2) > 0;
+              return Number(hostel.roomCapacityDetails.price2) > 0;
             case 'triple':
-              return Number(hostel.roomCapacityDetails.sharing3) > 0;
+              return Number(hostel.roomCapacityDetails.price3) > 0;
             case 'four':
-              return Number(hostel.roomCapacityDetails.sharing4) > 0;
+              return Number(hostel.roomCapacityDetails.price4) > 0;
+            case 'five':
+              return Number(hostel.roomCapacityDetails.price5) > 0;
             default:
               return false;
           }
         });
-        return hasSelectedSharing;
       });
     }
 
     // Apply sorting
     const sortedHostels = [...hostels].sort((a, b) => {
+      const getMinPrice = (h: typeof a) => {
+        const prices = [
+          Number(h.roomCapacityDetails.price1),
+          Number(h.roomCapacityDetails.price2),
+          Number(h.roomCapacityDetails.price3),
+          Number(h.roomCapacityDetails.price4),
+          Number(h.roomCapacityDetails.price5),
+        ].filter((p) => p > 0);
+        return prices.length > 0 ? Math.min(...prices) : 0;
+      };
+
       switch (sortOption) {
-        case 'price-asc': {
-          const minPriceA = Math.min(
-            Number(a.roomCapacityDetails.price1),
-            Number(a.roomCapacityDetails.price2),
-            Number(a.roomCapacityDetails.price3),
-            Number(a.roomCapacityDetails.price4)
-          );
-          const minPriceB = Math.min(
-            Number(b.roomCapacityDetails.price1),
-            Number(b.roomCapacityDetails.price2),
-            Number(b.roomCapacityDetails.price3),
-            Number(b.roomCapacityDetails.price4)
-          );
-          return minPriceA - minPriceB;
-        }
-        case 'price-desc': {
-          const minPriceA = Math.min(
-            Number(a.roomCapacityDetails.price1),
-            Number(a.roomCapacityDetails.price2),
-            Number(a.roomCapacityDetails.price3),
-            Number(a.roomCapacityDetails.price4)
-          );
-          const minPriceB = Math.min(
-            Number(b.roomCapacityDetails.price1),
-            Number(b.roomCapacityDetails.price2),
-            Number(b.roomCapacityDetails.price3),
-            Number(b.roomCapacityDetails.price4)
-          );
-          return minPriceB - minPriceA;
-        }
+        case 'price-asc':
+          return getMinPrice(a) - getMinPrice(b);
+        case 'price-desc':
+          return getMinPrice(b) - getMinPrice(a);
         case 'name-asc':
           return a.name.localeCompare(b.name);
         case 'name-desc':
@@ -148,6 +136,15 @@ export default function Home() {
     setSelectedSharingTypes([]);
   };
 
+  const headingLabel =
+    selectedCategory === 'All'
+      ? 'All Hostels'
+      : selectedCategory === 'Girls'
+      ? 'Girls Hostels'
+      : selectedCategory === 'Boys'
+      ? 'Boys Hostels'
+      : 'Co-Living Hostels';
+
   return (
     <div className="w-full">
       {/* Hero Section */}
@@ -163,7 +160,7 @@ export default function Home() {
             Find Your Perfect Hostel
           </h1>
           <p className="text-lg md:text-xl text-white/95 max-w-2xl mb-8">
-            Discover comfortable, affordable hostels for girls, boys, and co-living spaces
+            Discover comfortable, affordable hostels for girls, boys, and co-living spaces in Hyderabad
           </p>
         </div>
       </section>
@@ -207,7 +204,7 @@ export default function Home() {
           <div className="p-6 border-b border-warm-border">
             <h2 className="text-2xl font-bold text-foreground">Explore Locations</h2>
             <p className="text-muted-foreground mt-1">
-              View all hostels on the map and find the perfect location for you
+              View all hostels on the map — hover over a marker to see details
             </p>
           </div>
           <div className="h-[500px]">
@@ -226,11 +223,10 @@ export default function Home() {
       <section className="container mx-auto px-4 mt-12 mb-16">
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-foreground mb-2">
-              {selectedCategory === 'all' ? 'All Hostels' : `${selectedCategory === Category.girls ? 'Girls' : selectedCategory === Category.boys ? 'Boys' : 'Co-Living'} Hostels`}
-            </h2>
+            <h2 className="text-3xl font-bold text-foreground mb-2">{headingLabel}</h2>
             <p className="text-muted-foreground">
-              {filteredAndSortedHostels.length} {filteredAndSortedHostels.length === 1 ? 'hostel' : 'hostels'} available
+              {filteredAndSortedHostels.length}{' '}
+              {filteredAndSortedHostels.length === 1 ? 'hostel' : 'hostels'} available
             </p>
           </div>
           <SortControls currentSort={sortOption} onSortChange={setSortOption} />

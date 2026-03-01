@@ -1,28 +1,35 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Google site verification file for Search Console",
+  "title": "Fix category filtering (All, Girls Only, Boys Only, Co-Living) on Home page",
   "requirements": [
     {
-      "id": "REQ-37",
-      "summary": "Create a placeholder Google site verification HTML file in frontend/public and update the SeoInfoBanner to guide users through the Search Console verification process",
+      "id": "REQ-57",
+      "summary": "Fix the category filter functionality on the Home page so that selecting 'All Hostels', 'Girls Only', 'Boys Only', or 'Co-Living' correctly filters the displayed hostel listings",
       "acceptanceCriteria": [
-        "A file exists at frontend/public/google-site-verification.html that is served as a static asset",
-        "The file is accessible at the /google-site-verification.html route when the app is deployed",
-        "The file contains clear instructions for the site owner to replace it with the actual Google-provided verification file",
-        "The instructions reference the Google Search Console URL (https://search.google.com/search-console) and explain the typical file naming pattern (googleXXXXXXXXXXXXXXXX.html)",
-        "The SeoInfoBanner on the Home page is updated to mention uploading the Google verification file as a step in the Search Console submission process"
+        "Selecting 'All Hostels' displays every hostel in the listings grid",
+        "Selecting 'Girls Only' displays only hostels with category 'Girls'",
+        "Selecting 'Boys Only' displays only hostels with category 'Boys'",
+        "Selecting 'Co-Living' displays only hostels with category 'Co-Living'",
+        "The active/selected category tab is visually highlighted",
+        "Switching between category tabs updates the listings grid immediately without a page reload",
+        "If no hostels match the selected category, the empty-state UI is shown"
       ],
       "file_operations": [
         {
-          "path": "frontend/public/google-site-verification.html",
-          "operation": "create",
-          "description": "Create a placeholder HTML file with instructional content explaining that the site owner must replace this file with the actual verification file downloaded from Google Search Console (https://search.google.com/search-console). The file should explain the typical Google verification file naming pattern (googleXXXXXXXXXXXXXXXX.html) and content format (google-site-verificationXXXXXXXXXXXXXXXX). Include clear step-by-step instructions for obtaining and uploading the actual verification file."
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Fix the category filtering logic to correctly switch between useGetAllHostels (for 'All Hostels') and useGetHostelsByCategory (for specific categories). Ensure the selectedCategory state is properly passed to the query hooks and that the filtering logic correctly applies the category filter to the hostel list. Verify that the CategoryFilter component's onCategoryChange callback correctly updates the selectedCategory state and triggers a re-fetch of hostels matching the selected category. Ensure the empty-state UI is displayed when no hostels match the selected category."
         },
         {
-          "path": "frontend/src/components/SeoInfoBanner.tsx",
+          "path": "frontend/src/components/CategoryFilter.tsx",
           "operation": "modify",
-          "description": "Update the banner content to include guidance about uploading the Google verification file as part of the Search Console submission workflow. Add a step or note explaining that users should replace the placeholder google-site-verification.html file in the public directory with their actual verification file from Search Console before submitting their site for indexing."
+          "description": "Verify and fix the CategoryFilter component state management to ensure the selected category is correctly tracked and visually highlighted. Ensure the onCategoryChange callback is invoked with the correct category value ('All', 'Girls', 'Boys', or 'Co-Living') when a user clicks a category button. Confirm that the active category button receives the correct gradient styling to indicate selection."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Review the useGetHostelsByCategory and useGetAllHostels hooks to ensure they are correctly enabled based on the selectedCategory state and that they fetch the appropriate data from the backend. Verify that useGetHostelsByCategory passes the correct category string to the backend actor's getHostelsByCategory method and that useGetAllHostels calls listHostels. Ensure query keys are unique per category to prevent cache conflicts."
         }
       ]
     }

@@ -1,33 +1,32 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T12:11:13.797Z",
-  "summary": "The diff adds a Google site verification file and updates the SeoInfoBanner, but uses a real/specific verification token instead of a placeholder, and does not create the required placeholder file at frontend/public/google-site-verification.html with instructional content.",
-  "missing_requirements": [
-    {
-      "id": "REQ-37",
-      "requirement": "A clearly named placeholder file must exist at frontend/public/google-site-verification.html with instructional content explaining that the user must replace it with the actual file downloaded from Google Search Console, referencing the URL https://search.google.com/search-console and explaining the typical file naming pattern (googleXXXXXXXXXXXXXXXX.html).",
-      "reason": "The diff adds frontend/public/googlee7577b039261c25d.html (a specific token file) but does NOT add frontend/public/google-site-verification.html with instructional/placeholder content. The requirement explicitly calls for a placeholder file at that path with instructions for the site owner.",
-      "evidence": [
-        "frontend/public/googlee7577b039261c25d.html"
-      ]
-    }
-  ],
+  "generatedAt": "2026-03-01T13:03:39.634Z",
+  "summary": "The diff implements both REQ-57 and REQ-58. The frontend Home.tsx now correctly uses useGetAllHostels and useGetHostelsByCategory with plain string category values ('Girls', 'Boys', 'Co-Living'), CategoryFilter uses the correct CategoryValue type with matching strings, and the backend main.mo uses Text for category with matching seed data strings. A migration module is also added to convert old enum-based categories to plain strings. All major acceptance criteria appear to be addressed.",
+  "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "A specific Google verification file with a real token (googlee7577b039261c25d.html) is created and hardcoded into the SeoInfoBanner, including the actual verification token value.",
-      "reason": "The build request explicitly states as a non-goal: 'Hardcoding a specific Google verification token (the actual token must come from the site owner's Search Console account).' The diff hardcodes the token 'googlee7577b039261c25d' in both the file name and the SeoInfoBanner component.",
+      "description": "A migration module (backend/migration.mo) was added to convert old variant-type categories (#girls, #boys, #coLiving) to plain text strings.",
+      "reason": "The build request did not request any migration logic or module. REQ-58 only asked to verify/fix the backend filtering logic and seed data alignment, not to create a migration system for converting old data schemas.",
       "evidence": [
-        "frontend/public/googlee7577b039261c25d.html",
-        "frontend/src/components/SeoInfoBanner.tsx"
+        "backend/migration.mo",
+        "backend/main.mo"
       ]
     }
   ],
-  "confidence": 0.9,
+  "confidence": 0.82,
   "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/public/googlee7577b039261c25d.html",
-    "frontend/src/components/SeoInfoBanner.tsx",
+    "frontend/src/components/CategoryFilter.tsx",
+    "frontend/src/components/HostelCard.tsx",
+    "frontend/src/components/HostelMap.tsx",
+    "frontend/src/hooks/useMutations.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/AddHostel.tsx",
+    "frontend/src/pages/Home.tsx",
+    "frontend/src/pages/HostelDetail.tsx",
     "project_state.json"
   ]
 }

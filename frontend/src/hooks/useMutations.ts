@@ -1,15 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import { Hostel, Category, RoomSharing, UpdateHostelInput } from '../backend';
-import { ExternalBlob } from '../backend';
+import { Hostel, RoomSharing, UpdateHostelInput } from '../backend';
 
 interface AddHostelParams {
   name: string;
-  category: Category;
+  category: string;
   description: string;
   address: string;
+  latitude: number;
+  longitude: number;
   roomCapacityDetails: RoomSharing;
-  imageBlobs: ExternalBlob[];
+  imageUrls: string[];
   ownerContact: string;
 }
 
@@ -28,13 +29,14 @@ export function useAddHostel() {
         params.category,
         params.description,
         params.address,
+        params.latitude,
+        params.longitude,
         params.roomCapacityDetails,
-        params.imageBlobs,
+        params.imageUrls,
         params.ownerContact
       );
     },
     onSuccess: () => {
-      // Invalidate all hostel queries to refresh the list
       queryClient.invalidateQueries({ queryKey: ['hostels'] });
     },
   });
@@ -53,9 +55,7 @@ export function useUpdateHostel() {
       return actor.updateHostel(updateInput);
     },
     onSuccess: (_, variables) => {
-      // Invalidate all hostel queries to refresh the list
       queryClient.invalidateQueries({ queryKey: ['hostels'] });
-      // Invalidate the specific hostel query
       queryClient.invalidateQueries({ queryKey: ['hostel', variables.id.toString()] });
     },
   });

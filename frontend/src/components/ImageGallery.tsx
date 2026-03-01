@@ -1,14 +1,18 @@
-import { useState } from 'react';
-import { ExternalBlob } from '../backend';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface ImageGalleryProps {
-  images: ExternalBlob[];
+  images: string[];
 }
 
 export default function ImageGallery({ images }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Reset index when images change
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [images]);
 
   if (images.length === 0) {
     return (
@@ -26,10 +30,15 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
-  const currentImageUrl = images[currentIndex].getDirectURL();
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') goToPrevious();
+    if (e.key === 'ArrowRight') goToNext();
+  };
+
+  const currentImageUrl = images[currentIndex];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" onKeyDown={handleKeyDown} tabIndex={0}>
       {/* Main Image */}
       <div className="relative w-full h-[500px] rounded-2xl overflow-hidden bg-muted group">
         <img
@@ -37,7 +46,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
           alt={`Gallery image ${currentIndex + 1}`}
           className="w-full h-full object-cover"
         />
-        
+
         {/* Navigation Arrows */}
         {images.length > 1 && (
           <>
@@ -69,18 +78,18 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
       {/* Thumbnails */}
       {images.length > 1 && (
         <div className="flex gap-3 overflow-x-auto pb-2">
-          {images.map((image, index) => (
+          {images.map((imageUrl, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden border-2 transition-all ${
+              className={`flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border-2 transition-all ${
                 index === currentIndex
-                  ? 'border-warm-primary scale-105'
-                  : 'border-transparent hover:border-warm-border'
+                  ? 'border-warm-primary shadow-md scale-105'
+                  : 'border-transparent opacity-70 hover:opacity-100'
               }`}
             >
               <img
-                src={image.getDirectURL()}
+                src={imageUrl}
                 alt={`Thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
               />

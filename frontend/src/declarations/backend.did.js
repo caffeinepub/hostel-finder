@@ -19,11 +19,6 @@ export const _CaffeineStorageRefillResult = IDL.Record({
   'success' : IDL.Opt(IDL.Bool),
   'topped_up_amount' : IDL.Opt(IDL.Nat),
 });
-export const Category = IDL.Variant({
-  'boys' : IDL.Null,
-  'coLiving' : IDL.Null,
-  'girls' : IDL.Null,
-});
 export const RoomSharing = IDL.Record({
   'sharing1' : IDL.Nat,
   'sharing2' : IDL.Nat,
@@ -36,16 +31,17 @@ export const RoomSharing = IDL.Record({
   'price4' : IDL.Nat,
   'price5' : IDL.Nat,
 });
-export const ExternalBlob = IDL.Vec(IDL.Nat8);
 export const HostelId = IDL.Nat;
 export const Hostel = IDL.Record({
   'id' : HostelId,
+  'latitude' : IDL.Float64,
+  'imageUrls' : IDL.Vec(IDL.Text),
   'name' : IDL.Text,
   'description' : IDL.Text,
+  'longitude' : IDL.Float64,
   'address' : IDL.Text,
   'ownerContact' : IDL.Text,
-  'category' : Category,
-  'imageBlobs' : IDL.Vec(ExternalBlob),
+  'category' : IDL.Text,
   'roomCapacityDetails' : RoomSharing,
 });
 export const UpdateHostelInput = IDL.Record({
@@ -83,19 +79,21 @@ export const idlService = IDL.Service({
   'addHostel' : IDL.Func(
       [
         IDL.Text,
-        Category,
         IDL.Text,
         IDL.Text,
+        IDL.Text,
+        IDL.Float64,
+        IDL.Float64,
         RoomSharing,
-        IDL.Vec(ExternalBlob),
+        IDL.Vec(IDL.Text),
         IDL.Text,
       ],
       [Hostel],
       [],
     ),
   'getHostel' : IDL.Func([HostelId], [Hostel], ['query']),
+  'getHostelsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Hostel)], ['query']),
   'listHostels' : IDL.Func([], [IDL.Vec(Hostel)], ['query']),
-  'listHostelsByCategory' : IDL.Func([Category], [IDL.Vec(Hostel)], ['query']),
   'updateHostel' : IDL.Func([UpdateHostelInput], [], []),
 });
 
@@ -113,11 +111,6 @@ export const idlFactory = ({ IDL }) => {
     'success' : IDL.Opt(IDL.Bool),
     'topped_up_amount' : IDL.Opt(IDL.Nat),
   });
-  const Category = IDL.Variant({
-    'boys' : IDL.Null,
-    'coLiving' : IDL.Null,
-    'girls' : IDL.Null,
-  });
   const RoomSharing = IDL.Record({
     'sharing1' : IDL.Nat,
     'sharing2' : IDL.Nat,
@@ -130,16 +123,17 @@ export const idlFactory = ({ IDL }) => {
     'price4' : IDL.Nat,
     'price5' : IDL.Nat,
   });
-  const ExternalBlob = IDL.Vec(IDL.Nat8);
   const HostelId = IDL.Nat;
   const Hostel = IDL.Record({
     'id' : HostelId,
+    'latitude' : IDL.Float64,
+    'imageUrls' : IDL.Vec(IDL.Text),
     'name' : IDL.Text,
     'description' : IDL.Text,
+    'longitude' : IDL.Float64,
     'address' : IDL.Text,
     'ownerContact' : IDL.Text,
-    'category' : Category,
-    'imageBlobs' : IDL.Vec(ExternalBlob),
+    'category' : IDL.Text,
     'roomCapacityDetails' : RoomSharing,
   });
   const UpdateHostelInput = IDL.Record({
@@ -177,23 +171,21 @@ export const idlFactory = ({ IDL }) => {
     'addHostel' : IDL.Func(
         [
           IDL.Text,
-          Category,
           IDL.Text,
           IDL.Text,
+          IDL.Text,
+          IDL.Float64,
+          IDL.Float64,
           RoomSharing,
-          IDL.Vec(ExternalBlob),
+          IDL.Vec(IDL.Text),
           IDL.Text,
         ],
         [Hostel],
         [],
       ),
     'getHostel' : IDL.Func([HostelId], [Hostel], ['query']),
+    'getHostelsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Hostel)], ['query']),
     'listHostels' : IDL.Func([], [IDL.Vec(Hostel)], ['query']),
-    'listHostelsByCategory' : IDL.Func(
-        [Category],
-        [IDL.Vec(Hostel)],
-        ['query'],
-      ),
     'updateHostel' : IDL.Func([UpdateHostelInput], [], []),
   });
 };

@@ -1,6 +1,31 @@
+const SITE_URL = 'https://hosteladdas.icp0.io';
+
 export default function Disclaimer() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": SITE_URL + "/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Disclaimer",
+        "item": SITE_URL + "/disclaimer"
+      }
+    ]
+  };
+
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="bg-white dark:bg-card rounded-2xl shadow-lg border border-warm-border p-8 md:p-12">
         <h1 className="text-4xl font-bold text-warm-primary mb-8">Disclaimer</h1>
         

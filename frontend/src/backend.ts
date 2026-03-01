@@ -111,12 +111,14 @@ export interface _CaffeineStorageCreateCertificateResult {
 }
 export interface Hostel {
     id: HostelId;
+    latitude: number;
+    imageUrls: Array<string>;
     name: string;
     description: string;
+    longitude: number;
     address: string;
     ownerContact: string;
-    category: Category;
-    imageBlobs: Array<ExternalBlob>;
+    category: string;
     roomCapacityDetails: RoomSharing;
 }
 export interface UpdateHostelInput {
@@ -127,11 +129,6 @@ export interface _CaffeineStorageRefillResult {
     success?: boolean;
     topped_up_amount?: bigint;
 }
-export enum Category {
-    boys = "boys",
-    coLiving = "coLiving",
-    girls = "girls"
-}
 export interface backendInterface {
     _caffeineStorageBlobIsLive(hash: Uint8Array): Promise<boolean>;
     _caffeineStorageBlobsToDelete(): Promise<Array<Uint8Array>>;
@@ -139,13 +136,13 @@ export interface backendInterface {
     _caffeineStorageCreateCertificate(blobHash: string): Promise<_CaffeineStorageCreateCertificateResult>;
     _caffeineStorageRefillCashier(refillInformation: _CaffeineStorageRefillInformation | null): Promise<_CaffeineStorageRefillResult>;
     _caffeineStorageUpdateGatewayPrincipals(): Promise<void>;
-    addHostel(name: string, category: Category, description: string, address: string, roomCapacityDetails: RoomSharing, imageBlobs: Array<ExternalBlob>, ownerContact: string): Promise<Hostel>;
+    addHostel(name: string, category: string, description: string, address: string, latitude: number, longitude: number, roomCapacityDetails: RoomSharing, imageUrls: Array<string>, ownerContact: string): Promise<Hostel>;
     getHostel(hostelId: HostelId): Promise<Hostel>;
+    getHostelsByCategory(category: string): Promise<Array<Hostel>>;
     listHostels(): Promise<Array<Hostel>>;
-    listHostelsByCategory(category: Category): Promise<Array<Hostel>>;
     updateHostel(updateInput: UpdateHostelInput): Promise<void>;
 }
-import type { Category as _Category, ExternalBlob as _ExternalBlob, Hostel as _Hostel, HostelId as _HostelId, RoomSharing as _RoomSharing, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
+import type { _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _caffeineStorageBlobIsLive(arg0: Uint8Array): Promise<boolean> {
@@ -232,60 +229,60 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async addHostel(arg0: string, arg1: Category, arg2: string, arg3: string, arg4: RoomSharing, arg5: Array<ExternalBlob>, arg6: string): Promise<Hostel> {
+    async addHostel(arg0: string, arg1: string, arg2: string, arg3: string, arg4: number, arg5: number, arg6: RoomSharing, arg7: Array<string>, arg8: string): Promise<Hostel> {
         if (this.processError) {
             try {
-                const result = await this.actor.addHostel(arg0, to_candid_Category_n8(this._uploadFile, this._downloadFile, arg1), arg2, arg3, arg4, await to_candid_vec_n10(this._uploadFile, this._downloadFile, arg5), arg6);
-                return from_candid_Hostel_n12(this._uploadFile, this._downloadFile, result);
+                const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+                return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.addHostel(arg0, to_candid_Category_n8(this._uploadFile, this._downloadFile, arg1), arg2, arg3, arg4, await to_candid_vec_n10(this._uploadFile, this._downloadFile, arg5), arg6);
-            return from_candid_Hostel_n12(this._uploadFile, this._downloadFile, result);
+            const result = await this.actor.addHostel(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+            return result;
         }
     }
     async getHostel(arg0: HostelId): Promise<Hostel> {
         if (this.processError) {
             try {
                 const result = await this.actor.getHostel(arg0);
-                return from_candid_Hostel_n12(this._uploadFile, this._downloadFile, result);
+                return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getHostel(arg0);
-            return from_candid_Hostel_n12(this._uploadFile, this._downloadFile, result);
+            return result;
+        }
+    }
+    async getHostelsByCategory(arg0: string): Promise<Array<Hostel>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getHostelsByCategory(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getHostelsByCategory(arg0);
+            return result;
         }
     }
     async listHostels(): Promise<Array<Hostel>> {
         if (this.processError) {
             try {
                 const result = await this.actor.listHostels();
-                return from_candid_vec_n18(this._uploadFile, this._downloadFile, result);
+                return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.listHostels();
-            return from_candid_vec_n18(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async listHostelsByCategory(arg0: Category): Promise<Array<Hostel>> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.listHostelsByCategory(to_candid_Category_n8(this._uploadFile, this._downloadFile, arg0));
-                return from_candid_vec_n18(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.listHostelsByCategory(to_candid_Category_n8(this._uploadFile, this._downloadFile, arg0));
-            return from_candid_vec_n18(this._uploadFile, this._downloadFile, result);
+            return result;
         }
     }
     async updateHostel(arg0: UpdateHostelInput): Promise<void> {
@@ -303,15 +300,6 @@ export class Backend implements backendInterface {
         }
     }
 }
-function from_candid_Category_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Category): Category {
-    return from_candid_variant_n15(_uploadFile, _downloadFile, value);
-}
-async function from_candid_ExternalBlob_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _ExternalBlob): Promise<ExternalBlob> {
-    return await _downloadFile(value);
-}
-async function from_candid_Hostel_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Hostel): Promise<Hostel> {
-    return await from_candid_record_n13(_uploadFile, _downloadFile, value);
-}
 function from_candid__CaffeineStorageRefillResult_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: __CaffeineStorageRefillResult): _CaffeineStorageRefillResult {
     return from_candid_record_n5(_uploadFile, _downloadFile, value);
 }
@@ -320,36 +308,6 @@ function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Ar
 }
 function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
     return value.length === 0 ? null : value[0];
-}
-async function from_candid_record_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    id: _HostelId;
-    name: string;
-    description: string;
-    address: string;
-    ownerContact: string;
-    category: _Category;
-    imageBlobs: Array<_ExternalBlob>;
-    roomCapacityDetails: _RoomSharing;
-}): Promise<{
-    id: HostelId;
-    name: string;
-    description: string;
-    address: string;
-    ownerContact: string;
-    category: Category;
-    imageBlobs: Array<ExternalBlob>;
-    roomCapacityDetails: RoomSharing;
-}> {
-    return {
-        id: value.id,
-        name: value.name,
-        description: value.description,
-        address: value.address,
-        ownerContact: value.ownerContact,
-        category: from_candid_Category_n14(_uploadFile, _downloadFile, value.category),
-        imageBlobs: await from_candid_vec_n16(_uploadFile, _downloadFile, value.imageBlobs),
-        roomCapacityDetails: value.roomCapacityDetails
-    };
 }
 function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     success: [] | [boolean];
@@ -362,27 +320,6 @@ function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint
         success: record_opt_to_undefined(from_candid_opt_n6(_uploadFile, _downloadFile, value.success)),
         topped_up_amount: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.topped_up_amount))
     };
-}
-function from_candid_variant_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    boys: null;
-} | {
-    coLiving: null;
-} | {
-    girls: null;
-}): Category {
-    return "boys" in value ? Category.boys : "coLiving" in value ? Category.coLiving : "girls" in value ? Category.girls : value;
-}
-async function from_candid_vec_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_ExternalBlob>): Promise<Array<ExternalBlob>> {
-    return await Promise.all(value.map(async (x)=>await from_candid_ExternalBlob_n17(_uploadFile, _downloadFile, x)));
-}
-async function from_candid_vec_n18(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Hostel>): Promise<Array<Hostel>> {
-    return await Promise.all(value.map(async (x)=>await from_candid_Hostel_n12(_uploadFile, _downloadFile, x)));
-}
-function to_candid_Category_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Category): _Category {
-    return to_candid_variant_n9(_uploadFile, _downloadFile, value);
-}
-async function to_candid_ExternalBlob_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: ExternalBlob): Promise<_ExternalBlob> {
-    return await _uploadFile(value);
 }
 function to_candid__CaffeineStorageRefillInformation_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _CaffeineStorageRefillInformation): __CaffeineStorageRefillInformation {
     return to_candid_record_n3(_uploadFile, _downloadFile, value);
@@ -398,24 +335,6 @@ function to_candid_record_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8A
     return {
         proposed_top_up_amount: value.proposed_top_up_amount ? candid_some(value.proposed_top_up_amount) : candid_none()
     };
-}
-function to_candid_variant_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Category): {
-    boys: null;
-} | {
-    coLiving: null;
-} | {
-    girls: null;
-} {
-    return value == Category.boys ? {
-        boys: null
-    } : value == Category.coLiving ? {
-        coLiving: null
-    } : value == Category.girls ? {
-        girls: null
-    } : value;
-}
-async function to_candid_vec_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<ExternalBlob>): Promise<Array<_ExternalBlob>> {
-    return await Promise.all(value.map(async (x)=>await to_candid_ExternalBlob_n11(_uploadFile, _downloadFile, x)));
 }
 export interface CreateActorOptions {
     agent?: Agent;

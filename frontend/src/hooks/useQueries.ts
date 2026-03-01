@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import { Hostel, Category, HostelId } from '../backend';
+import { Hostel, HostelId } from '../backend';
 
 export function useGetAllHostels() {
   const { actor, isFetching } = useActor();
@@ -15,14 +15,14 @@ export function useGetAllHostels() {
   });
 }
 
-export function useGetHostelsByCategory(category: Category) {
+export function useGetHostelsByCategory(category: string) {
   const { actor, isFetching } = useActor();
 
   return useQuery<Hostel[]>({
     queryKey: ['hostels', 'category', category],
     queryFn: async () => {
       if (!actor) return [];
-      return actor.listHostelsByCategory(category);
+      return actor.getHostelsByCategory(category);
     },
     enabled: !!actor && !isFetching,
   });

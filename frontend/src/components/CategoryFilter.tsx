@@ -1,18 +1,19 @@
-import { Category } from '../backend';
 import { Button } from '@/components/ui/button';
 import { Users, UserCircle, Home } from 'lucide-react';
 
+export type CategoryValue = 'All' | 'Girls' | 'Boys' | 'Co-Living';
+
 interface CategoryFilterProps {
-  selectedCategory: Category | 'all';
-  onCategoryChange: (category: Category | 'all') => void;
+  selectedCategory: CategoryValue;
+  onCategoryChange: (category: CategoryValue) => void;
 }
 
 export default function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
-  const categories = [
-    { value: 'all' as const, label: 'All Hostels', icon: Home },
-    { value: Category.girls, label: 'Girls Only', icon: UserCircle },
-    { value: Category.boys, label: 'Boys Only', icon: UserCircle },
-    { value: Category.coLiving, label: 'Co-Living', icon: Users },
+  const categories: { value: CategoryValue; label: string; icon: React.ElementType }[] = [
+    { value: 'All', label: 'All Hostels', icon: Home },
+    { value: 'Girls', label: 'Girls Only', icon: UserCircle },
+    { value: 'Boys', label: 'Boys Only', icon: UserCircle },
+    { value: 'Co-Living', label: 'Co-Living', icon: Users },
   ];
 
   return (
@@ -21,7 +22,7 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }: C
         {categories.map((category) => {
           const Icon = category.icon;
           const isSelected = selectedCategory === category.value;
-          
+
           return (
             <Button
               key={category.value}

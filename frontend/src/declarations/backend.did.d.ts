@@ -10,18 +10,16 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export type Category = { 'boys' : null } |
-  { 'coLiving' : null } |
-  { 'girls' : null };
-export type ExternalBlob = Uint8Array;
 export interface Hostel {
   'id' : HostelId,
+  'latitude' : number,
+  'imageUrls' : Array<string>,
   'name' : string,
   'description' : string,
+  'longitude' : number,
   'address' : string,
   'ownerContact' : string,
-  'category' : Category,
-  'imageBlobs' : Array<ExternalBlob>,
+  'category' : string,
   'roomCapacityDetails' : RoomSharing,
 }
 export type HostelId = bigint;
@@ -71,18 +69,20 @@ export interface _SERVICE {
   'addHostel' : ActorMethod<
     [
       string,
-      Category,
       string,
       string,
+      string,
+      number,
+      number,
       RoomSharing,
-      Array<ExternalBlob>,
+      Array<string>,
       string,
     ],
     Hostel
   >,
   'getHostel' : ActorMethod<[HostelId], Hostel>,
+  'getHostelsByCategory' : ActorMethod<[string], Array<Hostel>>,
   'listHostels' : ActorMethod<[], Array<Hostel>>,
-  'listHostelsByCategory' : ActorMethod<[Category], Array<Hostel>>,
   'updateHostel' : ActorMethod<[UpdateHostelInput], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;

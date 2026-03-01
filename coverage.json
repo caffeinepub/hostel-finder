@@ -1,36 +1,58 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T12:11:13.801Z",
+  "generatedAt": "2026-03-01T13:03:39.637Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 1,
+    "total": 2,
     "implemented": 1,
     "items": [
       {
-        "id": "REQ-37",
-        "summary": "Create a Google site verification HTML file at frontend/public/googleXXXXXXXXXXXXXXXX.html (using a placeholder filename that follows Google's standard verification file naming pattern, e.g. google-site-verification.html) that contains the standard Google verification meta tag content. Since the actual verification code must be provided by the user from Google Search Console, add a clearly named placeholder file at frontend/public/google-site-verification.html with instructional content explaining that the user must replace this file with the actual file downloaded from Google Search Console (https://search.google.com/search-console), which will have a filename like 'googleXXXXXXXXXXXXXXXX.html' and content like 'google-site-verificationXXXXXXXXXXXXXXXX'.",
+        "id": "REQ-57",
+        "summary": "Fix the category filter functionality on the Home page (frontend/src/pages/Home.tsx) so that selecting 'All Hostels', 'Girls Only', 'Boys Only', or 'Co-Living' correctly filters the displayed hostel listings. Investigate whether the issue is in the CategoryFilter component state, the query hook (useGetHostelsByCategory vs useGetAllHostels), or the filtering logic applied to the hostel list, and ensure selecting each category tab shows only hostels matching that category (or all hostels for 'All').",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/google-site-verification.html",
-          "frontend/src/components/SeoInfoBanner.tsx"
+          "frontend/src/pages/Home.tsx",
+          "frontend/src/components/CategoryFilter.tsx",
+          "frontend/src/hooks/useQueries.ts"
         ],
         "matchedFiles": [
-          "frontend/src/components/SeoInfoBanner.tsx"
+          "frontend/src/pages/Home.tsx",
+          "frontend/src/components/CategoryFilter.tsx",
+          "frontend/src/hooks/useQueries.ts"
         ]
+      },
+      {
+        "id": "REQ-58",
+        "summary": "Verify and fix the backend category filtering logic in backend/main.mo so that the getHostelsByCategory function (or equivalent) correctly matches and returns hostels whose category field equals the requested category string (e.g. 'Girls', 'Boys', 'Co-Living'). Ensure the category values stored in the seed data and returned by the backend exactly match the values expected by the frontend filter.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/googlee7577b039261c25d.html",
-    "frontend/src/components/SeoInfoBanner.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/CategoryFilter.tsx",
+    "frontend/src/components/HostelCard.tsx",
+    "frontend/src/components/HostelMap.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useMutations.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/AddHostel.tsx",
+    "frontend/src/pages/Home.tsx",
+    "frontend/src/pages/HostelDetail.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

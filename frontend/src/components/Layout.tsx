@@ -52,7 +52,7 @@ export default function Layout() {
               <p className="text-sm text-muted-foreground">
                 © {currentYear} Hostel Finder. All rights reserved.
               </p>
-              <div className="flex items-center justify-center md:justify-start gap-4 mt-2">
+              <div className="flex items-center justify-center md:justify-start gap-4 mt-2 flex-wrap">
                 <Link
                   to="/privacy"
                   className="text-sm text-warm-primary hover:text-warm-accent transition-colors font-medium"
@@ -65,6 +65,13 @@ export default function Layout() {
                   className="text-sm text-warm-primary hover:text-warm-accent transition-colors font-medium"
                 >
                   Disclaimer
+                </Link>
+                <span className="text-muted-foreground">•</span>
+                <Link
+                  to="/seo-guide"
+                  className="text-sm text-warm-primary hover:text-warm-accent transition-colors font-medium"
+                >
+                  SEO Guide
                 </Link>
               </div>
             </div>

@@ -6,6 +6,7 @@ import AddHostel from './pages/AddHostel';
 import EditHostel from './pages/EditHostel';
 import Privacy from './pages/Privacy';
 import Disclaimer from './pages/Disclaimer';
+import SeoGuide from './pages/SeoGuide';
 
 const rootRoute = createRootRoute({
   component: Layout,
@@ -47,6 +48,12 @@ const disclaimerRoute = createRoute({
   component: Disclaimer,
 });
 
+const seoGuideRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/seo-guide',
+  component: SeoGuide,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   hostelDetailRoute,
@@ -54,6 +61,7 @@ const routeTree = rootRoute.addChildren([
   editHostelRoute,
   privacyRoute,
   disclaimerRoute,
+  seoGuideRoute,
 ]);
 
 const router = createRouter({ routeTree });

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 21,
+  "projectStateVersion": 29,
   "summary": "Website for listing hostels with separate categories for girls, boys, and co-living spaces. Features include hostel images, maps, room sharing details, pricing information, and a clean homepage.",
   "architectural_notes": [
     "Website type project with hostel listing functionality",
@@ -15,9 +15,11 @@
     "SEO meta tags needed for Google indexing (title, description, keywords, Open Graph, sitemap)"
   ],
   "known_issues": [
-    "Site not indexed by Google yet - SEO meta tags and Google Search Console submission needed"
+    "Site not indexed by Google yet - SEO meta tags and Google Search Console submission needed",
+    "Site still not visible in Google search results - requires additional SEO improvements beyond meta tags (structured data, backlinks, content optimization)",
+    "Category filtering (All Hostels, Girls Only, Boys Only, Co-Living) not working on the home page"
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-design-and-implement-a-clean-modern-homepage-that-displays-hostel-categories-girls-boys-co-living-with-category-selection-or-filtering",
@@ -258,6 +260,102 @@
         "REQ-37"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-json-ld-structured-data-schema-org-markup-to-frontend-index-html-and-key-pages-include-a-website-schema-with-searchaction-on-the-home-page-and-a-localbusiness-lodgingbusiness-schema-for-the-site-overall-also-add-breadcrumblist-schema-to-the-privacy-and-disclaimer-pages-this-helps-google-understand-the-site-content-and-display-rich-results",
+      "title": "Add JSON-LD structured data (Schema.org markup) to frontend/index.html and key pages. Include a WebSite schema with SearchAction on the home page, and a LocalBusiness / LodgingBusiness schema for the site overall. Also add BreadcrumbList schema to the Privacy and Disclaimer pages. This helps Google understand the site content and display rich results.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-seoinfobanner-component-frontend-src-components-seoinfobanner-tsx-to-include-a-step-by-step-how-to-find-your-site-on-google-guide-section-the-guide-should-explain-1-after-submitting-the-sitemap-to-google-search-console-indexing-can-take-1-4-weeks-2-users-can-check-if-their-site-is-indexed-by-typing-site-your-canister-url-in-google-search-3-they-can-also-search-for-hostel-addas-hyderabad-or-hostels-in-hyderabad-pg-to-find-the-listing-4-share-the-site-url-on-social-media-and-local-directories-to-build-backlinks-and-speed-up-indexing-style-this-guide-consistently-with-the-existing-warm-terracotta-amber-palette-and-keep-it-dismissible-per-the-existing-localstorage-logic",
+      "title": "Update the SeoInfoBanner component (frontend/src/components/SeoInfoBanner.tsx) to include a step-by-step 'How to find your site on Google' guide section. The guide should explain: (1) After submitting the sitemap to Google Search Console, indexing can take 1–4 weeks; (2) Users can check if their site is indexed by typing 'site:YOUR-CANISTER-URL' in Google search; (3) They can also search for 'Hostel Addas Hyderabad' or 'hostels in Hyderabad PG' to find the listing; (4) Share the site URL on social media and local directories to build backlinks and speed up indexing. Style this guide consistently with the existing warm terracotta/amber palette, and keep it dismissible per the existing localStorage logic.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-dedicated-seo-guide-page-component-at-frontend-src-pages-seoguide-tsx-that-provides-a-comprehensive-persistent-seo-and-google-visibility-guide-for-the-site-owner-the-page-should-cover-1-how-to-verify-the-site-is-indexed-using-site-canister-url-search-2-how-to-submit-and-monitor-the-sitemap-in-google-search-console-3-how-to-search-for-the-site-using-branded-terms-hostel-addas-hyderabad-and-category-terms-girls-hostel-hyderabad-boys-pg-hyderabad-co-living-hyderabad-4-tips-for-improving-ranking-getting-listed-on-justdial-sulekha-magicbricks-pg-section-and-linking-back-to-the-site-5-expected-timeline-1-4-weeks-after-search-console-submission-for-first-appearance-register-this-route-in-frontend-src-app-tsx-and-add-a-subtle-seo-guide-link-in-the-footer-of-frontend-src-components-layout-tsx",
+      "title": "Add a dedicated '/seo-guide' page component at frontend/src/pages/SeoGuide.tsx that provides a comprehensive, persistent SEO and Google visibility guide for the site owner. The page should cover: (1) How to verify the site is indexed using 'site:canister-url' search; (2) How to submit and monitor the sitemap in Google Search Console; (3) How to search for the site using branded terms ('Hostel Addas Hyderabad') and category terms ('girls hostel Hyderabad', 'boys PG Hyderabad', 'co-living Hyderabad'); (4) Tips for improving ranking: getting listed on JustDial, Sulekha, MagicBricks PG section and linking back to the site; (5) Expected timeline (1–4 weeks after Search Console submission for first appearance). Register this route in frontend/src/App.tsx and add a subtle 'SEO Guide' link in the footer of frontend/src/components/Layout.tsx.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-sitemap-at-frontend-public-sitemap-xml-to-include-hostel-detail-page-url-patterns-and-update-lastmod-dates-to-today-s-date-2025-07-10-also-add-changefreq-weekly-changefreq-for-the-home-page-to-signal-frequent-content-updates-to-crawlers",
+      "title": "Enhance the sitemap at frontend/public/sitemap.xml to include hostel detail page URL patterns and update <lastmod> dates to today's date (2025-07-10). Also add <changefreq>weekly</changefreq> for the home page to signal frequent content updates to crawlers.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-additional-location-specific-and-long-tail-seo-keywords-to-the-meta-name-keywords-tag-and-the-open-graph-description-in-frontend-index-html-include-terms-such-as-pg-in-hyderabad-paying-guest-hyderabad-affordable-hostels-hyderabad-girls-pg-near-hitech-city-boys-hostel-kukatpally-co-living-spaces-gachibowli-hostel-near-jntu-hyderabad-student-accommodation-hyderabad-also-update-the-meta-name-description-to-weave-in-2-3-of-these-high-value-location-terms-naturally-within-the-150-160-character-limit",
+      "title": "Add additional location-specific and long-tail SEO keywords to the <meta name='keywords'> tag and the Open Graph description in frontend/index.html. Include terms such as: 'PG in Hyderabad', 'paying guest Hyderabad', 'affordable hostels Hyderabad', 'girls PG near Hitech City', 'boys hostel Kukatpally', 'co-living spaces Gachibowli', 'hostel near JNTU Hyderabad', 'student accommodation Hyderabad'. Also update the <meta name='description'> to weave in 2–3 of these high-value location terms naturally within the 150-160 character limit.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-static-hostel-image-assets-for-the-new-hyderabad-hostel-seed-data-create-6-images-total-2-for-girls-hostels-warm-interior-clean-room-2-for-boys-hostels-modern-dormitory-common-area-and-2-for-co-living-spaces-shared-lounge-well-lit-bedroom-save-them-in-frontend-public-assets-generated-and-reference-them-in-the-backend-seed-data-added-in-req-50",
+      "title": "Generate static hostel image assets for the new Hyderabad hostel seed data. Create 6 images total: 2 for girls hostels (warm interior, clean room), 2 for boys hostels (modern dormitory, common area), and 2 for co-living spaces (shared lounge, well-lit bedroom). Save them in frontend/public/assets/generated/ and reference them in the backend seed data added in REQ-50.",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-imagegallery-component-frontend-src-components-imagegallery-tsx-and-the-hosteldetail-page-frontend-src-pages-hosteldetail-tsx-to-properly-display-all-images-associated-with-a-hostel-in-a-navigable-gallery-ensure-that-when-a-hostel-has-multiple-images-the-gallery-shows-all-of-them-with-previous-next-navigation-and-clickable-thumbnails-fallback-to-a-category-appropriate-placeholder-if-a-hostel-has-no-images",
+      "title": "Update the ImageGallery component (frontend/src/components/ImageGallery.tsx) and the HostelDetail page (frontend/src/pages/HostelDetail.tsx) to properly display all images associated with a hostel in a navigable gallery. Ensure that when a hostel has multiple images, the gallery shows all of them with previous/next navigation and clickable thumbnails. Fallback to a category-appropriate placeholder if a hostel has no images.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-hostelmap-component-frontend-src-components-hostelmap-tsx-renders-markers-for-all-new-hyderabad-hostels-using-their-latitude-longitude-coordinates-from-the-backend-each-marker-should-show-the-hostel-name-and-category-on-hover-click-the-map-view-on-the-home-page-should-display-all-seeded-hostels-with-correctly-placed-markers-within-the-hyderabad-region",
+      "title": "Ensure the HostelMap component (frontend/src/components/HostelMap.tsx) renders markers for all new Hyderabad hostels using their latitude/longitude coordinates from the backend. Each marker should show the hostel name and category on hover/click. The map view on the Home page should display all seeded hostels with correctly placed markers within the Hyderabad region.",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-addhostel-page-frontend-src-pages-addhostel-tsx-fully-supports-adding-hostels-with-name-category-girls-boys-co-living-description-full-address-owner-contact-phone-number-latitude-longitude-via-the-maplocationpicker-and-individual-price-inputs-for-1-sharing-2-sharing-3-sharing-4-sharing-and-5-sharing-room-types-verify-the-form-submits-all-data-to-the-backend-addhostel-function-and-redirects-to-the-new-hostel-s-detail-page-on-success",
+      "title": "Ensure the AddHostel page (frontend/src/pages/AddHostel.tsx) fully supports adding hostels with: name, category (Girls/Boys/Co-Living), description, full address, owner contact phone number, latitude/longitude via the MapLocationPicker, and individual price inputs for 1-sharing, 2-sharing, 3-sharing, 4-sharing, and 5-sharing room types. Verify the form submits all data to the backend addHostel function and redirects to the new hostel's detail page on success.",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-edithostel-page-frontend-src-pages-edithostel-tsx-is-accessible-from-the-hosteldetail-page-via-the-edit-hostel-button-pre-populates-all-5-sharing-type-price-fields-1-sharing-through-5-sharing-with-current-hostel-data-and-saves-updates-via-the-backend-updatehostel-function-show-a-success-toast-on-save-and-return-the-user-to-the-hostel-detail-page",
+      "title": "Ensure the EditHostel page (frontend/src/pages/EditHostel.tsx) is accessible from the HostelDetail page via the Edit Hostel button, pre-populates all 5 sharing type price fields (1-sharing through 5-sharing) with current hostel data, and saves updates via the backend updateHostel function. Show a success toast on save and return the user to the hostel detail page.",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-owner-contact-number-prominently-on-both-the-hostelcard-component-frontend-src-components-hostelcard-tsx-and-the-hosteldetail-page-frontend-src-pages-hosteldetail-tsx-on-the-card-show-it-below-the-address-with-a-phone-icon-on-the-detail-page-show-it-in-a-dedicated-contact-section-near-the-hostel-name-with-a-clickable-tel-link-for-direct-calling",
+      "title": "Display the owner contact number prominently on both the HostelCard component (frontend/src/components/HostelCard.tsx) and the HostelDetail page (frontend/src/pages/HostelDetail.tsx). On the card, show it below the address with a phone icon. On the detail page, show it in a dedicated contact section near the hostel name with a clickable tel: link for direct calling.",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-category-filter-functionality-on-the-home-page-frontend-src-pages-home-tsx-so-that-selecting-all-hostels-girls-only-boys-only-or-co-living-correctly-filters-the-displayed-hostel-listings-investigate-whether-the-issue-is-in-the-categoryfilter-component-state-the-query-hook-usegethostelsbycategory-vs-usegetallhostels-or-the-filtering-logic-applied-to-the-hostel-list-and-ensure-selecting-each-category-tab-shows-only-hostels-matching-that-category-or-all-hostels-for-all",
+      "title": "Fix the category filter functionality on the Home page (frontend/src/pages/Home.tsx) so that selecting 'All Hostels', 'Girls Only', 'Boys Only', or 'Co-Living' correctly filters the displayed hostel listings. Investigate whether the issue is in the CategoryFilter component state, the query hook (useGetHostelsByCategory vs useGetAllHostels), or the filtering logic applied to the hostel list, and ensure selecting each category tab shows only hostels matching that category (or all hostels for 'All').",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -411,6 +509,90 @@
       "id": "AR-27",
       "summary": "Upload Google site verification file to the website for Google Search Console verification",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Improve SEO further to increase Google search visibility - add structured data (JSON-LD schema markup), improve page titles, add more location-specific keywords, and provide user guidance on how to search for the site on Google",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Create a mobile app version of the hostel listing site",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Update the Layout component (frontend/src/components/Layout.tsx) to use a mobile-first responsive design: replace the desktop sticky header with a top app bar that shows only the logo/site name on mobile, add a bottom navigation bar on mobile screens with tabs for Home, Map, Add Hostel, and a hamburger menu or drawer for additional links (Privacy, Disclaimer, SEO Guide). The bottom nav should use the existing warm terracotta/amber color palette and highlight the active tab.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Update frontend/src/pages/Home.tsx to use a mobile-optimized layout: stack the search bar, category filter, advanced filters, and sort controls vertically in a single-column layout on mobile. The category filter should render as a horizontally scrollable pill row. The hostel grid should switch to a single-column card list on mobile. The map view toggle should be accessible via a floating action button (FAB) on mobile rather than an inline toggle.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Update the HostelCard component (frontend/src/components/HostelCard.tsx) to be touch-friendly for mobile: increase tap target sizes (minimum 44px height for interactive elements), use a full-width card layout on mobile with the image displayed as a banner at the top (aspect ratio 16:9), and show the hostel name, category badge, price, and contact number in a compact summary below the image. Add a subtle tap/press visual feedback using CSS active state.",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Update the HostelDetail page (frontend/src/pages/HostelDetail.tsx) for mobile: make the image gallery full-width with swipe-friendly navigation (use CSS scroll-snap on a horizontally scrollable strip), stack all content sections (room sharing, contact, map, description) vertically, and display a sticky bottom bar on mobile with the owner contact number and a 'Call Now' tel: link button styled in the warm color palette.",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Update the AddHostel page (frontend/src/pages/AddHostel.tsx) and EditHostel page (frontend/src/pages/EditHostel.tsx) for mobile: each form step should occupy the full viewport height with vertically stacked fields, increase input height to at least 48px for touch usability, and make the step navigation buttons (Previous/Next/Submit) full-width on mobile. The Google Maps location picker should render at a height of at least 300px on mobile.",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Add a viewport meta tag and mobile web app meta tags to frontend/index.html to enable a native app-like experience: ensure `<meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>` is present, add `<meta name='mobile-web-app-capable' content='yes'>`, `<meta name='apple-mobile-web-app-capable' content='yes'>`, `<meta name='apple-mobile-web-app-status-bar-style' content='default'>`, and `<meta name='apple-mobile-web-app-title' content='Hostel Addas'>`. Also add a `<meta name='theme-color'>` using the primary terracotta color (#C1440E or closest token).",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Update frontend/tailwind.config.js and frontend/src/index.css to ensure all touch interaction states are properly styled: add `touch-action: manipulation` to buttons and links to eliminate the 300ms tap delay, ensure focus-visible outlines are preserved for accessibility, and add safe-area-inset padding support (env(safe-area-inset-bottom)) to the bottom navigation bar and sticky footer elements so content is not obscured by device notches or home indicators.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Expand the backend seed data in backend/main.mo to include at least 9 real Hyderabad hostels (3 Girls, 3 Boys, 3 Co-Living). Each hostel must have: name, category, full Hyderabad address (e.g. Kukatpally, Gachibowli, JNTU, Hitech City, Madhapur, Ameerpet areas), description, ownerContact phone number, latitude/longitude coordinates for Hyderabad, and a roomSharing array covering 1-sharing, 2-sharing, 3-sharing, 4-sharing, and 5-sharing with realistic per-bed prices in INR (ranging roughly ₹4000–₹12000 depending on sharing type and category). Assign at least 2 image URLs per hostel using the existing static asset paths under /assets/generated/.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Verify and fix the backend category filtering logic in backend/main.mo so that the getHostelsByCategory function (or equivalent) correctly matches and returns hostels whose category field equals the requested category string (e.g. 'Girls', 'Boys', 'Co-Living'). Ensure the category values stored in the seed data and returned by the backend exactly match the values expected by the frontend filter.",
+      "reqIds": [
+        "REQ-58"
+      ],
       "status": "pending"
     }
   ],
