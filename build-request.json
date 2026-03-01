@@ -1,0 +1,41 @@
+{
+  "kind": "build_request",
+  "title": "Add Google site verification file for Search Console",
+  "projectName": "Hostel Addas",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-37",
+      "text": "Create a Google site verification HTML file at frontend/public/googleXXXXXXXXXXXXXXXX.html (using a placeholder filename that follows Google's standard verification file naming pattern, e.g. google-site-verification.html) that contains the standard Google verification meta tag content. Since the actual verification code must be provided by the user from Google Search Console, add a clearly named placeholder file at frontend/public/google-site-verification.html with instructional content explaining that the user must replace this file with the actual file downloaded from Google Search Console (https://search.google.com/search-console), which will have a filename like 'googleXXXXXXXXXXXXXXXX.html' and content like 'google-site-verificationXXXXXXXXXXXXXXXX'.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "upload to my site for google verification"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A file exists at frontend/public/google-site-verification.html that is served as a static asset",
+        "The file is accessible at the /google-site-verification.html route when the app is deployed",
+        "The file contains clear instructions for the site owner to replace it with the actual Google-provided verification file",
+        "The instructions reference the Google Search Console URL (https://search.google.com/search-console) and explain the typical file naming pattern (googleXXXXXXXXXXXXXXXX.html)",
+        "The SeoInfoBanner on the Home page is updated to mention uploading the Google verification file as a step in the Search Console submission process"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify any files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui",
+    "The verification file must be placed in frontend/public so it is served as a static asset at the root URL path"
+  ],
+  "nonGoals": [
+    "Hardcoding a specific Google verification token (the actual token must come from the site owner's Search Console account)",
+    "Automating the Google Search Console submission process",
+    "Changes to backend logic"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-03-01T12:11:13.801Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 1,
+    "implemented": 1,
+    "items": [
+      {
+        "id": "REQ-37",
+        "summary": "Create a Google site verification HTML file at frontend/public/googleXXXXXXXXXXXXXXXX.html (using a placeholder filename that follows Google's standard verification file naming pattern, e.g. google-site-verification.html) that contains the standard Google verification meta tag content. Since the actual verification code must be provided by the user from Google Search Console, add a clearly named placeholder file at frontend/public/google-site-verification.html with instructional content explaining that the user must replace this file with the actual file downloaded from Google Search Console (https://search.google.com/search-console), which will have a filename like 'googleXXXXXXXXXXXXXXXX.html' and content like 'google-site-verificationXXXXXXXXXXXXXXXX'.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/google-site-verification.html",
+          "frontend/src/components/SeoInfoBanner.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/SeoInfoBanner.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/public/googlee7577b039261c25d.html",
+    "frontend/src/components/SeoInfoBanner.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

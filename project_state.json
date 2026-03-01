@@ -1,0 +1,421 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 21,
+  "summary": "Website for listing hostels with separate categories for girls, boys, and co-living spaces. Features include hostel images, maps, room sharing details, pricing information, and a clean homepage.",
+  "architectural_notes": [
+    "Website type project with hostel listing functionality",
+    "Need image hosting/storage for hostel photos",
+    "Map integration required (Google Maps or similar)",
+    "Category-based filtering system (girls/boys/co-living)",
+    "Sample hostel data includes Hyderabad location with various sharing options",
+    "Manual hostel entry form required with fields for all hostel attributes",
+    "Google Maps integration needed for location selection during hostel creation",
+    "Edit hostel functionality required for updating room sharing options and pricing",
+    "Privacy policy and disclaimer pages required for legal compliance",
+    "SEO meta tags needed for Google indexing (title, description, keywords, Open Graph, sitemap)"
+  ],
+  "known_issues": [
+    "Site not indexed by Google yet - SEO meta tags and Google Search Console submission needed"
+  ],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-design-and-implement-a-clean-modern-homepage-that-displays-hostel-categories-girls-boys-co-living-with-category-selection-or-filtering",
+      "title": "Design and implement a clean, modern homepage that displays hostel categories (Girls, Boys, Co-Living) with category selection or filtering",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-hostel-listing-cards-that-display-hostel-images-name-category-badge-price-room-sharing-details-and-location-information",
+      "title": "Create hostel listing cards that display hostel images, name, category badge, price, room sharing details, and location information",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-interactive-maps-that-show-hostel-locations-with-markers-for-each-listed-hostel",
+      "title": "Integrate interactive maps that show hostel locations with markers for each listed hostel",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-detailed-hostel-view-page-that-shows-all-images-in-a-gallery-complete-room-details-pricing-breakdown-map-location-and-sharing-arrangements",
+      "title": "Implement a detailed hostel view page that shows all images in a gallery, complete room details, pricing breakdown, map location, and sharing arrangements",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-cohesive-visual-design-with-a-welcoming-hospitality-focused-aesthetic-using-warm-inviting-colors-earth-tones-soft-oranges-or-greens-clean-typography-and-spacious-layouts-that-emphasize-comfort-and-community",
+      "title": "Apply a cohesive visual design with a welcoming, hospitality-focused aesthetic using warm, inviting colors (earth tones, soft oranges, or greens), clean typography, and spacious layouts that emphasize comfort and community",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-generated-hostel-images-as-static-assets-in-frontend-public-assets-generated-and-display-them-in-hostel-listings-and-detail-views",
+      "title": "Render generated hostel images as static assets in frontend/public/assets/generated and display them in hostel listings and detail views",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-newly-added-hyderabad-hostels-on-the-homepage-with-proper-category-filtering-showing-all-hostel-details-including-sharing-capacity-and-pricing-information-in-the-hostel-cards",
+      "title": "Display the newly added Hyderabad hostels on the homepage with proper category filtering, showing all hostel details including sharing capacity and pricing information in the hostel cards",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-hostel-owner-s-contact-number-on-hostel-listing-cards-in-the-hostelcard-component-shown-below-the-address-with-a-phone-icon",
+      "title": "Display the hostel owner's contact number on hostel listing cards in the HostelCard component, shown below the address with a phone icon",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-hostel-owner-s-contact-number-prominently-on-the-hosteldetail-page-positioned-near-the-hostel-name-and-address-in-a-dedicated-contact-section",
+      "title": "Display the hostel owner's contact number prominently on the HostelDetail page, positioned near the hostel name and address in a dedicated contact section",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-search-bar-component-to-the-home-page-that-filters-hostels-by-name-or-address-in-real-time-as-the-user-types",
+      "title": "Add a search bar component to the Home page that filters hostels by name or address in real-time as the user types",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-advanced-filter-controls-to-the-home-page-for-price-range-and-room-sharing-capacity-that-work-alongside-the-existing-category-filter",
+      "title": "Add advanced filter controls to the Home page for price range and room sharing capacity that work alongside the existing category filter",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-sort-controls-to-the-home-page-that-allow-users-to-sort-hostel-listings-by-price-low-to-high-high-to-low-name-a-z-z-a-or-location",
+      "title": "Add sort controls to the Home page that allow users to sort hostel listings by price (low to high, high to low), name (A-Z, Z-A), or location",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-addhostel-page-component-with-a-multi-step-form-that-collects-hostel-name-category-selection-girls-boys-co-living-description-full-address-owner-contact-number-and-room-sharing-options-with-individual-price-inputs-for-each-sharing-type",
+      "title": "Create an AddHostel page component with a multi-step form that collects: hostel name, category selection (Girls/Boys/Co-Living), description, full address, owner contact number, and room sharing options with individual price inputs for each sharing type",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-google-maps-location-picker-in-the-addhostel-form-that-allows-users-to-search-for-and-select-a-location-displaying-the-selected-address-and-capturing-latitude-longitude-coordinates",
+      "title": "Integrate Google Maps location picker in the AddHostel form that allows users to search for and select a location, displaying the selected address and capturing latitude/longitude coordinates",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-form-submission-in-the-addhostel-page-that-calls-the-backend-addhostel-function-with-all-collected-data-displays-success-error-messages-and-redirects-to-the-newly-created-hostel-detail-page-on-success",
+      "title": "Implement form submission in the AddHostel page that calls the backend addHostel function with all collected data, displays success/error messages, and redirects to the newly created hostel detail page on success",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-prominent-add-hostel-button-in-the-layout-header-navigation-that-links-to-the-addhostel-form-page",
+      "title": "Add a prominent 'Add Hostel' button in the Layout header navigation that links to the AddHostel form page",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-edit-hostel-button-to-the-hosteldetail-page-that-navigates-to-an-edit-form-page-edit-hostel-id-where-users-can-modify-the-existing-hostel-s-room-sharing-options-and-their-corresponding-prices",
+      "title": "Add an Edit Hostel button to the HostelDetail page that navigates to an edit form page (/edit-hostel/:id) where users can modify the existing hostel's room sharing options and their corresponding prices",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-edithostel-page-component-at-frontend-src-pages-edithostel-tsx-that-displays-a-form-similar-to-addhostel-but-pre-populated-with-existing-hostel-data-focusing-specifically-on-editing-the-roomsharing-array-room-types-and-their-prices",
+      "title": "Create an EditHostel page component at frontend/src/pages/EditHostel.tsx that displays a form similar to AddHostel but pre-populated with existing hostel data, focusing specifically on editing the roomSharing array (room types and their prices)",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-new-route-in-frontend-src-app-tsx-for-edit-hostel-id-that-renders-the-edithostel-page-component",
+      "title": "Add a new route in frontend/src/App.tsx for /edit-hostel/:id that renders the EditHostel page component",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-react-query-mutation-hook-useupdatehostel-in-frontend-src-hooks-usemutations-ts-that-calls-the-backend-updatehostel-function-invalidates-the-hostels-query-cache-on-success-and-handles-loading-error-states",
+      "title": "Create a React Query mutation hook useUpdateHostel in frontend/src/hooks/useMutations.ts that calls the backend updateHostel function, invalidates the hostels query cache on success, and handles loading/error states",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-edithostel-page-component-frontend-src-pages-edithostel-tsx-to-include-input-fields-for-one-sharing-two-sharing-three-sharing-four-sharing-and-five-sharing-room-types-with-their-corresponding-price-inputs-allowing-users-to-edit-prices-for-all-five-sharing-capacities",
+      "title": "Update the EditHostel page component (frontend/src/pages/EditHostel.tsx) to include input fields for one-sharing, two-sharing, three-sharing, four-sharing, and five-sharing room types with their corresponding price inputs, allowing users to edit prices for all five sharing capacities",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-privacy-page-component-at-frontend-src-pages-privacy-tsx-that-displays-a-comprehensive-privacy-policy-covering-data-collection-usage-storage-user-rights-and-contact-information-styled-consistently-with-the-existing-warm-terracotta-sage-amber-color-palette",
+      "title": "Create a Privacy page component at frontend/src/pages/Privacy.tsx that displays a comprehensive privacy policy covering data collection, usage, storage, user rights, and contact information, styled consistently with the existing warm terracotta/sage/amber color palette",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-disclaimer-page-component-at-frontend-src-pages-disclaimer-tsx-that-displays-legal-disclaimers-covering-liability-limitations-accuracy-of-information-third-party-content-and-terms-of-use-styled-consistently-with-the-existing-design-system",
+      "title": "Create a Disclaimer page component at frontend/src/pages/Disclaimer.tsx that displays legal disclaimers covering liability limitations, accuracy of information, third-party content, and terms of use, styled consistently with the existing design system",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-routes-for-privacy-and-disclaimer-in-frontend-src-app-tsx-that-render-the-privacy-and-disclaimer-page-components-respectively",
+      "title": "Add routes for /privacy and /disclaimer in frontend/src/App.tsx that render the Privacy and Disclaimer page components respectively",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-privacy-and-disclaimer-links-to-the-footer-section-of-the-layout-component-frontend-src-components-layout-tsx-that-navigate-to-the-respective-pages",
+      "title": "Add Privacy and Disclaimer links to the footer section of the Layout component (frontend/src/components/Layout.tsx) that navigate to the respective pages",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-index-html-to-include-comprehensive-seo-meta-tags-a-descriptive-title-tag-hostel-addas-hostels-in-hyderabad-girls-boys-co-living-pg-a-meta-name-description-with-a-150-160-character-description-about-hostel-listings-in-hyderabad-meta-name-keywords-with-relevant-terms-hostels-in-hyderabad-pg-accommodation-girls-hostel-boys-hostel-co-living-paying-guest-open-graph-tags-og-title-og-description-og-type-og-url-og-site-name-and-twitter-card-meta-tags-twitter-card-twitter-title-twitter-description-also-add-meta-name-robots-content-index-follow-and-a-canonical-link-tag",
+      "title": "Update frontend/index.html to include comprehensive SEO meta tags: a descriptive <title> tag ('Hostel Addas - Hostels in Hyderabad | Girls, Boys & Co-Living PG'), a <meta name='description'> with a 150-160 character description about hostel listings in Hyderabad, <meta name='keywords'> with relevant terms (hostels in Hyderabad, PG accommodation, girls hostel, boys hostel, co-living, paying guest), Open Graph tags (og:title, og:description, og:type, og:url, og:site_name), and Twitter Card meta tags (twitter:card, twitter:title, twitter:description). Also add <meta name='robots' content='index, follow'> and a canonical link tag.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-static-sitemap-file-at-frontend-public-sitemap-xml-listing-the-main-routes-of-the-app-home-privacy-privacy-and-disclaimer-disclaimer-include-lastmod-changefreq-and-priority-elements-for-each-url-the-domain-should-use-a-placeholder-that-matches-the-icp-canister-url-pattern",
+      "title": "Create a static sitemap file at frontend/public/sitemap.xml listing the main routes of the app: home (/), privacy (/privacy), and disclaimer (/disclaimer). Include <lastmod>, <changefreq>, and <priority> elements for each URL. The domain should use a placeholder that matches the ICP canister URL pattern.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-robots-txt-file-at-frontend-public-robots-txt-that-allows-all-search-engine-crawlers-to-index-the-site-user-agent-disallow-nothing-and-includes-a-sitemap-directive-pointing-to-the-sitemap-xml-url",
+      "title": "Create a robots.txt file at frontend/public/robots.txt that allows all search engine crawlers to index the site (User-agent: *, Disallow: nothing), and includes a Sitemap directive pointing to the sitemap.xml URL.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-visible-how-to-get-found-on-google-informational-banner-or-section-on-the-home-page-frontend-src-pages-home-tsx-that-is-dismissible-it-should-display-a-short-message-explaining-that-the-site-has-been-optimized-for-search-engines-and-instructing-the-site-owner-to-submit-it-to-google-search-console-at-search-google-com-search-console-for-faster-indexing-style-it-consistently-with-the-warm-terracotta-amber-color-palette-store-the-dismissed-state-in-localstorage-so-it-does-not-reappear-after-being-closed",
+      "title": "Add a visible 'How to get found on Google' informational banner or section on the Home page (frontend/src/pages/Home.tsx) that is dismissible. It should display a short message explaining that the site has been optimized for search engines and instructing the site owner to submit it to Google Search Console at search.google.com/search-console for faster indexing. Style it consistently with the warm terracotta/amber color palette. Store the dismissed state in localStorage so it does not reappear after being closed.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-google-site-verification-html-file-at-frontend-public-googlexxxxxxxxxxxxxxxx-html-using-a-placeholder-filename-that-follows-google-s-standard-verification-file-naming-pattern-e-g-google-site-verification-html-that-contains-the-standard-google-verification-meta-tag-content-since-the-actual-verification-code-must-be-provided-by-the-user-from-google-search-console-add-a-clearly-named-placeholder-file-at-frontend-public-google-site-verification-html-with-instructional-content-explaining-that-the-user-must-replace-this-file-with-the-actual-file-downloaded-from-google-search-console-https-search-google-com-search-console-which-will-have-a-filename-like-googlexxxxxxxxxxxxxxxx-html-and-content-like-google-site-verificationxxxxxxxxxxxxxxxx",
+      "title": "Create a Google site verification HTML file at frontend/public/googleXXXXXXXXXXXXXXXX.html (using a placeholder filename that follows Google's standard verification file naming pattern, e.g. google-site-verification.html) that contains the standard Google verification meta tag content. Since the actual verification code must be provided by the user from Google Search Console, add a clearly named placeholder file at frontend/public/google-site-verification.html with instructional content explaining that the user must replace this file with the actual file downloaded from Google Search Console (https://search.google.com/search-console), which will have a filename like 'googleXXXXXXXXXXXXXXXX.html' and content like 'google-site-verificationXXXXXXXXXXXXXXXX'.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Display hostels list with categories (girls, boys, co-living)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Show hostel images for each listing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Integrate maps for hostel locations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Display room sharing details and pricing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Create clean and neat homepage",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Create a backend data model for hostels that includes: hostel name, category (girls/boys/co-living), description, address, price per room, room sharing capacity, and image URLs",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement backend functions to add, retrieve, and list hostels with filtering by category (girls/boys/co-living)",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add sample hostel data for Hyderabad including girls, boys, and co-living hostels with sharing-based pricing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Add sample hostel data for Hyderabad including girls hostels, boys hostels, and co-living hostels with detailed information: hostel name, category, address in Hyderabad, description, room sharing capacity (single, double, triple, four-sharing), and price per bed based on sharing arrangement",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Add hostel owner contact number to hostel listings and detail views",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Add an ownerContact field (Text type) to the Hostel data type in backend/main.mo to store the hostel owner's phone number",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add search bar to find hostels by name or location",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add filter functionality for hostel listings (by category, price range, sharing capacity)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add sort functionality for hostel listings (by price, name, location)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add manual entry form for creating new hostels with all details including Google Maps integration",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Create a backend function addHostel that accepts hostel details (name, category, description, address, ownerContact, roomSharing options with prices, and coordinates) and stores a new hostel in the hostels HashMap, returning the generated hostel ID",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Add editing functionality for room types and prices in existing hostel entries",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Create a backend function updateHostel in backend/main.mo that accepts a hostel ID and updated roomSharing data, validates the hostel exists, updates only the roomSharing field in the hostels HashMap, and returns a success/error result",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Ensure the backend updateHostel function in backend/main.mo accepts and properly updates roomSharing arrays that include one-sharing, two-sharing, three-sharing, four-sharing, and five-sharing entries with their respective prices",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Add privacy policy page to the website",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Add disclaimer page to the website",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Add SEO meta tags (title, description, keywords, Open Graph) to improve Google search visibility and indexing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Upload Google site verification file to the website for Google Search Console verification",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Hostel Finder",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

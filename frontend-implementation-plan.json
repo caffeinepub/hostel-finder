@@ -1,0 +1,30 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add Google site verification file for Search Console",
+  "requirements": [
+    {
+      "id": "REQ-37",
+      "summary": "Create a placeholder Google site verification HTML file in frontend/public and update the SeoInfoBanner to guide users through the Search Console verification process",
+      "acceptanceCriteria": [
+        "A file exists at frontend/public/google-site-verification.html that is served as a static asset",
+        "The file is accessible at the /google-site-verification.html route when the app is deployed",
+        "The file contains clear instructions for the site owner to replace it with the actual Google-provided verification file",
+        "The instructions reference the Google Search Console URL (https://search.google.com/search-console) and explain the typical file naming pattern (googleXXXXXXXXXXXXXXXX.html)",
+        "The SeoInfoBanner on the Home page is updated to mention uploading the Google verification file as a step in the Search Console submission process"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/google-site-verification.html",
+          "operation": "create",
+          "description": "Create a placeholder HTML file with instructional content explaining that the site owner must replace this file with the actual verification file downloaded from Google Search Console (https://search.google.com/search-console). The file should explain the typical Google verification file naming pattern (googleXXXXXXXXXXXXXXXX.html) and content format (google-site-verificationXXXXXXXXXXXXXXXX). Include clear step-by-step instructions for obtaining and uploading the actual verification file."
+        },
+        {
+          "path": "frontend/src/components/SeoInfoBanner.tsx",
+          "operation": "modify",
+          "description": "Update the banner content to include guidance about uploading the Google verification file as part of the Search Console submission workflow. Add a step or note explaining that users should replace the placeholder google-site-verification.html file in the public directory with their actual verification file from Search Console before submitting their site for indexing."
+        }
+      ]
+    }
+  ]
+}

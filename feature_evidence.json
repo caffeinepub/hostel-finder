@@ -1,0 +1,24 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-google-site-verification-html-file-at-frontend-public-googlexxxxxxxxxxxxxxxx-html-using-a-placeholder-filename-that-follows-google-s-standard-verification-file-naming-pattern-e-g-google-site-verification-html-that-contains-the-standard-google-verification-meta-tag-content-since-the-actual-verification-code-must-be-provided-by-the-user-from-google-search-console-add-a-clearly-named-placeholder-file-at-frontend-public-google-site-verification-html-with-instructional-content-explaining-that-the-user-must-replace-this-file-with-the-actual-file-downloaded-from-google-search-console-https-search-google-com-search-console-which-will-have-a-filename-like-googlexxxxxxxxxxxxxxxx-html-and-content-like-google-site-verificationxxxxxxxxxxxxxxxx",
+      "featureTitle": "Create a Google site verification HTML file at frontend/public/googleXXXXXXXXXXXXXXXX.html (using a placeholder filename that follows Google's standard verification file naming pattern, e.g. google-site-verification.html) that contains the standard Google verification meta tag content. Since the actual verification code must be provided by the user from Google Search Console, add a clearly named placeholder file at frontend/public/google-site-verification.html with instructional content explaining that the user must replace this file with the actual file downloaded from Google Search Console (https://search.google.com/search-console), which will have a filename like 'googleXXXXXXXXXXXXXXXX.html' and content like 'google-site-verificationXXXXXXXXXXXXXXXX'.",
+      "files": [
+        "frontend/src/components/SeoInfoBanner.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-37"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

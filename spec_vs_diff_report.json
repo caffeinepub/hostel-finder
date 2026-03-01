@@ -1,0 +1,33 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-03-01T12:11:13.797Z",
+  "summary": "The diff adds a Google site verification file and updates the SeoInfoBanner, but uses a real/specific verification token instead of a placeholder, and does not create the required placeholder file at frontend/public/google-site-verification.html with instructional content.",
+  "missing_requirements": [
+    {
+      "id": "REQ-37",
+      "requirement": "A clearly named placeholder file must exist at frontend/public/google-site-verification.html with instructional content explaining that the user must replace it with the actual file downloaded from Google Search Console, referencing the URL https://search.google.com/search-console and explaining the typical file naming pattern (googleXXXXXXXXXXXXXXXX.html).",
+      "reason": "The diff adds frontend/public/googlee7577b039261c25d.html (a specific token file) but does NOT add frontend/public/google-site-verification.html with instructional/placeholder content. The requirement explicitly calls for a placeholder file at that path with instructions for the site owner.",
+      "evidence": [
+        "frontend/public/googlee7577b039261c25d.html"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "A specific Google verification file with a real token (googlee7577b039261c25d.html) is created and hardcoded into the SeoInfoBanner, including the actual verification token value.",
+      "reason": "The build request explicitly states as a non-goal: 'Hardcoding a specific Google verification token (the actual token must come from the site owner's Search Console account).' The diff hardcodes the token 'googlee7577b039261c25d' in both the file name and the SeoInfoBanner component.",
+      "evidence": [
+        "frontend/public/googlee7577b039261c25d.html",
+        "frontend/src/components/SeoInfoBanner.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.9,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/public/googlee7577b039261c25d.html",
+    "frontend/src/components/SeoInfoBanner.tsx",
+    "project_state.json"
+  ]
+}
